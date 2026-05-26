@@ -274,14 +274,31 @@ def run_daily(topic, auto_schedule):
         chosen = variants[idx]
         path = paths[idx]
 
+    # Generate quote-card image → upload to Cloudinary
+    image_url = None
+    if os.environ.get("CLOUDINARY_API_KEY"):
+        try:
+            from src.utils.image_gen import generate_quote_card
+            from src.integrations.cloudinary_client import upload_post_image
+            author_name = os.environ.get("AUTHOR_NAME", "Jake Wilkowski")
+            author_headline = os.environ.get("AUTHOR_HEADLINE", "Senior Product Manager | SaaS & DaaS")
+            print_info("Generating quote-card image...")
+            card_path = generate_quote_card(chosen["text"], author_name=author_name, author_headline=author_headline)
+            print_info("Uploading image to Cloudinary...")
+            result = upload_post_image(card_path, chosen["topic"])
+            image_url = result["url"]
+            print_success(f"Image ready: {image_url}")
+        except Exception as e:
+            print_error(f"Image generation skipped: {e}")
+
     # Schedule to Buffer
     if os.environ.get("BUFFER_ACCESS_TOKEN"):
         buffer = BufferClient()
         if buffer.validate_connection():
-            result = buffer.add_to_queue(chosen["text"])
+            result = buffer.add_to_queue(chosen["text"], image_url=image_url)
             update_post_status(
                 str(path), "scheduled",
-                extra={"buffer_result": result, "scheduled_when": "queue"},
+                extra={"buffer_result": result, "scheduled_when": "queue", "image_url": image_url},
             )
             print_success("Post added to Buffer queue!")
         else:
