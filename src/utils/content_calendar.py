@@ -73,15 +73,26 @@ def pick_todays_topic() -> str:
 
 
 def pick_todays_formats(count: int = 3) -> list[str]:
-    """Pick formats not used in the last 3 days for variety."""
+    """
+    Pick formats not used in the last 3 days.
+    trend_prediction and framework are preferred — they match the educator/trends voice.
+    """
     recent = set(get_recent_formats(3))
-    all_fmts = list(POST_FORMATS.keys())
-    fresh = [f for f in all_fmts if f not in recent]
-    rest = [f for f in all_fmts if f in recent]
-    random.shuffle(fresh)
-    random.shuffle(rest)
-    combined = (fresh + rest)[:count]
-    return combined
+    # Preferred formats get double weight
+    preferred = ["trend_prediction", "framework", "hot_take"]
+    others = ["breakdown", "myth_busting", "data_insight"]
+    pool = [f for f in preferred if f not in recent] * 2 + \
+           [f for f in others if f not in recent] + \
+           [f for f in (preferred + others) if f in recent]
+    seen: list[str] = []
+    result: list[str] = []
+    for f in pool:
+        if f not in seen:
+            seen.append(f)
+            result.append(f)
+        if len(result) == count:
+            break
+    return result
 
 
 def get_weekly_summary() -> dict:

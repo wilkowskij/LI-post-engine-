@@ -22,9 +22,11 @@ def generate_post(
         import os
         client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
-    chosen_format = post_format or random.choice(list(POST_FORMATS.keys()))
+    # Prefer forward-looking formats unless caller specifies one
+    preferred = ["trend_prediction", "framework", "hot_take", "breakdown", "myth_busting", "data_insight"]
+    chosen_format = post_format or random.choice(preferred)
     fmt = POST_FORMATS[chosen_format]
-    hashtags = HASHTAG_MAP.get(topic, ["#ProductManagement", "#SaaS", "#Leadership"])
+    hashtags = HASHTAG_MAP.get(topic, ["#ProductManagement", "#SaaS", "#GTM"])
 
     angle_note = f"\n\nSpecific angle to emphasize: {custom_angle}" if custom_angle else ""
 
@@ -42,12 +44,16 @@ Target length: {fmt['length']}
 HASHTAGS to use (pick 3-5 most relevant): {', '.join(hashtags)}
 
 RULES:
-- Start with a strong hook — NOT "I'm excited to share" or "Today I want to talk about"
+- Open with a PREDICTION, PATTERN, or FRAMEWORK — not a personal story opener
+- Write for both a senior PM AND an executive reading on mobile
+- Include one forward-looking take (where is this heading in 12-24 months?)
+- Use structure: numbered lists, named frameworks, clear before/after when possible
+- Ground every claim in a concrete signal, pattern, or market observation
+- Never name specific companies, clients, or employers
+- Never use: "delve into", "it's worth noting", "in today's fast-paced landscape",
+  "game-changer", "revolutionize", "synergy", or "leverage" as a verb
 - Short paragraphs, line breaks between each for mobile readability
-- Include at least one specific number, metric, or concrete example
-- End with a question OR a direct call to action
-- Sound human and direct, not corporate
-- Do NOT use em-dashes (—) excessively
+- Do NOT use em-dashes (—) more than once
 - Do NOT start with "I"
 
 Return ONLY the post text, ready to copy-paste to LinkedIn. No meta-commentary."""
