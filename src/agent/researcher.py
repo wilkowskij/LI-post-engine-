@@ -24,20 +24,20 @@ def research_trending_topics(category: Optional[str] = None) -> dict:
 
     queries = {
         "Product-led growth tactics": "product-led growth SaaS 2025 case study results",
+        "Go-to-market strategy for SaaS": "SaaS go to market strategy 2025 trends",
+        "Pricing and packaging strategy": "SaaS pricing strategy 2025 trends research",
+        "Activation and time-to-value": "SaaS activation time to value product-led growth 2025",
+        "Product-led sales (PLS) motions": "product-led sales PLS SaaS motion 2025",
         "Data-as-a-Service business models": "data as a service DaaS market trends 2025",
         "AI features in B2B SaaS products": "AI features B2B SaaS product adoption 2025",
-        "Pricing and packaging strategy": "SaaS pricing strategy 2025 trends research",
-        "Customer discovery and research": "B2B customer discovery methods product management 2025",
-        "Metrics and product analytics": "SaaS metrics benchmarks 2025 product analytics",
-        "Platform and ecosystem strategy": "SaaS platform ecosystem strategy 2025",
-        "Enterprise sales and product alignment": "enterprise SaaS product led sales 2025",
-        "API-first product design": "API-first product design trends developer experience 2025",
-        "Building vs buying data infrastructure": "build vs buy data infrastructure SaaS 2025",
-        "Product team structure and culture": "product team structure best practices 2025",
-        "Go-to-market strategy for SaaS": "SaaS go to market strategy 2025 trends",
-        "Developer experience (DX) as a product": "developer experience product SaaS 2025",
         "Data monetization and governance": "data monetization strategy enterprise 2025",
+        "Building with LLMs in SaaS products": "LLM integration B2B SaaS product feature 2025",
+        "API-first product design": "API-first product design trends developer experience 2025",
+        "Understanding the B2B buyer as a PM": "B2B buyer behavior SaaS product management 2025",
+        "Enterprise sales and product alignment": "enterprise SaaS product led sales 2025",
+        "Metrics that matter to buyers and boards": "SaaS metrics KPIs executives buyers boards 2025",
         "Feature prioritization frameworks": "feature prioritization frameworks product management 2025",
+        "Customer discovery and research": "B2B customer discovery methods product management 2025",
     }
 
     query = queries.get(topic, f"{topic} 2025 trends insights")
@@ -102,7 +102,7 @@ Include:
 1. A specific angle or hook (surprising stat, contrarian take, or timely observation)
 2. 2-3 concrete data points or examples a PM would know from experience or industry knowledge
 3. The core insight or lesson
-4. A suggested post format: story / hot_take / framework / trend_analysis / data_insight / myth_busting
+4. A suggested post format: trend_prediction / framework / hot_take / breakdown / myth_busting / data_insight
 
 Keep the brief to 150-200 words. Be specific — no vague generalities."""
 

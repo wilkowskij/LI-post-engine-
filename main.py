@@ -36,7 +36,7 @@ def cli():
 @cli.command()
 @click.option("--topic", "-t", default=None, help="Topic category (auto-selects if omitted)")
 @click.option("--format", "-f", "post_format", default=None,
-              type=click.Choice(["story", "hot_take", "framework", "trend_analysis", "data_insight", "myth_busting"]),
+              type=click.Choice(["framework", "trend_prediction", "hot_take", "breakdown", "myth_busting", "data_insight"]),
               help="Post format (auto-selects if omitted)")
 @click.option("--variants", "-n", default=1, show_default=True, help="Number of variants to generate")
 @click.option("--angle", "-a", default=None, help="Specific angle or hook to emphasize")
@@ -55,9 +55,8 @@ def generate(topic, post_format, variants, angle):
 
     # Pick topic
     if not topic:
-        from src.agent.persona import TOPIC_CATEGORIES
-        import random
-        topic = random.choice(TOPIC_CATEGORIES)
+        from src.utils.content_calendar import pick_todays_topic
+        topic = pick_todays_topic()
         print_info(f"Auto-selected topic: [bold]{topic}[/bold]")
 
     print_info("Researching topic...")

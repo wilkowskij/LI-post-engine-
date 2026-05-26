@@ -19,7 +19,7 @@ def save_post(post: dict, status: str = "draft") -> Path:
     date_str = now.strftime("%Y-%m-%d")
     slug = post.get("topic", "post").lower().replace(" ", "_")[:30]
     fmt = post.get("format", "post")
-    stamp = now.strftime("%H%M%S")
+    stamp = now.strftime("%H%M%S%f")  # HHMMSS + 6 microsecond digits — unique per call
     filename = OUTPUT_DIR / f"{date_str}_{slug}_{fmt}_{stamp}_{status}.json"
 
     record = {
