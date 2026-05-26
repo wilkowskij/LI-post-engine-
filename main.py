@@ -274,17 +274,17 @@ def run_daily(topic, auto_schedule):
         chosen = variants[idx]
         path = paths[idx]
 
-    # Generate quote-card image → upload to Cloudinary
+    # Generate framework diagram → upload to Cloudinary
     image_url = None
     if os.environ.get("CLOUDINARY_API_KEY"):
         try:
             from src.utils.image_gen import generate_post_image
             from src.integrations.cloudinary_client import upload_post_image
+            from src.agent.writer import generate_diagram_spec
             author_name = os.environ.get("AUTHOR_NAME", "Jeff Wilkowski")
-            author_headline = os.environ.get("AUTHOR_HEADLINE", "Senior Product Manager | SaaS & DaaS")
-            img_type = "framework diagram" if chosen.get("format") == "visual_framework" else "quote-card"
-            print_info(f"Generating {img_type} image...")
-            card_path = generate_post_image(chosen, author_name=author_name, author_headline=author_headline)
+            print_info("Generating framework diagram...")
+            generate_diagram_spec(chosen, client)   # no-op if spec already present
+            card_path = generate_post_image(chosen, author_name=author_name)
             print_info("Uploading image to Cloudinary...")
             result = upload_post_image(card_path, chosen["topic"])
             image_url = result["url"]

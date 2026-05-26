@@ -131,6 +131,73 @@ def _parse_visual_framework_response(raw: str, topic: str, fmt: str, hashtags: l
     }
 
 
+_DIAGRAM_SPEC_PROMPT = """\
+You are given a LinkedIn post. Generate a framework diagram spec that visually explains \
+the core concept, process, or mental model in the post.
+
+The diagram should TEACH something the reader can apply — not repeat the post text.
+
+Return a single JSON object (no markdown fences):
+{
+  "title": "<ALL CAPS framework name, 3-5 words>",
+  "subtitle": "<one tagline describing what the diagram shows, max 12 words>",
+  "steps": [
+    {"label": "<ALL CAPS, 2-3 words>", "description": "<one sentence, max 12 words>"},
+    ...
+  ],
+  "foundation_title": "<ALL CAPS foundation layer header, optional>",
+  "foundation_items": ["<ITEM>", ...]
+}
+
+Steps: 4-5 items that form a logical sequence or flow.
+Foundation items: 3-5 supporting concepts (omit the key entirely if there is no natural layer).
+The diagram must stand alone — someone who only sees the image should understand the framework."""
+
+
+def generate_diagram_spec(post: dict, client: Optional[anthropic.Anthropic] = None) -> dict:
+    """
+    Generate a framework diagram spec for any post format.
+    Adds the spec to post["diagram"] in-place and returns the spec dict.
+    Already-present specs (visual_framework posts) are returned as-is.
+    """
+    if post.get("diagram"):
+        return post["diagram"]
+
+    if client is None:
+        import os
+        client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+
+    message = client.messages.create(
+        model="claude-opus-4-7",
+        max_tokens=600,
+        system="You create concise, clear visual framework diagrams for LinkedIn posts.",
+        messages=[
+            {
+                "role": "user",
+                "content": (
+                    f"{_DIAGRAM_SPEC_PROMPT}\n\n"
+                    f"POST:\n{post['text']}"
+                ),
+            }
+        ],
+    )
+
+    raw = message.content[0].text.strip()
+    try:
+        text = raw
+        if text.startswith("```"):
+            text = text.split("```", 2)[1]
+            if text.startswith("json"):
+                text = text[4:]
+            text = text.rsplit("```", 1)[0].strip()
+        spec = json.loads(text)
+    except (json.JSONDecodeError, ValueError):
+        spec = {}
+
+    post["diagram"] = spec
+    return spec
+
+
 def generate_post_variants(
     research_brief: str,
     topic: str,
