@@ -278,12 +278,13 @@ def run_daily(topic, auto_schedule):
     image_url = None
     if os.environ.get("CLOUDINARY_API_KEY"):
         try:
-            from src.utils.image_gen import generate_quote_card
+            from src.utils.image_gen import generate_post_image
             from src.integrations.cloudinary_client import upload_post_image
             author_name = os.environ.get("AUTHOR_NAME", "Jeff Wilkowski")
             author_headline = os.environ.get("AUTHOR_HEADLINE", "Senior Product Manager | SaaS & DaaS")
-            print_info("Generating quote-card image...")
-            card_path = generate_quote_card(chosen["text"], author_name=author_name, author_headline=author_headline)
+            img_type = "framework diagram" if chosen.get("format") == "visual_framework" else "quote-card"
+            print_info(f"Generating {img_type} image...")
+            card_path = generate_post_image(chosen, author_name=author_name, author_headline=author_headline)
             print_info("Uploading image to Cloudinary...")
             result = upload_post_image(card_path, chosen["topic"])
             image_url = result["url"]

@@ -9,6 +9,27 @@ import anthropic
 
 from src.agent.persona import PERSONA_SYSTEM_PROMPT, POST_FORMATS, HASHTAG_MAP, TOPIC_CATEGORIES
 
+_VISUAL_FRAMEWORK_SUFFIX = """
+
+IMPORTANT — this is a visual_framework post. Return a single JSON object (no markdown fences) with exactly these keys:
+
+{
+  "post_text": "<the LinkedIn post text, ready to copy-paste>",
+  "diagram": {
+    "title": "<ALL CAPS framework name, max 5 words>",
+    "subtitle": "<one short descriptive sentence about what the diagram shows>",
+    "steps": [
+      {"label": "<ALL CAPS step label, 2-3 words>", "description": "<one sentence, max 12 words>"},
+      ...
+    ],
+    "foundation_title": "<ALL CAPS title for the bottom row, optional>",
+    "foundation_items": ["<ITEM LABEL>", ...]
+  }
+}
+
+Steps: 4-5 items. Foundation items: 3-5 items (or omit the array if there is no natural foundation layer).
+The diagram must be self-contained — someone who only sees the image should understand the framework."""
+
 
 def generate_post(
     research_brief: str,
@@ -22,13 +43,15 @@ def generate_post(
         import os
         client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
-    # Prefer forward-looking formats unless caller specifies one
     preferred = ["trend_prediction", "framework", "hot_take", "breakdown", "myth_busting", "data_insight"]
     chosen_format = post_format or random.choice(preferred)
     fmt = POST_FORMATS[chosen_format]
     hashtags = HASHTAG_MAP.get(topic, ["#ProductManagement", "#SaaS", "#GTM"])
 
     angle_note = f"\n\nSpecific angle to emphasize: {custom_angle}" if custom_angle else ""
+
+    is_visual = chosen_format == "visual_framework"
+    format_suffix = _VISUAL_FRAMEWORK_SUFFIX if is_visual else "\nReturn ONLY the post text, ready to copy-paste to LinkedIn. No meta-commentary."
 
     user_prompt = f"""Write a LinkedIn post for a Senior Product Manager in the SaaS/DaaS space.
 
@@ -55,23 +78,54 @@ RULES:
 - Short paragraphs, line breaks between each for mobile readability
 - Do NOT use em-dashes (—) more than once
 - Do NOT start with "I"
-
-Return ONLY the post text, ready to copy-paste to LinkedIn. No meta-commentary."""
+{format_suffix}"""
 
     message = client.messages.create(
         model="claude-opus-4-7",
-        max_tokens=600,
+        max_tokens=900 if is_visual else 600,
         system=PERSONA_SYSTEM_PROMPT,
         messages=[{"role": "user", "content": user_prompt}],
     )
 
-    post_text = message.content[0].text.strip()
+    raw = message.content[0].text.strip()
+
+    if is_visual:
+        return _parse_visual_framework_response(raw, topic, chosen_format, hashtags)
+
+    return {
+        "text": raw,
+        "topic": topic,
+        "format": chosen_format,
+        "hashtags": hashtags,
+        "word_count": len(raw.split()),
+        "char_count": len(raw),
+    }
+
+
+def _parse_visual_framework_response(raw: str, topic: str, fmt: str, hashtags: list) -> dict:
+    """Parse the JSON response for a visual_framework post."""
+    try:
+        # Strip accidental markdown fences
+        text = raw.strip()
+        if text.startswith("```"):
+            text = text.split("```", 2)[1]
+            if text.startswith("json"):
+                text = text[4:]
+            text = text.rsplit("```", 1)[0].strip()
+
+        data = json.loads(text)
+        post_text = data.get("post_text", raw)
+        diagram = data.get("diagram", {})
+    except (json.JSONDecodeError, ValueError):
+        post_text = raw
+        diagram = {}
 
     return {
         "text": post_text,
         "topic": topic,
-        "format": chosen_format,
+        "format": fmt,
         "hashtags": hashtags,
+        "diagram": diagram,
         "word_count": len(post_text.split()),
         "char_count": len(post_text),
     }

@@ -39,7 +39,7 @@ def test_post_formats_have_required_keys():
 
 
 def test_known_formats_present():
-    expected = {"framework", "trend_prediction", "hot_take", "breakdown", "myth_busting", "data_insight"}
+    expected = {"visual_framework", "framework", "trend_prediction", "hot_take", "breakdown", "myth_busting", "data_insight"}
     assert expected == set(POST_FORMATS.keys()), (
         f"Format mismatch.\nExpected: {sorted(expected)}\nActual:   {sorted(POST_FORMATS.keys())}"
     )

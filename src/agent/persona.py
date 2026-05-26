@@ -44,6 +44,11 @@ NEVER:
 """
 
 POST_FORMATS = {
+    "visual_framework": {
+        "description": "A named process or mental model taught through a visual step-by-step diagram with a supporting foundation layer",
+        "structure": "Contrarian opening that challenges how most people think about the topic → Name the framework (ALL CAPS title) → 4-5 numbered steps each with a label and one-line description → A foundation layer of 4-5 supporting concepts → Why this changes how PMs and leaders should act",
+        "length": "140-200 words (the diagram carries the teaching weight; the text frames and contextualizes it)",
+    },
     "framework": {
         "description": "A named mental model or decision framework",
         "structure": "Name the problem → Present the framework (numbered or visual) → One market signal that makes it timely → Where this breaks down → CTA",
