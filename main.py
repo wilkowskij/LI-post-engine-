@@ -280,7 +280,7 @@ def run_daily(topic, auto_schedule):
         try:
             from src.utils.image_gen import generate_quote_card
             from src.integrations.cloudinary_client import upload_post_image
-            author_name = os.environ.get("AUTHOR_NAME", "Jake Wilkowski")
+            author_name = os.environ.get("AUTHOR_NAME", "Jeff Wilkowski")
             author_headline = os.environ.get("AUTHOR_HEADLINE", "Senior Product Manager | SaaS & DaaS")
             print_info("Generating quote-card image...")
             card_path = generate_quote_card(chosen["text"], author_name=author_name, author_headline=author_headline)

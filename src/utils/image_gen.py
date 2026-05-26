@@ -172,7 +172,7 @@ def _generate_with_pillow(
 
 def generate_quote_card(
     post_text: str,
-    author_name: str = "Jake Wilkowski",
+    author_name: str = "Jeff Wilkowski",
     author_headline: str = "Senior Product Manager | SaaS & DaaS",
     output_path: Optional[Path] = None,
 ) -> Path:
