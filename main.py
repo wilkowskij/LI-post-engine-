@@ -232,7 +232,6 @@ def run_daily(topic, auto_schedule):
     """
     import anthropic
     from src.agent.researcher import research_trending_topics, build_research_brief
-    from src.agent.writer import generate_post_variants
     from src.integrations.buffer_client import BufferClient
     from src.utils.storage import save_post, update_post_status
     from src.utils.display import print_variants, print_info, print_success, print_error
@@ -241,10 +240,10 @@ def run_daily(topic, auto_schedule):
 
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
+    from src.utils.content_calendar import pick_todays_topic, pick_todays_formats
+
     if not topic:
-        import random
-        from src.agent.persona import TOPIC_CATEGORIES
-        topic = random.choice(TOPIC_CATEGORIES)
+        topic = pick_todays_topic()
 
     console.rule(f"[bold blue]Daily Post Engine — {datetime.now().strftime('%A, %B %d %Y')}[/bold blue]")
     print_info(f"Topic: {topic}")
@@ -254,9 +253,11 @@ def run_daily(topic, auto_schedule):
     research = research_trending_topics(category=topic)
     brief = build_research_brief(research, client)
 
-    # Generate 3 variants
-    print_info("Generating 3 post variants...")
-    variants = generate_post_variants(brief, topic, count=3, client=client)
+    # Generate 3 variants using smart format rotation
+    formats = pick_todays_formats(count=3)
+    print_info(f"Generating 3 post variants ({', '.join(formats)})...")
+    from src.agent.writer import generate_post
+    variants = [generate_post(brief, topic, post_format=fmt, client=client) for fmt in formats]
     print_variants(variants)
 
     # Save all as drafts
@@ -305,6 +306,110 @@ def run_daily(topic, auto_schedule):
             print_error("Buffer connection failed — draft saved but not scheduled.")
     else:
         print_info("BUFFER_ACCESS_TOKEN not set — draft saved locally.")
+
+
+# ------------------------------------------------------------------ #
+# calendar
+# ------------------------------------------------------------------ #
+
+@cli.command()
+@click.option("--days", "-d", default=7, show_default=True, help="Days to look ahead")
+def calendar(days):
+    """Show recent post history and upcoming content plan."""
+    from src.utils.content_calendar import get_weekly_summary, get_upcoming_plan, get_posting_days, DAY_NAMES
+    from rich.table import Table
+    from rich import box
+
+    # Recent history
+    summary = get_weekly_summary()
+    console.rule("[bold blue]Last 7 Days[/bold blue]")
+    console.print(f"Posts generated: [bold]{summary['total']}[/bold]  "
+                  f"Scheduled: [green]{summary['scheduled']}[/green]  "
+                  f"Drafts: [yellow]{summary['drafts']}[/yellow]")
+
+    if summary["posts"]:
+        hist = Table(box=box.SIMPLE)
+        hist.add_column("Date", style="cyan", width=12)
+        hist.add_column("Topic", width=34)
+        hist.add_column("Format", width=16)
+        hist.add_column("Status", width=10)
+        for p in sorted(summary["posts"], key=lambda x: x.get("saved_at", ""), reverse=True):
+            hist.add_row(
+                p.get("saved_at", "")[:10],
+                p.get("topic", "")[:32],
+                p.get("format", "").replace("_", " "),
+                p.get("status", ""),
+            )
+        console.print(hist)
+    else:
+        console.print("[dim]No posts in the last 7 days.[/dim]")
+
+    # Upcoming plan
+    console.rule("[bold blue]Upcoming Plan[/bold blue]")
+    posting_days = get_posting_days()
+    day_labels = ", ".join(DAY_NAMES.get(d, "") for d in sorted(posting_days))
+    console.print(f"Posting days: [cyan]{day_labels}[/cyan]  |  "
+                  f"Time: [cyan]{os.environ.get('POST_SCHEDULE_TIME', '08:00')}[/cyan]\n")
+
+    plan = get_upcoming_plan(days)
+    if plan:
+        plan_table = Table(box=box.ROUNDED)
+        plan_table.add_column("Date", style="cyan", width=12)
+        plan_table.add_column("Day", width=8)
+        plan_table.add_column("Suggested Topic", width=42)
+        for entry in plan:
+            day_label = "[bold green]TODAY[/bold green]" if entry["is_today"] else entry["weekday"]
+            plan_table.add_row(entry["date"], day_label, entry["topic"])
+        console.print(plan_table)
+    else:
+        console.print("[dim]No posting days in the next {days} days.[/dim]")
+
+
+# ------------------------------------------------------------------ #
+# weekly-report
+# ------------------------------------------------------------------ #
+
+@cli.command("weekly-report")
+def weekly_report():
+    """Print a summary of this week's content activity."""
+    from src.utils.content_calendar import get_weekly_summary
+    from rich.table import Table
+    from rich import box
+
+    summary = get_weekly_summary()
+
+    console.rule("[bold blue]Weekly Content Report[/bold blue]")
+    console.print(f"\n[bold]Posts this week:[/bold] {summary['total']}")
+    console.print(f"  Scheduled to Buffer : [green]{summary['scheduled']}[/green]")
+    console.print(f"  Saved as drafts     : [yellow]{summary['drafts']}[/yellow]")
+
+    if summary["topics_used"]:
+        console.print(f"\n[bold]Topics covered:[/bold]")
+        for t in summary["topics_used"]:
+            console.print(f"  • {t}")
+
+    if summary["formats_used"]:
+        console.print(f"\n[bold]Formats used:[/bold] {', '.join(f.replace('_', ' ') for f in summary['formats_used'])}")
+
+    if summary["posts"]:
+        console.print()
+        table = Table(title="Post Log", box=box.ROUNDED)
+        table.add_column("Date", style="cyan", width=12)
+        table.add_column("Format", width=16)
+        table.add_column("Words", justify="center", width=6)
+        table.add_column("Status", width=10)
+        table.add_column("Topic", width=30)
+        for p in sorted(summary["posts"], key=lambda x: x.get("saved_at", ""), reverse=True):
+            table.add_row(
+                p.get("saved_at", "")[:10],
+                p.get("format", "").replace("_", " "),
+                str(p.get("word_count", 0)),
+                p.get("status", ""),
+                p.get("topic", "")[:28],
+            )
+        console.print(table)
+    else:
+        console.print("\n[dim]No posts generated in the last 7 days.[/dim]")
 
 
 # ------------------------------------------------------------------ #
