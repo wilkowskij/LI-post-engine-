@@ -3,7 +3,6 @@ Cloudinary integration — upload and manage images for LinkedIn posts.
 Cloud: drum3eekm
 """
 import os
-import io
 from pathlib import Path
 from typing import Optional, Union
 from datetime import datetime
@@ -14,6 +13,9 @@ def get_cloudinary():
     import cloudinary
     import cloudinary.uploader
     import cloudinary.api
+
+    # Use system CA bundle to avoid SSL issues in containerised environments
+    os.environ.setdefault("REQUESTS_CA_BUNDLE", "/etc/ssl/certs/ca-certificates.crt")
 
     cloudinary.config(
         cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME", "drum3eekm"),
