@@ -364,6 +364,20 @@ def setup():
         print_error("Buffer: BUFFER_ACCESS_TOKEN not set")
         all_ok = False
 
+    # OpenAI — GPT Image 2 (gpt-image-1)
+    openai_key = os.environ.get("OPENAI_API_KEY", "")
+    if openai_key and openai_key != "your_openai_api_key_here":
+        try:
+            from openai import OpenAI
+            OpenAI(api_key=openai_key).models.retrieve("gpt-image-1")
+            print_success("OpenAI (GPT Image 2): connected")
+        except Exception as e:
+            print_error(f"OpenAI (GPT Image 2): {e}")
+            all_ok = False
+    else:
+        print_error("OpenAI: OPENAI_API_KEY not set — image generation will fall back to Pillow")
+        all_ok = False
+
     # Tavily (optional)
     if os.environ.get("TAVILY_API_KEY"):
         print_success("Tavily: API key present (web research enabled)")
