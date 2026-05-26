@@ -1,8 +1,12 @@
 """
 Image generators for LinkedIn posts.
 
-Quote card:  OpenAI gpt-image-1 (primary) or Pillow (fallback).
-Framework diagram: Pillow — renders a numbered step-flow with a foundation layer.
+Quote card:       OpenAI gpt-image-1 (primary) or Pillow (fallback).
+Framework diagram: Pillow — step-flow with gold accents, serif typography.
+
+Design language: professional, elegant, sophisticated.
+  Palette — charcoal #111827 bg · warm gold #C9A255 accent · near-white text
+  Typography — Liberation Serif Bold for display; Liberation Sans for body
 """
 import base64
 import os
@@ -16,17 +20,15 @@ OUTPUT_DIR = Path(__file__).parent.parent.parent / "output" / "images"
 OPENAI_IMAGE_SIZE = "1536x1024"
 
 BRAND = {
-    "bg": "#0A0A0A",
-    "accent": "#2563EB",
-    "hook_text": "#FFFFFF",
-    "sub_text": "#94A3B8",
-    "tag_bg": "#1E3A5F",
-    "tag_text": "#93C5FD",
-    "found_bg": "#111827",
+    "bg":           "#111827",   # Charcoal — richer depth than pure black
+    "surface":      "#1C2A3A",   # Elevated card surface
+    "found_bg":     "#0D1520",   # Foundation pill depth
+    "accent":       "#C9A255",   # Warm gold
+    "accent_light": "#E8D5A3",   # Champagne / light gold
+    "hook_text":    "#F8FAFC",   # Near-white (slightly warm)
+    "sub_text":     "#94A3B8",   # Cool mid-gray
+    "muted":        "#64748B",   # Darker muted gray
 }
-
-# Step-number circle colors (cycles if more than 5 steps)
-STEP_COLORS = ["#2563EB", "#059669", "#F59E0B", "#DC2626", "#7C3AED"]
 
 W, H = 1200, 627
 
@@ -34,12 +36,6 @@ W, H = 1200, 627
 # ---------------------------------------------------------------------------
 # Shared helpers
 # ---------------------------------------------------------------------------
-
-def _hex(color: str) -> tuple:
-    """Convert #RRGGBB to (R, G, B)."""
-    c = color.lstrip("#")
-    return tuple(int(c[i:i+2], 16) for i in (0, 2, 4))
-
 
 def _extract_hook(post_text: str) -> str:
     for line in post_text.splitlines():
@@ -53,28 +49,27 @@ def _extract_hashtags(post_text: str) -> list[str]:
     return re.findall(r"#\w+", post_text)[:4]
 
 
-def _build_image_prompt(hook: str, author_name: str, author_headline: str, hashtags: list[str]) -> str:
-    tags_str = "  ".join(hashtags) if hashtags else ""
-    return (
-        "Create a professional LinkedIn thought-leadership quote card image. "
-        "Dark near-black background (#0A0A0A). A bold electric-blue (#2563EB) vertical accent bar on the left edge "
-        "and a thin horizontal accent line along the top. "
-        f"Large bold white sans-serif text centered on the card reading: \"{hook}\" "
-        "Below the quote, a short blue divider line, then the author's name in white bold "
-        f"\"{author_name}\" and their title in slate-grey \"{author_headline}\". "
-        f"Small blue hashtag pills in the bottom-right corner: {tags_str}. "
-        "Clean, minimal, corporate-tech aesthetic. No stock photos, no people, no logos. "
-        "High contrast. Landscape orientation 3:2 ratio. Photorealistic render quality."
-    )
-
-
-def _load_font(size: int, bold: bool = False):
+def _load_font(size: int, bold: bool = False, serif: bool = False):
+    """Load font with serif support for display text."""
     from PIL import ImageFont
-    candidates = [
-        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf" if bold else "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
-        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf" if bold else "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
-        "/usr/share/fonts/truetype/ubuntu/Ubuntu-B.ttf" if bold else "/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf",
-    ]
+
+    if serif:
+        candidates = [
+            "/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf"
+            if bold else "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf",
+            "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf"
+            if bold else "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+            "/usr/share/fonts/truetype/freefont/FreeSerifBold.ttf"
+            if bold else "/usr/share/fonts/truetype/freefont/FreeSerif.ttf",
+        ]
+    else:
+        candidates = [
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+            if bold else "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+            "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf"
+            if bold else "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+        ]
+
     for path in candidates:
         try:
             return ImageFont.truetype(path, size)
@@ -83,13 +78,29 @@ def _load_font(size: int, bold: bool = False):
     return ImageFont.load_default()
 
 
-def _accent_bars(draw, brand=BRAND):
-    draw.rectangle([0, 0, 6, H], fill=brand["accent"])
-    draw.rectangle([6, 0, W, 4], fill=brand["accent"])
+def _bg(draw):
+    """Fill background and draw thin gold top accent line."""
+    from PIL import ImageDraw
+    draw.rectangle([0, 0, W, H], fill=BRAND["bg"])
+    draw.rectangle([0, 0, W, 3], fill=BRAND["accent"])
+
+
+def _build_image_prompt(hook: str, author_name: str, author_headline: str, hashtags: list[str]) -> str:
+    tags_str = "  ".join(hashtags) if hashtags else ""
+    return (
+        "Create a professional LinkedIn thought-leadership image. "
+        "Deep charcoal background (#111827). A thin warm-gold (#C9A255) horizontal accent line at the very top. "
+        f"Large, bold serif font (elegant, editorial style) white text centered: \"{hook}\" "
+        "Below the quote, a short thin warm-gold divider line, then the author's name "
+        f"\"{author_name}\" in bold white and their title \"{author_headline}\" in cool gray. "
+        f"Small warm-gold hashtag text bottom-right: {tags_str}. "
+        "Sophisticated, minimal, executive aesthetic — no photos, no icons, no logos. "
+        "Typography-driven. Landscape 3:2."
+    )
 
 
 # ---------------------------------------------------------------------------
-# Quote card (OpenAI + Pillow fallback)
+# OpenAI quote card
 # ---------------------------------------------------------------------------
 
 def _generate_with_openai(hook, author_name, author_headline, hashtags, output_path):
@@ -108,51 +119,68 @@ def _generate_with_openai(hook, author_name, author_headline, hashtags, output_p
     return output_path
 
 
+# ---------------------------------------------------------------------------
+# Pillow quote card
+# ---------------------------------------------------------------------------
+
 def _generate_with_pillow(hook, author_name, author_headline, hashtags, output_path):
     from PIL import Image, ImageDraw
 
     img = Image.new("RGB", (W, H), color=BRAND["bg"])
     draw = ImageDraw.Draw(img)
-    _accent_bars(draw)
+    _bg(draw)
 
-    font_hook = _load_font(52, bold=True)
-    font_tag = _load_font(22)
-    font_name = _load_font(28, bold=True)
-    font_title = _load_font(22)
+    margin_x = 96
+    margin_top = 60
 
-    margin = 80
-    wrapped = textwrap.fill(hook, width=38)
+    # Fonts
+    f_hook = _load_font(46, bold=True, serif=True)
+    f_author_name = _load_font(22, bold=True)
+    f_author_title = _load_font(17)
+    f_hash = _load_font(16)
+
+    # Wrap hook text
+    wrapped = textwrap.fill(hook, width=44)
     lines = wrapped.splitlines()
-    line_height = 64
-    total_text_height = len(lines) * line_height
-    y_start = (H - total_text_height) // 2 - 40
+    line_h = 58
+    block_h = len(lines) * line_h
+
+    # Vertical center — nudge up slightly to leave room for author footer
+    y_quote = max(margin_top, (H - block_h) // 2 - 36)
 
     for i, line in enumerate(lines):
-        draw.text((margin, y_start + i * line_height), line, font=font_hook, fill=BRAND["hook_text"])
+        draw.text(
+            (margin_x, y_quote + i * line_h),
+            line,
+            font=f_hook,
+            fill=BRAND["hook_text"],
+        )
 
-    divider_y = y_start + total_text_height + 30
-    draw.rectangle([margin, divider_y, margin + 60, divider_y + 3], fill=BRAND["accent"])
+    # Thin gold rule below quote
+    rule_y = y_quote + block_h + 24
+    draw.rectangle([margin_x, rule_y, margin_x + 48, rule_y + 2], fill=BRAND["accent"])
 
-    author_y = divider_y + 20
-    draw.text((margin, author_y), author_name, font=font_name, fill=BRAND["hook_text"])
-    draw.text((margin, author_y + 36), author_headline, font=font_title, fill=BRAND["sub_text"])
+    # Author block
+    author_y = rule_y + 18
+    draw.text((margin_x, author_y), author_name, font=f_author_name, fill=BRAND["hook_text"])
+    draw.text(
+        (margin_x, author_y + 30),
+        author_headline,
+        font=f_author_title,
+        fill=BRAND["sub_text"],
+    )
 
+    # Hashtags — plain gold text, bottom-right
     if hashtags:
-        pill_x = W - margin
-        pill_y = H - 60
-        pill_h = 32
-        pill_pad = 14
-        for tag in reversed(hashtags):
-            bbox = draw.textbbox((0, 0), tag, font=font_tag)
-            tag_w = bbox[2] - bbox[0] + pill_pad * 2
-            pill_x -= tag_w + 10
-            draw.rounded_rectangle(
-                [pill_x, pill_y, pill_x + tag_w, pill_y + pill_h],
-                radius=8, fill=BRAND["tag_bg"],
-            )
-            draw.text((pill_x + pill_pad, pill_y + 5), tag, font=font_tag, fill=BRAND["tag_text"])
+        tag_text = "  ".join(hashtags)
+        draw.text(
+            (W - margin_x, H - 30),
+            tag_text,
+            font=f_hash,
+            fill=BRAND["accent"],
+            anchor="rb",
+        )
 
-    draw.text((W - margin, H - 30), "linkedin", font=font_title, fill=BRAND["sub_text"], anchor="rm")
     img.save(output_path, "PNG", optimize=True)
     return output_path
 
@@ -163,10 +191,7 @@ def generate_quote_card(
     author_headline: str = "Senior Product Manager | SaaS & DaaS",
     output_path: Optional[Path] = None,
 ) -> Path:
-    """
-    Generate a branded LinkedIn quote card.
-    Uses gpt-image-1 when OPENAI_API_KEY is set, otherwise Pillow.
-    """
+    """Generate a branded LinkedIn quote card."""
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     if output_path is None:
@@ -184,7 +209,7 @@ def generate_quote_card(
 
 
 # ---------------------------------------------------------------------------
-# Framework diagram (Pillow only)
+# Pillow framework diagram
 # ---------------------------------------------------------------------------
 
 def generate_framework_diagram(
@@ -193,14 +218,14 @@ def generate_framework_diagram(
     output_path: Optional[Path] = None,
 ) -> Path:
     """
-    Render a visual framework diagram from a structured spec dict.
+    Render a visual framework diagram.
 
-    Expected dict keys:
+    diagram keys:
       title            str   ALL CAPS framework name
       subtitle         str   optional tagline
       steps            list  [{"label": str, "description": str}, ...]
       foundation_title str   optional header for the bottom row
-      foundation_items list  optional ["ITEM", ...] shown as pills at the bottom
+      foundation_items list  optional ["ITEM", ...]
     """
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -213,131 +238,149 @@ def generate_framework_diagram(
 
     img = Image.new("RGB", (W, H), color=BRAND["bg"])
     draw = ImageDraw.Draw(img)
-    _accent_bars(draw)
+    _bg(draw)
 
     title = diagram.get("title", "FRAMEWORK").upper()
     subtitle = diagram.get("subtitle", "")
     steps = diagram.get("steps", [])[:6]
     foundation_title = diagram.get("foundation_title", "")
     foundation_items = (diagram.get("foundation_items") or [])[:6]
-
     has_foundation = bool(foundation_items)
 
     # Fonts
-    f_title = _load_font(30, bold=True)
-    f_subtitle = _load_font(16)
-    f_step_num = _load_font(18, bold=True)
-    f_step_label = _load_font(13, bold=True)
-    f_step_desc = _load_font(11)
-    f_found_head = _load_font(12, bold=True)
-    f_found_item = _load_font(12, bold=True)
-    f_byline = _load_font(14)
+    f_title    = _load_font(28, bold=True, serif=True)
+    f_subtitle = _load_font(15)
+    f_stepnum  = _load_font(20, bold=True)
+    f_label    = _load_font(12, bold=True)
+    f_desc     = _load_font(11)
+    f_found_h  = _load_font(11, bold=True)
+    f_found    = _load_font(11, bold=True)
+    f_byline   = _load_font(13)
 
-    margin = 36
+    margin = 40
 
-    # -- Title block --
-    title_y = 18
+    # -- Title --
+    title_y = 16
     draw.text((W // 2, title_y), title, font=f_title, fill=BRAND["hook_text"], anchor="mt")
-    sub_y = title_y + 38
+    sub_y = title_y + 36
     if subtitle:
         draw.text((W // 2, sub_y), subtitle, font=f_subtitle, fill=BRAND["sub_text"], anchor="mt")
 
-    header_bottom = sub_y + (22 if subtitle else 0)
+    header_bottom = sub_y + (20 if subtitle else 0)
 
-    # -- Layout areas --
-    footer_h = 54 if has_foundation else 0
-    byline_h = 24
-    step_top = header_bottom + 14
-    step_bottom = H - footer_h - byline_h - 10
+    # -- Layout zones --
+    footer_h  = 52 if has_foundation else 0
+    byline_h  = 22
+    step_top  = header_bottom + 14
+    step_bot  = H - footer_h - byline_h - 8
 
     # -- Step boxes --
     n = max(1, len(steps))
-    arrow_gap = 22
-    total_arrows = (n - 1) * arrow_gap
-    box_w = max(60, (W - 2 * margin - total_arrows) // n)
-    box_h = step_bottom - step_top
+    arrow_gap = 18
+    box_w = max(60, (W - 2 * margin - (n - 1) * arrow_gap) // n)
+    box_h = step_bot - step_top
 
     for i, step in enumerate(steps):
         bx = margin + i * (box_w + arrow_gap)
         by = step_top
 
-        # Arrow from previous box
+        # Thin arrow between boxes
         if i > 0:
-            ax = bx - arrow_gap
             mid_y = by + box_h // 2
-            draw.line([(ax, mid_y), (bx - 4, mid_y)], fill=BRAND["accent"], width=2)
-            # Arrowhead
+            ax_start = bx - arrow_gap + 2
+            ax_end   = bx - 3
+            draw.line([(ax_start, mid_y), (ax_end, mid_y)], fill=BRAND["accent"], width=1)
             draw.polygon(
-                [(bx - 4, mid_y), (bx - 10, mid_y - 5), (bx - 10, mid_y + 5)],
+                [(ax_end, mid_y), (ax_end - 7, mid_y - 4), (ax_end - 7, mid_y + 4)],
                 fill=BRAND["accent"],
             )
 
-        # Box
-        draw.rounded_rectangle([bx, by, bx + box_w, by + box_h], radius=8, fill=BRAND["tag_bg"])
+        # Box background
+        draw.rounded_rectangle([bx, by, bx + box_w, by + box_h], radius=6, fill=BRAND["surface"])
+
+        # Thin gold left accent border on each box
+        draw.rounded_rectangle([bx, by, bx + 3, by + box_h], radius=2, fill=BRAND["accent"])
 
         cx = bx + box_w // 2
+        inner_x = bx + 4  # offset past the gold bar
 
-        # Number circle
-        color = STEP_COLORS[i % len(STEP_COLORS)]
-        r = 13
-        cy_circle = by + 18
-        draw.ellipse([cx - r, cy_circle - r, cx + r, cy_circle + r], fill=color)
-        draw.text((cx, cy_circle), str(i + 1), font=f_step_num, fill="#FFFFFF", anchor="mm")
+        # Step number: "01", "02", …
+        num_str = f"{i + 1:02d}"
+        num_y = by + 14
+        draw.text((cx, num_y), num_str, font=f_stepnum, fill=BRAND["accent"], anchor="mt")
 
         # Label
         label = step.get("label", "").upper()
-        label_y = cy_circle + r + 8
-        draw.text((cx, label_y), label, font=f_step_label, fill=BRAND["hook_text"], anchor="mt")
-
-        # Description — wrap to fit box width
-        desc = step.get("description", "")
-        char_width = max(8, box_w // 7)
-        wrapped = textwrap.fill(desc, width=char_width)
-        desc_y = label_y + 18
-        for j, line in enumerate(wrapped.splitlines()[:5]):
+        label_y = num_y + 26
+        # Wrap label if needed
+        label_lines = textwrap.fill(label, width=max(6, box_w // 8)).splitlines()
+        for j, ll in enumerate(label_lines[:2]):
             draw.text(
-                (cx, desc_y + j * 14),
-                line,
-                font=f_step_desc,
+                (cx, label_y + j * 15),
+                ll,
+                font=f_label,
+                fill=BRAND["hook_text"],
+                anchor="mt",
+            )
+
+        # Description
+        desc = step.get("description", "")
+        desc_y = label_y + len(label_lines[:2]) * 15 + 6
+        desc_lines = textwrap.fill(desc, width=max(8, box_w // 6)).splitlines()
+        for j, dl in enumerate(desc_lines[:5]):
+            draw.text(
+                (cx, desc_y + j * 13),
+                dl,
+                font=f_desc,
                 fill=BRAND["sub_text"],
                 anchor="mt",
             )
 
     # -- Foundation row --
     if has_foundation:
-        found_top = H - footer_h - byline_h
+        found_top = H - footer_h - byline_h + 4
+
+        # Thin gold separator
+        draw.rectangle([margin, found_top - 2, W - margin, found_top - 1], fill=BRAND["muted"])
+
         if foundation_title:
             draw.text(
                 (W // 2, found_top + 2),
                 foundation_title.upper(),
-                font=f_found_head,
+                font=f_found_h,
                 fill=BRAND["sub_text"],
                 anchor="mt",
             )
-        pill_top = found_top + (18 if foundation_title else 4)
-        pill_h_px = 26
+
+        pill_top = found_top + (16 if foundation_title else 4)
+        pill_h_px = 24
         ni = len(foundation_items)
-        pill_gap = 8
-        pill_w = max(40, (W - 2 * margin - (ni - 1) * pill_gap) // ni)
+        gap = 8
+        pill_w = max(40, (W - 2 * margin - (ni - 1) * gap) // ni)
 
         for i, item in enumerate(foundation_items):
-            px = margin + i * (pill_w + pill_gap)
-            py = pill_top
-            draw.rounded_rectangle([px, py, px + pill_w, py + pill_h_px], radius=6, fill=BRAND["found_bg"])
+            px = margin + i * (pill_w + gap)
+            draw.rounded_rectangle(
+                [px, pill_top, px + pill_w, pill_top + pill_h_px],
+                radius=4,
+                fill=BRAND["found_bg"],
+            )
+            # Thin gold top line on each pill
+            draw.rectangle([px, pill_top, px + pill_w, pill_top + 2], fill=BRAND["accent"])
             draw.text(
-                (px + pill_w // 2, py + pill_h_px // 2),
+                (px + pill_w // 2, pill_top + pill_h_px // 2 + 1),
                 item.upper(),
-                font=f_found_item,
-                fill=BRAND["tag_text"],
+                font=f_found,
+                fill=BRAND["sub_text"],
                 anchor="mm",
             )
 
     # -- Byline --
     draw.text(
-        (W - margin, H - 10),
+        (W - margin, H - 8),
         author_name,
         font=f_byline,
-        fill=BRAND["sub_text"],
+        fill=BRAND["muted"],
         anchor="rb",
     )
 
@@ -356,8 +399,8 @@ def generate_post_image(
     output_path: Optional[Path] = None,
 ) -> Path:
     """
-    Choose the right image type based on post format.
-    visual_framework posts get a diagram; all others get a quote card.
+    Route to the right image type based on post format.
+    visual_framework → diagram; everything else → quote card.
     """
     if post.get("format") == "visual_framework" and post.get("diagram"):
         return generate_framework_diagram(
