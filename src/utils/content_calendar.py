@@ -14,8 +14,8 @@ DAY_NAMES = {v: k for k, v in DAY_MAP.items()}
 
 
 def get_posting_days() -> list[int]:
-    """Weekday numbers to post on. Reads POSTING_DAYS env var, default Mon-Fri."""
-    raw = os.environ.get("POSTING_DAYS", "Mon,Tue,Wed,Thu,Fri")
+    """Weekday numbers to post on. Reads POSTING_DAYS env var, default Mon/Wed/Fri."""
+    raw = os.environ.get("POSTING_DAYS", "Mon,Wed,Fri")
     return [DAY_MAP[d.strip()] for d in raw.split(",") if d.strip() in DAY_MAP]
 
 
@@ -56,8 +56,8 @@ def get_recent_formats(days: int = 3) -> list[str]:
 
 
 def pick_todays_topic() -> str:
-    """Pick a topic not used in the last 7 days. Falls back to least-recently-used."""
-    recent = set(get_recent_topics(7))
+    """Pick a topic not used in the last 14 days (5-6 posts at 3x/week). Falls back to least-recently-used."""
+    recent = set(get_recent_topics(14))
     fresh = [t for t in TOPIC_CATEGORIES if t not in recent]
     if fresh:
         return random.choice(fresh)
@@ -74,10 +74,10 @@ def pick_todays_topic() -> str:
 
 def pick_todays_formats(count: int = 3) -> list[str]:
     """
-    Pick formats not used in the last 3 days.
+    Pick formats not used in the last 7 days (2 posts at 3x/week).
     trend_prediction and framework are preferred — they match the educator/trends voice.
     """
-    recent = set(get_recent_formats(3))
+    recent = set(get_recent_formats(7))
     # Preferred formats get double weight
     preferred = ["trend_prediction", "framework", "hot_take"]
     others = ["breakdown", "myth_busting", "data_insight"]
