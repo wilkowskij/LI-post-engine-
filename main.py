@@ -1,0 +1,381 @@
+#!/usr/bin/env python3
+"""
+LinkedIn Post Engine — CLI entry point.
+
+Commands:
+  generate      Research + write a new post (saves as draft)
+  schedule      Pick a draft and push to Buffer
+  queue         Show Buffer queue status
+  list          List saved posts
+  run-daily     Full daily flow: research → write → schedule
+"""
+import os
+import sys
+from pathlib import Path
+from datetime import datetime
+
+import click
+from dotenv import load_dotenv
+from rich.console import Console
+from rich.prompt import Prompt, Confirm
+
+load_dotenv()
+console = Console()
+
+
+@click.group()
+def cli():
+    """LinkedIn Post Engine — Senior PM content, automated."""
+    pass
+
+
+# ------------------------------------------------------------------ #
+# generate
+# ------------------------------------------------------------------ #
+
+@cli.command()
+@click.option("--topic", "-t", default=None, help="Topic category (auto-selects if omitted)")
+@click.option("--format", "-f", "post_format", default=None,
+              type=click.Choice(["story", "hot_take", "framework", "trend_analysis", "data_insight", "myth_busting"]),
+              help="Post format (auto-selects if omitted)")
+@click.option("--variants", "-n", default=1, show_default=True, help="Number of variants to generate")
+@click.option("--angle", "-a", default=None, help="Specific angle or hook to emphasize")
+def generate(topic, post_format, variants, angle):
+    """Research a topic and generate LinkedIn post draft(s)."""
+    import anthropic
+    from src.agent.researcher import research_trending_topics, build_research_brief
+    from src.agent.writer import generate_post, generate_post_variants
+    from src.agent.persona import TOPIC_CATEGORIES
+    from src.utils.storage import save_post
+    from src.utils.display import print_post, print_variants, print_info, print_success
+
+    _require_env("ANTHROPIC_API_KEY")
+
+    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+
+    # Pick topic
+    if not topic:
+        from src.agent.persona import TOPIC_CATEGORIES
+        import random
+        topic = random.choice(TOPIC_CATEGORIES)
+        print_info(f"Auto-selected topic: [bold]{topic}[/bold]")
+
+    print_info("Researching topic...")
+    research = research_trending_topics(category=topic)
+
+    print_info("Building research brief...")
+    brief = build_research_brief(research, client)
+    console.print(f"\n[dim]Brief:[/dim] {brief[:200]}...\n")
+
+    print_info(f"Generating {variants} post variant(s)...")
+
+    if variants == 1:
+        post = generate_post(brief, topic, post_format=post_format, custom_angle=angle, client=client)
+        print_post(post)
+        path = save_post(post)
+        print_success(f"Saved draft → {path.name}")
+    else:
+        posts = generate_post_variants(brief, topic, count=variants, client=client)
+        print_variants(posts)
+        for post in posts:
+            path = save_post(post)
+            print_success(f"Saved draft → {path.name}")
+
+
+# ------------------------------------------------------------------ #
+# schedule
+# ------------------------------------------------------------------ #
+
+@cli.command()
+@click.option("--file", "-f", "filepath", default=None, help="Path to post JSON file (auto-selects latest draft)")
+@click.option("--image", "-i", default=None, help="Image path or URL to attach")
+@click.option("--when", "-w", default="queue",
+              type=click.Choice(["queue", "now", "tomorrow"]),
+              help="When to post: add to queue, post now, or schedule for tomorrow 8am UTC")
+def schedule(filepath, image, when):
+    """Push a draft post to Buffer for scheduling."""
+    from src.integrations.buffer_client import BufferClient
+    from src.utils.storage import list_posts, update_post_status, load_post
+    from src.utils.display import print_post, print_info, print_success, print_error
+
+    _require_env("BUFFER_ACCESS_TOKEN")
+
+    # Resolve post file
+    if filepath:
+        post = load_post(Path(filepath))
+    else:
+        drafts = list_posts(status="draft", limit=5)
+        if not drafts:
+            print_error("No drafts found. Run `generate` first.")
+            sys.exit(1)
+        post = drafts[0]
+        print_info(f"Using latest draft: {post['_filepath']}")
+
+    print_post(post)
+
+    if not Confirm.ask("Schedule this post to Buffer?"):
+        console.print("[dim]Cancelled.[/dim]")
+        return
+
+    # Handle image upload to Cloudinary
+    image_url = None
+    if image:
+        from src.integrations.cloudinary_client import upload_post_image, upload_image_from_url
+        _require_env("CLOUDINARY_API_KEY", "CLOUDINARY_API_SECRET")
+        print_info("Uploading image to Cloudinary...")
+        if image.startswith("http"):
+            result = upload_image_from_url(image, post["topic"])
+        else:
+            result = upload_post_image(image, post["topic"])
+        image_url = result["url"]
+        print_success(f"Image uploaded: {image_url}")
+
+    # Push to Buffer
+    buffer = BufferClient()
+    print_info("Connecting to Buffer...")
+
+    if not buffer.validate_connection():
+        print_error("Buffer connection failed. Check BUFFER_ACCESS_TOKEN.")
+        sys.exit(1)
+
+    if when == "now":
+        result = buffer.schedule_post(post["text"], image_url=image_url, now=True)
+    elif when == "tomorrow":
+        result = buffer.schedule_for_tomorrow_morning(post["text"], image_url=image_url)
+    else:
+        result = buffer.add_to_queue(post["text"], image_url=image_url)
+
+    update_post_status(
+        post["_filepath"],
+        "scheduled",
+        extra={"buffer_result": result, "scheduled_when": when, "image_url": image_url},
+    )
+    print_success(f"Post scheduled via Buffer (mode: {when})")
+
+
+# ------------------------------------------------------------------ #
+# queue
+# ------------------------------------------------------------------ #
+
+@cli.command()
+def queue():
+    """Show the current Buffer posting queue."""
+    from src.integrations.buffer_client import BufferClient
+    from src.utils.display import print_queue_summary, print_error
+
+    _require_env("BUFFER_ACCESS_TOKEN")
+
+    buffer = BufferClient()
+    if not buffer.validate_connection():
+        print_error("Buffer connection failed. Check BUFFER_ACCESS_TOKEN.")
+        sys.exit(1)
+
+    summary = buffer.get_queue_summary()
+    if not summary:
+        console.print("[yellow]No LinkedIn profiles found in Buffer.[/yellow]")
+        return
+
+    print_queue_summary(summary)
+
+
+# ------------------------------------------------------------------ #
+# list
+# ------------------------------------------------------------------ #
+
+@cli.command("list")
+@click.option("--status", "-s", default=None,
+              type=click.Choice(["draft", "scheduled", "posted"]),
+              help="Filter by status")
+@click.option("--limit", "-n", default=10, show_default=True)
+def list_posts_cmd(status, limit):
+    """List saved posts."""
+    from src.utils.storage import list_posts
+    from src.utils.display import print_info
+
+    posts = list_posts(status=status, limit=limit)
+    if not posts:
+        console.print("[dim]No posts found.[/dim]")
+        return
+
+    from rich.table import Table
+    from rich import box
+    table = Table(title="Saved Posts", box=box.ROUNDED)
+    table.add_column("Date", style="cyan", width=12)
+    table.add_column("Topic", width=30)
+    table.add_column("Format", width=14)
+    table.add_column("Words", justify="center", width=6)
+    table.add_column("Status", style="green", width=10)
+
+    for p in posts:
+        saved = p.get("saved_at", "")[:10]
+        table.add_row(
+            saved,
+            p.get("topic", "")[:28],
+            p.get("format", ""),
+            str(p.get("word_count", 0)),
+            p.get("status", ""),
+        )
+    console.print(table)
+
+
+# ------------------------------------------------------------------ #
+# run-daily
+# ------------------------------------------------------------------ #
+
+@cli.command("run-daily")
+@click.option("--topic", "-t", default=None, help="Override topic for today")
+@click.option("--auto-schedule", is_flag=True, help="Auto-schedule without prompting")
+def run_daily(topic, auto_schedule):
+    """
+    Full daily flow: research → generate 3 variants → pick one → schedule.
+    Designed to run as a cron job or scheduled task.
+    """
+    import anthropic
+    from src.agent.researcher import research_trending_topics, build_research_brief
+    from src.agent.writer import generate_post_variants
+    from src.integrations.buffer_client import BufferClient
+    from src.utils.storage import save_post, update_post_status
+    from src.utils.display import print_variants, print_info, print_success, print_error
+
+    _require_env("ANTHROPIC_API_KEY")
+
+    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+
+    if not topic:
+        import random
+        from src.agent.persona import TOPIC_CATEGORIES
+        topic = random.choice(TOPIC_CATEGORIES)
+
+    console.rule(f"[bold blue]Daily Post Engine — {datetime.now().strftime('%A, %B %d %Y')}[/bold blue]")
+    print_info(f"Topic: {topic}")
+
+    # Research
+    print_info("Researching...")
+    research = research_trending_topics(category=topic)
+    brief = build_research_brief(research, client)
+
+    # Generate 3 variants
+    print_info("Generating 3 post variants...")
+    variants = generate_post_variants(brief, topic, count=3, client=client)
+    print_variants(variants)
+
+    # Save all as drafts
+    paths = [save_post(v) for v in variants]
+
+    if auto_schedule:
+        chosen = variants[0]
+        path = paths[0]
+    else:
+        choice = Prompt.ask("Which variant to schedule? (1/2/3, or 'skip')", default="1")
+        if choice == "skip":
+            console.print("[dim]Skipped scheduling. Drafts saved.[/dim]")
+            return
+        idx = max(0, min(int(choice) - 1, len(variants) - 1))
+        chosen = variants[idx]
+        path = paths[idx]
+
+    # Schedule to Buffer
+    if os.environ.get("BUFFER_ACCESS_TOKEN"):
+        buffer = BufferClient()
+        if buffer.validate_connection():
+            result = buffer.add_to_queue(chosen["text"])
+            update_post_status(
+                str(path), "scheduled",
+                extra={"buffer_result": result, "scheduled_when": "queue"},
+            )
+            print_success("Post added to Buffer queue!")
+        else:
+            print_error("Buffer connection failed — draft saved but not scheduled.")
+    else:
+        print_info("BUFFER_ACCESS_TOKEN not set — draft saved locally.")
+
+
+# ------------------------------------------------------------------ #
+# setup
+# ------------------------------------------------------------------ #
+
+@cli.command()
+def setup():
+    """Verify all integrations are configured correctly."""
+    from src.utils.display import print_success, print_error, print_info
+
+    all_ok = True
+
+    # Anthropic
+    if os.environ.get("ANTHROPIC_API_KEY"):
+        try:
+            import anthropic
+            client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+            client.messages.create(
+                model="claude-haiku-4-5-20251001",
+                max_tokens=10,
+                messages=[{"role": "user", "content": "ping"}],
+            )
+            print_success("Anthropic API: connected")
+        except Exception as e:
+            print_error(f"Anthropic API: {e}")
+            all_ok = False
+    else:
+        print_error("Anthropic API: ANTHROPIC_API_KEY not set")
+        all_ok = False
+
+    # Cloudinary
+    if os.environ.get("CLOUDINARY_API_KEY"):
+        try:
+            from src.integrations.cloudinary_client import get_cloudinary
+            import cloudinary.api
+            get_cloudinary()
+            cloudinary.api.ping()
+            print_success("Cloudinary: connected (cloud: drum3eekm)")
+        except Exception as e:
+            print_error(f"Cloudinary: {e}")
+            all_ok = False
+    else:
+        print_error("Cloudinary: CLOUDINARY_API_KEY not set")
+        all_ok = False
+
+    # Buffer
+    if os.environ.get("BUFFER_ACCESS_TOKEN"):
+        try:
+            from src.integrations.buffer_client import BufferClient
+            buffer = BufferClient()
+            if buffer.validate_connection():
+                profiles = buffer.get_linkedin_profiles()
+                print_success(f"Buffer: connected ({len(profiles)} LinkedIn profile(s))")
+            else:
+                print_error("Buffer: token invalid")
+                all_ok = False
+        except Exception as e:
+            print_error(f"Buffer: {e}")
+            all_ok = False
+    else:
+        print_error("Buffer: BUFFER_ACCESS_TOKEN not set")
+        all_ok = False
+
+    # Tavily (optional)
+    if os.environ.get("TAVILY_API_KEY"):
+        print_success("Tavily: API key present (web research enabled)")
+    else:
+        print_info("Tavily: not configured (will use Claude's knowledge for research)")
+
+    console.print()
+    if all_ok:
+        console.print("[bold green]All integrations ready. Run `python main.py run-daily` to generate your first post.[/bold green]")
+    else:
+        console.print("[bold yellow]Some integrations need configuration. Copy .env.example to .env and fill in the values.[/bold yellow]")
+
+
+# ------------------------------------------------------------------ #
+# Helpers
+# ------------------------------------------------------------------ #
+
+def _require_env(*keys: str) -> None:
+    missing = [k for k in keys if not os.environ.get(k)]
+    if missing:
+        console.print(f"[bold red]Missing env vars: {', '.join(missing)}[/bold red]")
+        console.print("Copy .env.example to .env and fill in the values.")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    cli()
