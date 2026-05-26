@@ -1,8 +1,10 @@
 """
 Research agent — finds trending topics and supporting data for LinkedIn posts.
+
+Primary path: marketing_agent.run_research_agent (agentic loop with claude-opus-4-7)
+Fallback: Tavily direct search or Claude training-data synthesis
 """
 import os
-import json
 import random
 from datetime import datetime
 from typing import Optional
@@ -13,14 +15,33 @@ from src.agent.persona import TOPIC_CATEGORIES
 
 
 def research_trending_topics(category: Optional[str] = None) -> dict:
-    """Use Tavily to find current, relevant news and data for a topic."""
+    """
+    Research a topic using the agentic marketing agent.
+    Falls back to direct Tavily search or training-data synthesis if needed.
+    """
+    topic = category or random.choice(TOPIC_CATEGORIES)
+
+    try:
+        from src.agent.marketing_agent import run_research_agent
+        client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+        return run_research_agent(topic, client)
+    except Exception:
+        pass
+
+    # Legacy fallback: direct Tavily search
+    return _tavily_research(topic)
+
+
+def _tavily_research(topic: str) -> dict:
+    """Direct Tavily search, bypassing the agentic loop."""
     try:
         from tavily import TavilyClient
-        client = TavilyClient(api_key=os.environ["TAVILY_API_KEY"])
-    except (ImportError, KeyError):
-        return _fallback_research(category)
-
-    topic = category or random.choice(TOPIC_CATEGORIES)
+        key = os.environ.get("TAVILY_API_KEY", "")
+        if not key or key == "your_tavily_api_key":
+            raise ValueError("Tavily key not set")
+        client = TavilyClient(api_key=key)
+    except Exception:
+        return _fallback_research(topic)
 
     queries = {
         "Product-led growth tactics": "product-led growth SaaS 2025 case study results",
@@ -39,7 +60,6 @@ def research_trending_topics(category: Optional[str] = None) -> dict:
         "Feature prioritization frameworks": "feature prioritization frameworks product management 2025",
         "Customer discovery and research": "B2B customer discovery methods product management 2025",
     }
-
     query = queries.get(topic, f"{topic} 2025 trends insights")
 
     try:
@@ -68,7 +88,6 @@ def research_trending_topics(category: Optional[str] = None) -> dict:
 
 
 def _fallback_research(category: Optional[str] = None, error: str = "") -> dict:
-    """Fallback when Tavily is unavailable — Claude generates context from training data."""
     topic = category or random.choice(TOPIC_CATEGORIES)
     return {
         "topic": topic,
@@ -82,7 +101,19 @@ def _fallback_research(category: Optional[str] = None, error: str = "") -> dict:
 
 
 def build_research_brief(research: dict, client: anthropic.Anthropic) -> str:
-    """Use Claude to synthesize research into a post brief."""
+    """
+    Convert a research dict into a text brief for the post writer.
+
+    If the research came from the agentic marketing agent it already has
+    structured fields (hook, data_points, core_insight). Otherwise synthesize
+    via a quick Claude call.
+    """
+    # Agentic brief: convert structured fields to text directly
+    if research.get("agentic"):
+        from src.agent.marketing_agent import brief_to_text
+        return brief_to_text(research)
+
+    # Legacy path: synthesize from raw Tavily output
     sources_text = ""
     if research.get("sources"):
         sources_text = "\n\nRecent sources:\n" + "\n".join(
@@ -94,17 +125,17 @@ def build_research_brief(research: dict, client: anthropic.Anthropic) -> str:
     if research.get("summary"):
         summary_text = f"\n\nResearch summary: {research['summary']}"
 
-    prompt = f"""Topic area: {research['topic']}
-{summary_text}{sources_text}
-
-Based on this topic and any current context above, generate a research brief for a LinkedIn post.
-Include:
-1. A specific angle or hook (surprising stat, contrarian take, or timely observation)
-2. 2-3 concrete data points or examples a PM would know from experience or industry knowledge
-3. The core insight or lesson
-4. A suggested post format: trend_prediction / framework / hot_take / breakdown / myth_busting / data_insight
-
-Keep the brief to 150-200 words. Be specific — no vague generalities."""
+    prompt = (
+        f"Topic area: {research['topic']}"
+        f"{summary_text}{sources_text}\n\n"
+        "Based on this topic and any current context above, generate a research brief for a LinkedIn post.\n"
+        "Include:\n"
+        "1. A specific angle or hook (surprising stat, contrarian take, or timely observation)\n"
+        "2. 2-3 concrete data points or examples a PM would know from experience or industry knowledge\n"
+        "3. The core insight or lesson\n"
+        "4. A suggested post format: trend_prediction / framework / hot_take / breakdown / myth_busting / data_insight\n\n"
+        "Keep the brief to 150-200 words. Be specific — no vague generalities."
+    )
 
     message = client.messages.create(
         model="claude-opus-4-7",

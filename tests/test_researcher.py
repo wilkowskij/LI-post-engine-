@@ -47,17 +47,14 @@ def test_fallback_sources_empty():
 # ── query map coverage ───────────────────────────────────────────────────────
 
 def test_all_topics_have_query_entries():
-    """Every topic in TOPIC_CATEGORIES must map to a Tavily search query."""
-    # We test this by checking the queries dict inside research_trending_topics
-    # by importing it from the module source
+    """Every topic in TOPIC_CATEGORIES must map to a Tavily search query in _tavily_research."""
     import src.agent.researcher as researcher_mod
-    import inspect, ast
+    import inspect
 
-    src_text = inspect.getsource(researcher_mod.research_trending_topics)
-    # Parse out the queries dict keys via a quick string check
+    src_text = inspect.getsource(researcher_mod._tavily_research)
     for topic in TOPIC_CATEGORIES:
         assert topic in src_text, (
-            f"Topic {topic!r} has no Tavily query in researcher.py"
+            f"Topic {topic!r} has no Tavily query in _tavily_research"
         )
 
 
@@ -98,7 +95,7 @@ def test_build_brief_prompt_no_old_format_names():
 # ── research_trending_topics (Tavily absent fallback) ────────────────────────
 
 def test_research_uses_fallback_without_tavily(monkeypatch):
-    """When Tavily is not installed, should gracefully fall back."""
+    """When Tavily and the marketing agent are both unavailable, fall back gracefully."""
     import builtins
     real_import = builtins.__import__
 
@@ -107,7 +104,12 @@ def test_research_uses_fallback_without_tavily(monkeypatch):
             raise ImportError("tavily not installed")
         return real_import(name, *args, **kwargs)
 
+    # Block Tavily AND stub the agentic path to simulate full outage
     monkeypatch.setattr(builtins, "__import__", mock_import)
+    monkeypatch.setattr(
+        "src.agent.marketing_agent.run_research_agent",
+        lambda *a, **kw: (_ for _ in ()).throw(RuntimeError("agent unavailable")),
+    )
     result = research_trending_topics("Product-led growth tactics")
     assert result["fallback"] is True
     assert result["topic"] == "Product-led growth tactics"
