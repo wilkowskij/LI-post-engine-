@@ -15,14 +15,17 @@ def save_post(post: dict, status: str = "draft") -> Path:
     """Save a generated post to disk."""
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    date_str = datetime.now().strftime("%Y-%m-%d")
+    now = datetime.now()
+    date_str = now.strftime("%Y-%m-%d")
     slug = post.get("topic", "post").lower().replace(" ", "_")[:30]
-    filename = OUTPUT_DIR / f"{date_str}_{slug}_{status}.json"
+    fmt = post.get("format", "post")
+    stamp = now.strftime("%H%M%S")
+    filename = OUTPUT_DIR / f"{date_str}_{slug}_{fmt}_{stamp}_{status}.json"
 
     record = {
         **post,
         "status": status,
-        "saved_at": datetime.now().isoformat(),
+        "saved_at": now.isoformat(),
     }
 
     with open(filename, "w") as f:
