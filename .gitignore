@@ -9,5 +9,7 @@ dist/
 build/
 *.egg-info/
 output/posts/*.json
+output/images/*.png
+output/images/*.jpg
 assets/
 .DS_Store
