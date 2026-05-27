@@ -1,0 +1,46 @@
+{
+  "text": "Heard a stat last week that I can't stop thinking about: at one major dev platform, 80% of new signups are now AI agents. Not humans.\n\nWhich means most of us are still building activation flows for the wrong user.\n\nThink about what we ship to new signups: welcome emails, product tours, progress bars, tooltips, the carefully engineered aha moment at minute seven. All of it assumes a human eye, a human attention span, a human deciding whether to come back tomorrow.\n\nAn agent doesn't come back tomorrow. It either gets a successful API response in the next two seconds or it moves on and you never see it again.\n\nI spent years optimizing activation funnels. Most of that work would be invisible to an agent. Worse \u2014 some of it actively gets in the way (interstitials, email verification, guided setup).\n\nThe uncomfortable PM question: if half your new users are machines, what does your activation dashboard actually measure?\n\nWhat are you tracking that an agent would never trigger?\n\n#AIProduct #ProductManagement #SaaS",
+  "topic": "AI features in B2B SaaS products",
+  "format": "visual_framework",
+  "hashtags": [
+    "#AIProduct",
+    "#SaaS",
+    "#ProductManagement"
+  ],
+  "diagram": {
+    "title": "AGENT-FIRST ACTIVATION",
+    "subtitle": "How activation changes when your new user is a machine, not a person.",
+    "steps": [
+      {
+        "label": "DISCOVERABLE",
+        "description": "Machine-readable docs an agent can parse without a browser."
+      },
+      {
+        "label": "FIRST CALL",
+        "description": "Successful API response within seconds, no signup required."
+      },
+      {
+        "label": "MEASURABLE OUTPUT",
+        "description": "Agent can verify the result programmatically and continue its task."
+      },
+      {
+        "label": "USAGE SIGNAL",
+        "description": "Track calls and outcomes, not sessions or logins."
+      },
+      {
+        "label": "EXPANSION",
+        "description": "More agents, more calls, priced on consumption not seats."
+      }
+    ],
+    "foundation_title": "WHAT TO RETIRE",
+    "foundation_items": [
+      "GUIDED TOURS",
+      "ACTIVATION EMAILS",
+      "PROGRESS BARS",
+      "PER-SEAT PRICING",
+      "AHA MOMENT ENGINEERING"
+    ]
+  },
+  "word_count": 172,
+  "char_count": 1022
+}
