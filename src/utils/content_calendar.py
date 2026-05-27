@@ -79,7 +79,7 @@ def pick_todays_formats(count: int = 3) -> list[str]:
     """
     recent = set(get_recent_formats(7))
     # Preferred formats get double weight
-    preferred = ["trend_prediction", "framework", "hot_take"]
+    preferred = ["visual_framework", "trend_prediction", "framework", "hot_take"]
     others = ["breakdown", "myth_busting", "data_insight"]
     pool = [f for f in preferred if f not in recent] * 2 + \
            [f for f in others if f not in recent] + \

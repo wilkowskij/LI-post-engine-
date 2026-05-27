@@ -2,10 +2,9 @@ name: Daily LinkedIn Post
 
 on:
   schedule:
-    # 8:00 AM CT (UTC-6 winter / UTC-5 summer) on Mon, Wed, Fri
-    # Winter (UTC-6): 14:00 UTC · Summer (UTC-5): 13:00 UTC
-    # Runs at 14:00 UTC year-round; post lands ~8am CT in winter, ~9am in summer
-    - cron: '0 14 * * 1,3,5'
+    # 9:00 AM EST (UTC-5) on Tue, Wed, Thu
+    # EST (UTC-5): 14:00 UTC | EDT (UTC-4): 14:00 UTC = 10am (still optimal)
+    - cron: '0 14 * * 2,3,4'
   workflow_dispatch:
     inputs:
       topic:
@@ -31,7 +30,24 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run daily post generation
+      # ── Automated run (schedule): generate only, no Buffer ───────────
+      - name: Generate post for review
+        if: github.event_name == 'schedule'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          AUTHOR_NAME: ${{ secrets.AUTHOR_NAME }}
+          AUTHOR_HEADLINE: ${{ secrets.AUTHOR_HEADLINE }}
+          POST_TIMEZONE: America/New_York
+          POSTING_DAYS: Tue,Wed,Thu
+        run: python main.py run-daily --generate-only
+
+      # ── Manual dispatch: full pipeline, schedules to Buffer immediately ──
+      - name: Generate + schedule post
+        if: github.event_name == 'workflow_dispatch'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
@@ -42,8 +58,8 @@ jobs:
           TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
           AUTHOR_NAME: ${{ secrets.AUTHOR_NAME }}
           AUTHOR_HEADLINE: ${{ secrets.AUTHOR_HEADLINE }}
-          POST_TIMEZONE: America/Chicago
-          POSTING_DAYS: Mon,Wed,Fri
+          POST_TIMEZONE: America/New_York
+          POSTING_DAYS: Tue,Wed,Thu
         run: |
           TOPIC="${{ github.event.inputs.topic }}"
           if [ -n "$TOPIC" ]; then
@@ -57,9 +73,82 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add output/posts/ || true
+          git add output/posts/ output/.review_pending.json || true
           git diff --cached --quiet || git commit -m "chore: add post $(date +%Y-%m-%d) [skip ci]"
           git push || true
+
+      # ── Create GitHub Issue for review (automated runs only) ─────────
+      - name: Create review issue
+        if: success() && github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let review = {};
+            try {
+              review = JSON.parse(fs.readFileSync('output/.review_pending.json', 'utf8'));
+            } catch (e) {
+              console.log('No review file found — skipping issue creation:', e.message);
+              return;
+            }
+
+            // Ensure the post-review label exists
+            try {
+              await github.rest.issues.createLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: 'post-review',
+                color: '0075ca',
+                description: 'LinkedIn post awaiting your review before publishing',
+              });
+            } catch (_) { /* already exists */ }
+
+            const date = new Date().toISOString().slice(0, 10);
+            const scheduleUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/workflows/schedule-post.yml`;
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${{ github.run_id }}`;
+            const postText = review.text || '(no text generated)';
+            const formatLabel = (review.format || 'N/A').replace(/_/g, ' ');
+            const postFile = review.post_file || 'latest draft';
+            const imageSection = review.image_url
+              ? `### Framework Diagram\n\n![Diagram](${review.image_url})\n\n`
+              : '';
+
+            const body = [
+              `## LinkedIn Post — Ready for Your Review`,
+              ``,
+              `📅 **Date:** ${date}`,
+              `📌 **Topic:** ${review.topic || 'N/A'}`,
+              `🎨 **Format:** ${formatLabel}`,
+              ``,
+              `---`,
+              ``,
+              `### Post Text`,
+              ``,
+              `\`\`\``,
+              postText,
+              `\`\`\``,
+              ``,
+              imageSection,
+              `---`,
+              ``,
+              `### To publish this post`,
+              ``,
+              `1. Review the content above — edit the file if needed`,
+              `2. Go to **[Actions → Schedule Post](${scheduleUrl})** and click **Run workflow**`,
+              `3. Paste the post file path: \`${postFile}\``,
+              `4. Close this issue once it's live ✓`,
+              ``,
+              `> **Post file:** \`${postFile}\``,
+              `> Generated by [Run #${{ github.run_number }}](${runUrl})`,
+            ].join('\n');
+
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `📝 Review: ${review.topic || 'LinkedIn post'} — ${date}`,
+              body: body,
+              labels: ['post-review'],
+            });
 
       - name: Upload generated artifacts
         if: always()

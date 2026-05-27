@@ -95,7 +95,8 @@ def generate(topic, post_format, variants, angle, preview):
 @click.option("--when", "-w", default="queue",
               type=click.Choice(["queue", "now", "tomorrow"]),
               help="When to post: add to queue, post now, or schedule for tomorrow 8am UTC")
-def schedule(filepath, image, when):
+@click.option("--yes", "-y", is_flag=True, help="Skip confirmation prompt (for CI/automation)")
+def schedule(filepath, image, when, yes):
     """Push a draft post to Buffer for scheduling."""
     from src.integrations.buffer_client import BufferClient
     from src.utils.storage import list_posts, update_post_status, load_post
@@ -116,12 +117,14 @@ def schedule(filepath, image, when):
 
     print_post(post)
 
-    if not Confirm.ask("Schedule this post to Buffer?"):
+    if not yes and not Confirm.ask("Schedule this post to Buffer?"):
         console.print("[dim]Cancelled.[/dim]")
         return
 
+    # Use pre-uploaded image URL from post JSON if available (avoids re-upload after review flow)
+    image_url = post.get("image_url") or None
+
     # Auto-generate and upload diagram if no image is provided explicitly
-    image_url = None
     if image:
         from src.integrations.cloudinary_client import upload_post_image, upload_image_from_url
         _require_env("CLOUDINARY_API_KEY", "CLOUDINARY_API_SECRET")
@@ -244,7 +247,8 @@ def list_posts_cmd(status, limit):
 @cli.command("run-daily")
 @click.option("--topic", "-t", default=None, help="Override topic for today")
 @click.option("--auto-schedule", is_flag=True, help="Auto-schedule without prompting")
-def run_daily(topic, auto_schedule):
+@click.option("--generate-only", is_flag=True, help="Generate + upload image only; skip Buffer (writes review file for CI)")
+def run_daily(topic, auto_schedule, generate_only):
     """
     Full daily flow: research → generate 3 variants → pick one → schedule.
     Designed to run as a cron job or scheduled task.
@@ -282,7 +286,7 @@ def run_daily(topic, auto_schedule):
     # Save all as drafts
     paths = [save_post(v) for v in variants]
 
-    if auto_schedule:
+    if auto_schedule or generate_only:
         chosen = variants[0]
         path = paths[0]
     else:
@@ -309,8 +313,26 @@ def run_daily(topic, auto_schedule):
             result = upload_post_image(card_path, chosen["topic"])
             image_url = result["url"]
             print_success(f"Image ready: {image_url}")
+            # Persist image_url in the draft JSON so schedule-post can reuse it
+            update_post_status(str(path), "draft", extra={"image_url": image_url})
         except Exception as e:
             print_error(f"Image generation skipped: {e}")
+
+    if generate_only:
+        # Write a review-pending file for the CI workflow to create a GitHub Issue
+        import json as _json
+        review = {
+            "post_file": str(path),
+            "topic": chosen["topic"],
+            "format": chosen.get("format", ""),
+            "text": chosen["text"],
+            "image_url": image_url or "",
+            "generated_at": datetime.now().isoformat(),
+        }
+        Path("output").mkdir(exist_ok=True)
+        Path("output/.review_pending.json").write_text(_json.dumps(review, indent=2))
+        print_success("Post saved. Awaiting review — a GitHub Issue will be created for approval.")
+        return
 
     # Schedule to Buffer
     if os.environ.get("BUFFER_ACCESS_TOKEN"):

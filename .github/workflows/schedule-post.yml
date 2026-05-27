@@ -1,0 +1,61 @@
+name: Schedule Post to Buffer
+
+on:
+  workflow_dispatch:
+    inputs:
+      post_file:
+        description: 'Path to post JSON file (leave blank for latest draft)'
+        required: false
+        default: ''
+
+jobs:
+  schedule:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Pull latest (fetch committed post files)
+        run: git pull origin main --rebase
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Schedule post to Buffer
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+          BUFFER_ACCESS_TOKEN: ${{ secrets.BUFFER_ACCESS_TOKEN }}
+          BUFFER_PROFILE_IDS: ${{ secrets.BUFFER_PROFILE_IDS }}
+          AUTHOR_NAME: ${{ secrets.AUTHOR_NAME }}
+          AUTHOR_HEADLINE: ${{ secrets.AUTHOR_HEADLINE }}
+        run: |
+          POST_FILE="${{ github.event.inputs.post_file }}"
+          if [ -n "$POST_FILE" ]; then
+            python main.py schedule --file "$POST_FILE" --yes
+          else
+            python main.py schedule --yes
+          fi
+
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Schedule post failed — ${new Date().toISOString().slice(0,10)}`,
+              body: `The Schedule Post workflow failed.\n\n**Run:** [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})\n\nCheck the logs for details.`,
+              labels: ['pipeline-failure']
+            });
