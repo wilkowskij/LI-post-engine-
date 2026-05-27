@@ -92,14 +92,39 @@ RULES:
     if is_visual:
         return _parse_visual_framework_response(raw, topic, chosen_format, hashtags)
 
+    post_text = _enforce_char_limit(raw, client, user_prompt)
+
     return {
-        "text": raw,
+        "text": post_text,
         "topic": topic,
         "format": chosen_format,
         "hashtags": hashtags,
-        "word_count": len(raw.split()),
-        "char_count": len(raw),
+        "word_count": len(post_text.split()),
+        "char_count": len(post_text),
     }
+
+
+_LI_CHAR_LIMIT = 3000
+
+
+def _enforce_char_limit(text: str, client, original_prompt: str, limit: int = _LI_CHAR_LIMIT) -> str:
+    """If text exceeds the LinkedIn character limit, ask Claude to tighten it."""
+    if len(text) <= limit:
+        return text
+
+    tighten_prompt = (
+        f"This LinkedIn post is {len(text)} characters — over the {limit}-character limit.\n\n"
+        f"{text}\n\n"
+        f"Tighten it to under {limit} characters while keeping every key idea. "
+        f"Return ONLY the revised post text, nothing else."
+    )
+    message = client.messages.create(
+        model="claude-opus-4-7",
+        max_tokens=600,
+        system=PERSONA_SYSTEM_PROMPT,
+        messages=[{"role": "user", "content": tighten_prompt}],
+    )
+    return message.content[0].text.strip()
 
 
 def _parse_visual_framework_response(raw: str, topic: str, fmt: str, hashtags: list) -> dict:

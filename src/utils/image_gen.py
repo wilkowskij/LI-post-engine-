@@ -89,6 +89,8 @@ def generate_framework_diagram(
         stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         output_path = OUTPUT_DIR / f"diagram_{stamp}.png"
 
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
     from PIL import Image, ImageDraw
 
     img = Image.new("RGB", (W, H), color=BRAND["bg"])

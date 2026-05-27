@@ -36,15 +36,16 @@ def cli():
 @cli.command()
 @click.option("--topic", "-t", default=None, help="Topic category (auto-selects if omitted)")
 @click.option("--format", "-f", "post_format", default=None,
-              type=click.Choice(["framework", "trend_prediction", "hot_take", "breakdown", "myth_busting", "data_insight"]),
+              type=click.Choice(["visual_framework", "framework", "trend_prediction", "hot_take", "breakdown", "myth_busting", "data_insight"]),
               help="Post format (auto-selects if omitted)")
 @click.option("--variants", "-n", default=1, show_default=True, help="Number of variants to generate")
 @click.option("--angle", "-a", default=None, help="Specific angle or hook to emphasize")
-def generate(topic, post_format, variants, angle):
+@click.option("--preview", "-p", is_flag=True, help="Render and open the diagram image after generating")
+def generate(topic, post_format, variants, angle, preview):
     """Research a topic and generate LinkedIn post draft(s)."""
     import anthropic
     from src.agent.researcher import research_trending_topics, build_research_brief
-    from src.agent.writer import generate_post, generate_post_variants
+    from src.agent.writer import generate_post, generate_post_variants, generate_diagram_spec
     from src.agent.persona import TOPIC_CATEGORIES
     from src.utils.storage import save_post
     from src.utils.display import print_post, print_variants, print_info, print_success
@@ -53,7 +54,6 @@ def generate(topic, post_format, variants, angle):
 
     client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
 
-    # Pick topic
     if not topic:
         from src.utils.content_calendar import pick_todays_topic
         topic = pick_todays_topic()
@@ -73,12 +73,16 @@ def generate(topic, post_format, variants, angle):
         print_post(post)
         path = save_post(post)
         print_success(f"Saved draft → {path.name}")
+        if preview:
+            _render_and_open_preview(post, client)
     else:
         posts = generate_post_variants(brief, topic, count=variants, client=client)
         print_variants(posts)
         for post in posts:
             path = save_post(post)
             print_success(f"Saved draft → {path.name}")
+        if preview:
+            _render_and_open_preview(posts[0], client)
 
 
 # ------------------------------------------------------------------ #
@@ -116,7 +120,7 @@ def schedule(filepath, image, when):
         console.print("[dim]Cancelled.[/dim]")
         return
 
-    # Handle image upload to Cloudinary
+    # Auto-generate and upload diagram if no image is provided explicitly
     image_url = None
     if image:
         from src.integrations.cloudinary_client import upload_post_image, upload_image_from_url
@@ -128,6 +132,22 @@ def schedule(filepath, image, when):
             result = upload_post_image(image, post["topic"])
         image_url = result["url"]
         print_success(f"Image uploaded: {image_url}")
+    elif os.environ.get("CLOUDINARY_API_KEY"):
+        try:
+            import anthropic as _anthropic
+            from src.agent.writer import generate_diagram_spec
+            from src.utils.image_gen import generate_post_image
+            from src.integrations.cloudinary_client import upload_post_image as _upload
+            _client = _anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+            print_info("Generating framework diagram...")
+            generate_diagram_spec(post, _client)
+            card_path = generate_post_image(post, author_name=os.environ.get("AUTHOR_NAME", "Jeff Wilkowski"))
+            print_info("Uploading diagram to Cloudinary...")
+            result = _upload(card_path, post["topic"])
+            image_url = result["url"]
+            print_success(f"Diagram uploaded: {image_url}")
+        except Exception as e:
+            print_error(f"Diagram generation skipped: {e}")
 
     # Push to Buffer
     buffer = BufferClient()
@@ -469,18 +489,12 @@ def setup():
         print_error("Buffer: BUFFER_ACCESS_TOKEN not set")
         all_ok = False
 
-    # OpenAI — GPT Image 2 (gpt-image-1)
-    openai_key = os.environ.get("OPENAI_API_KEY", "")
-    if openai_key and openai_key != "your_openai_api_key_here":
-        try:
-            from openai import OpenAI
-            OpenAI(api_key=openai_key).models.retrieve("gpt-image-1")
-            print_success("OpenAI (GPT Image 2): connected")
-        except Exception as e:
-            print_error(f"OpenAI (GPT Image 2): {e}")
-            all_ok = False
-    else:
-        print_error("OpenAI: OPENAI_API_KEY not set — image generation will fall back to Pillow")
+    # Image generation (Pillow — always available)
+    try:
+        from PIL import Image as _PILImage
+        print_success("Image generation: Pillow ready (framework diagrams enabled)")
+    except ImportError:
+        print_error("Image generation: Pillow not installed — run `pip install pillow`")
         all_ok = False
 
     # Tavily (optional)
@@ -497,8 +511,78 @@ def setup():
 
 
 # ------------------------------------------------------------------ #
+# refine
+# ------------------------------------------------------------------ #
+
+@cli.command()
+@click.option("--file", "-f", "filepath", default=None, help="Path to post JSON (auto-selects latest draft)")
+@click.option("--feedback", "-fb", required=True, help="What to change, e.g. 'make it more contrarian'")
+@click.option("--preview", "-p", is_flag=True, help="Render and open the diagram after refining")
+def refine(filepath, feedback, preview):
+    """Refine a draft post based on feedback."""
+    import anthropic
+    from src.agent.writer import refine_post
+    from src.utils.storage import load_post, list_posts, save_post
+    from src.utils.display import print_post, print_info, print_success, print_error
+
+    _require_env("ANTHROPIC_API_KEY")
+
+    if filepath:
+        post = load_post(Path(filepath))
+    else:
+        drafts = list_posts(status="draft", limit=5)
+        if not drafts:
+            print_error("No drafts found. Run `generate` first.")
+            sys.exit(1)
+        post = drafts[0]
+        print_info(f"Refining: {post['_filepath']}")
+
+    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+    print_info(f"Applying feedback: {feedback}")
+    new_text = refine_post(post["text"], feedback, client=client)
+
+    post["text"] = new_text
+    post["word_count"] = len(new_text.split())
+    post["char_count"] = len(new_text)
+    post.pop("diagram", None)  # diagram may no longer match; regenerate on next publish
+
+    print_post(post)
+    path = save_post(post)
+    print_success(f"Saved refined draft → {path.name}")
+
+    if preview:
+        _render_and_open_preview(post, client)
+
+
+# ------------------------------------------------------------------ #
 # Helpers
 # ------------------------------------------------------------------ #
+
+def _render_and_open_preview(post: dict, client) -> None:
+    """Render the diagram for a post and open it with the system viewer."""
+    from src.agent.writer import generate_diagram_spec
+    from src.utils.image_gen import generate_post_image
+    from src.utils.display import print_info, print_success, print_error
+    import subprocess
+
+    try:
+        print_info("Rendering diagram preview...")
+        generate_diagram_spec(post, client)
+        img_path = generate_post_image(
+            post,
+            author_name=os.environ.get("AUTHOR_NAME", "Jeff Wilkowski"),
+        )
+        print_success(f"Diagram saved → {img_path}")
+        # Try to open with system viewer (works on macOS, Linux with xdg-open, Windows)
+        for cmd in ["open", "xdg-open", "start"]:
+            try:
+                subprocess.Popen([cmd, str(img_path)], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                break
+            except FileNotFoundError:
+                continue
+    except Exception as e:
+        print_error(f"Preview failed: {e}")
+
 
 def _require_env(*keys: str) -> None:
     missing = [k for k in keys if not os.environ.get(k)]
