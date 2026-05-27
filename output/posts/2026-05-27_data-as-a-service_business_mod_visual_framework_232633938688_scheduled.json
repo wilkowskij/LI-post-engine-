@@ -1,0 +1,54 @@
+{
+  "text": "Most PMs still scope data-as-a-service like it's 2019: 'sell curated datasets via API to analysts.'\n\nThe buyer changed. The biggest consumer of enterprise data now isn't a human running a dashboard. It's an agent making a decision, hundreds of times a second, inside someone else's product.\n\nThat breaks the old packaging. Agents don't need pretty exports or quarterly refreshes. They need data that's queryable, governed, priced per call, and contextual enough to act on without a human in the loop.\n\nThe teams winning this transition are repackaging their catalog along a specific path:\n\nThe ones still selling seat-based access to flat files are about to watch their renewals get repriced by procurement teams who realized the agent only touched 4% of what they licensed.\n\nIf your data product can't be consumed by something that doesn't have a mouse, it's a feature, not a product.\n\nWhat's the first dataset in your org you'd repackage for an agent buyer instead of a human one?\n\n#DaaS #DataStrategy #DataProducts",
+  "topic": "Data-as-a-Service business models",
+  "format": "visual_framework",
+  "hashtags": [
+    "#DaaS",
+    "#DataStrategy",
+    "#DataProducts"
+  ],
+  "diagram": {
+    "title": "FROM DATASETS TO DATA PRODUCTS",
+    "subtitle": "How DaaS repackages itself for agentic AI as the primary buyer",
+    "steps": [
+      {
+        "label": "AUDIT CONSUMERS",
+        "description": "Separate human analysts from agent callers in your usage logs."
+      },
+      {
+        "label": "RESHAPE THE UNIT",
+        "description": "Move from bulk files to small, queryable, context-rich responses."
+      },
+      {
+        "label": "REPRICE TO USAGE",
+        "description": "Charge per call or per decision, not per seat."
+      },
+      {
+        "label": "EMBED GOVERNANCE",
+        "description": "Lineage, permissions, and freshness become part of the payload."
+      },
+      {
+        "label": "LIST ON MARKETPLACES",
+        "description": "Distribute where the agents already shop for inputs."
+      }
+    ],
+    "foundation_title": "WHAT THIS REQUIRES UNDERNEATH",
+    "foundation_items": [
+      "MACHINE-READABLE CONTRACTS",
+      "REAL-TIME FRESHNESS",
+      "AUDITABLE LINEAGE",
+      "METERED BILLING"
+    ]
+  },
+  "word_count": 165,
+  "char_count": 1017,
+  "status": "scheduled",
+  "saved_at": "2026-05-27T23:26:33.938688",
+  "updated_at": "2026-05-27T23:26:37.650327",
+  "image_url": "https://res.cloudinary.com/drum3eekm/image/upload/v1779924396/li-posts/2026-05-27/data-as-a-service_business_models.png",
+  "buffer_result": {
+    "id": "6a177dad7626ffa6c653a672",
+    "status": "scheduled"
+  },
+  "scheduled_when": "queue"
+}

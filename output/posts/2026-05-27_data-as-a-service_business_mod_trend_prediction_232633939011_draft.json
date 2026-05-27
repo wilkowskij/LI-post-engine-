@@ -1,0 +1,14 @@
+{
+  "text": "The DaaS market quietly crossed something important this year, and I don't think most product teams have clocked it yet.\n\nThe biggest new buyer of data isn't an analyst. It isn't a BI tool. It's an agent.\n\nFor years we scoped DaaS the same way: clean dataset, REST API, tiered subscription, maybe a Snowflake share if you were feeling modern. The buyer was a human who needed to answer a question.\n\nThat buyer is being replaced by software that needs to make a decision \u2014 and it consumes data completely differently. It doesn't want a CSV. It wants a typed, governed, versioned data product with provenance attached, priced by call, not by seat.\n\nHere's where I think this goes in the next 18-24 months:\n\nSubscription DaaS gets squeezed from both sides. The dataset-behind-an-API model gets commoditized, while the teams who package data as AI-consumable products \u2014 schema-stable, lineage-attached, usage-priced \u2014 capture the margin. Marketplaces become the distribution layer, not direct sales.\n\nThe seat-based pricing page becomes a liability. If your largest \"user\" is an agent making 40,000 calls an hour, you don't have a pricing model. You have a leak.\n\nWhat I'd do starting now: stop scoping your DaaS roadmap around human dashboards. Ask what your data looks like when the consumer is non-deterministic, doesn't read docs, and bills you for being wrong.\n\nAre you pricing for the human buyer you have, or the agent buyer you're about to get?\n\n#DaaS #DataProducts #DataStrategy",
+  "topic": "Data-as-a-Service business models",
+  "format": "trend_prediction",
+  "hashtags": [
+    "#DaaS",
+    "#DataStrategy",
+    "#DataProducts"
+  ],
+  "word_count": 243,
+  "char_count": 1483,
+  "status": "draft",
+  "saved_at": "2026-05-27T23:26:33.939011"
+}

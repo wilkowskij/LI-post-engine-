@@ -1,0 +1,14 @@
+{
+  "text": "Most DaaS roadmaps I see are still scoped for the wrong customer.\n\nThey're built for an analyst who logs in, runs a query, exports to a dashboard, and renews annually. That buyer is shrinking. The fastest-growing consumer of data right now isn't a person at all \u2014 it's an agent making thousands of decisions an hour, and it shops very differently.\n\nA frame I've been using to pressure-test DaaS strategy:\n\n**Three questions, in order.**\n\n1. Can an agent discover this dataset without a human reading your marketing site?\n2. Can it consume the data without a human mapping the schema?\n3. Can it pay for exactly what it used, without a human signing an order form?\n\nIf the answer to any of those is no, you're selling spreadsheets with an API in front of them. You'll renew. You won't compound.\n\nThe timing signal: BFSI buyers are already treating data as an input to *revenue products*, not reporting. Telematics priced into policies. Market feeds wired straight into execution. Once data sits inside a revenue product, procurement starts asking usage-based questions your subscription model can't answer.\n\nWhere the frame breaks: regulated datasets with mandatory human-in-the-loop review. Don't agent-ify those. You'll regret it.\n\nThe harder question for PMs: if your top customer in 2028 is an autonomous agent with a budget, what does your pricing page even look like? Because the one you have today probably isn't built for a buyer that can't read it.\n\n#DaaS #DataProducts #DataStrategy",
+  "topic": "Data-as-a-Service business models",
+  "format": "framework",
+  "hashtags": [
+    "#DaaS",
+    "#DataStrategy",
+    "#DataProducts"
+  ],
+  "word_count": 245,
+  "char_count": 1490,
+  "status": "draft",
+  "saved_at": "2026-05-27T23:26:33.939183"
+}
