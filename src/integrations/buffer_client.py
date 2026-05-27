@@ -58,11 +58,23 @@ class BufferClient:
         return [p for p in self.get_profiles() if "linkedin" in p.get("service", "").lower()]
 
     def get_profile_ids(self) -> list[str]:
-        """Return channel IDs from env or auto-detect LinkedIn channels."""
+        """Return channel IDs, validating env var against actual Buffer channels."""
+        all_channels = self.get_profiles()
+        valid_ids = {c["id"] for c in all_channels}
+        print(f"[buffer] Available channels: {[(c.get('service'), c.get('name'), c['id']) for c in all_channels]}")
+
         env_ids = os.environ.get("BUFFER_PROFILE_IDS", "")
         if env_ids:
-            return [pid.strip() for pid in env_ids.split(",") if pid.strip()]
-        linkedin = self.get_linkedin_profiles()
+            requested = [pid.strip() for pid in env_ids.split(",") if pid.strip()]
+            bad = [pid for pid in requested if pid not in valid_ids]
+            if bad:
+                print(f"[buffer] WARNING: BUFFER_PROFILE_IDS contains invalid IDs {bad} — falling back to auto-detect")
+            else:
+                return requested
+
+        linkedin = [c for c in all_channels if "linkedin" in c.get("service", "").lower()]
+        if not linkedin:
+            print(f"[buffer] No LinkedIn channels found. Available: {[c.get('service') for c in all_channels]}")
         return [p["id"] for p in linkedin]
 
     # ------------------------------------------------------------------ #
