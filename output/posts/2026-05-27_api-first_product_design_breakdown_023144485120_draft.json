@@ -1,0 +1,14 @@
+{
+  "text": "Prediction: by 2026, your API's #1 consumer won't be a developer. It will be an LLM deciding at runtime whether your endpoint is worth invoking.\n\nThat changes what \"API-first\" means.\n\nOld definition: design for developers writing curl commands.\nNew definition: design for agents reading your spec and choosing your tool over a competitor's.\n\nThe shift is already measurable. Gartner projects 30%+ of new API demand by 2026 will come from AI consumption. The latest State of the API benchmark put AI/LLM integration as the top driver of new API investment, displacing internal dev productivity for the first time.\n\nHere's the Agent Experience (AX) breakdown PMs should run against every endpoint:\n\n1. **Discoverability** \u2014 Is your OpenAPI spec semantically rich enough that an agent knows when to call you vs. a competitor?\n\n2. **Description quality** \u2014 Every endpoint and parameter needs natural-language descriptions written for a model, not a human skimmer.\n\n3. **Typed, structured errors** \u2014 Agents retry on signal. Vague 400s get abandoned; typed errors with recovery hints get re-invoked.\n\n4. **Idempotency and safety** \u2014 Agents will call your endpoint 50 times. Design for it.\n\n5. **Tool-spec compatibility** \u2014 MCP-style machine-readable contracts are becoming table stakes across every major model provider.\n\nThe step everyone skips: **error semantics.** Teams polish happy paths and ship 400s that read like internal tickets.\n\nThe best teams now treat their OpenAPI spec as core product surface area, reviewed with the same rigor as the UI.\n\nIf your API isn't legible to an agent in 2026, you're invisible in the AI distribution layer.\n\nFor the PMs reading: who owns AX on your team today? For the execs: is it in your roadmap, or still buried under \"develop",
+  "topic": "API-first product design",
+  "format": "breakdown",
+  "hashtags": [
+    "#APIFirst",
+    "#DeveloperExperience",
+    "#SaaS"
+  ],
+  "word_count": 281,
+  "char_count": 1766,
+  "status": "draft",
+  "saved_at": "2026-05-27T02:31:44.485120"
+}

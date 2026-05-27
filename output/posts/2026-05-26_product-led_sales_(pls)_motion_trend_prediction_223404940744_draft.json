@@ -1,0 +1,15 @@
+{
+  "text": "Most PLG companies think they're running Product-Led Sales.\n\nThey're actually running Product-Led Lead Scoring with a sales team bolted on. And it's costing them 40-60% of expansion revenue.\n\nHere's the pattern I keep seeing:\n\n1. Product team ships usage analytics\n2. RevOps defines a PQL based on generic thresholds (logins, seats, feature adoption)\n3. PQLs get routed to AEs carrying six-figure quotas\n4. Reps call 3-5 days later, treating the signal like an MQL\n5. The user has already mentally churned or self-served their way past the moment\n\nThe economics don't work. A $100K-quota AE can't profitably chase a 12-seat expansion. And usage thresholds without context (collaboration depth, integration breadth, team activation patterns) generate noise, not intent.\n\nBenchmark data is clear: PLS companies outgrow sales-led peers by ~50%, but only when reps engage inside 24 hours. After 72, conversion drops by more than half.\n\nMy 12-24 month prediction:\n\nPLS will split into its own GTM discipline with a dedicated rep tier ($40-60K OTE, high-velocity, product-fluent), distinct PQL taxonomies per product surface, and real-time triggers wired into the workflow rather than nightly Salesforce syncs. The companies still treating PLS as \"PLG + AEs\" will lose the expansion game to ones who built the motion natively.\n\nFor PMs: stop shipping usage dashboards. Start defining the 3-5 behavioral patterns that signal a buying conversation, not just engagement.\n\nFor leaders: audit your PQL-to-touch SLA. If it's over 24 hours, you're funding a leaky bucket.\n\nWhat's your current PQL-to-conversation time?\n\n#PLS #PLG #SaaS",
+  "topic": "Product-led sales (PLS) motions",
+  "format": "trend_prediction",
+  "hashtags": [
+    "#PLS",
+    "#PLG",
+    "#SaaS",
+    "#GTM"
+  ],
+  "word_count": 248,
+  "char_count": 1622,
+  "status": "draft",
+  "saved_at": "2026-05-26T22:34:04.940744"
+}

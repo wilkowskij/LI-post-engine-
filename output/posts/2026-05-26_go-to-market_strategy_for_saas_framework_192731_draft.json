@@ -1,0 +1,14 @@
+{
+  "text": "Product-Led Growth is quietly dying for mid-market SaaS.\n\nAnd the data nobody's talking about proves it: OpenView's 2023 PLG Index showed PLG companies trading at lower multiples than sales-led peers for the first time since 2020.\n\nHere's the uncomfortable truth most founders miss:\n\nPLG is an acquisition channel. Not a GTM strategy.\n\nAfter watching ChiliPiper, Amplitude, and Pendo all bolt on outbound motions past $50M ARR, I built a framework I now use with every PM team I advise.\n\n**The PLG-to-PLS Maturity Model:**\n\n1\ufe0f\u20e3 **Acquire** (PLG): Free signups drive top-of-funnel. Measure activation rate, not MQLs.\n\n2\ufe0f\u20e3 **Qualify** (PQLs): Product usage signals replace form fills. Track depth + breadth + frequency.\n\n3\ufe0f\u20e3 **Expand** (Sales-assist): Humans enter when ACV justifies it. Usually $15K+ deals.\n\n4\ufe0f\u20e3 **Retain** (CS-led): Usage data drives proactive interventions before churn signals fire.\n\nSkip a layer and you'll feel it in NRR.\n\nICONIQ's 2024 benchmarks back this up: hybrid GTM motions show 1.4x higher net revenue retention than pure PLG at $10M+ ARR.\n\n**Real example:** Figma didn't win because PLG. They won because designers self-served, then enterprise sales closed the company-wide deals. Two motions. One product.\n\n**When NOT to use this framework:**\n\nIf your ACV is under $5K and your ICP is SMB, stay pure PLG. Adding sales-assist below that threshold destroys unit economics. The math just doesn't work.\n\nThe companies winning in 2025 aren't choosing PL",
+  "topic": "Go-to-market strategy for SaaS",
+  "format": "framework",
+  "hashtags": [
+    "#GTM",
+    "#SaaS",
+    "#ProductStrategy"
+  ],
+  "word_count": 228,
+  "char_count": 1479,
+  "status": "draft",
+  "saved_at": "2026-05-26T19:27:31.481376"
+}

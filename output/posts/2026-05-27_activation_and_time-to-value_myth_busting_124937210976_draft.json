@@ -1,0 +1,14 @@
+{
+  "text": "The myth that won't die in PLG circles:\n\n\"If activation is strong, expansion will follow.\"\n\nMost product teams build their entire 2024 roadmap around this. Optimize time-to-value, nail the aha moment, watch ARR compound.\n\nThen they look at net revenue retention 18 months later and wonder what went wrong.\n\nHere's what falls apart when you actually talk to buyers:\n\nThe person who activates is almost never the person who expands the contract. Activators are individual users solving a personal workflow. Expanders are managers solving a team or org problem. Two different buyers. Two different jobs.\n\nStrong activation tells you the product works. It tells you nothing about whether it's becoming infrastructure.\n\nWhat's actually true:\n\n1. Activation predicts retention, not expansion\n2. Expansion is driven by *cross-user dependency* \u2014 how many people rely on what one user produced\n3. The metric to watch isn't DAU/WAU. It's \"artifacts shared across team boundaries\" per account\n\nThe shift to make: stop optimizing the single-user funnel as your growth engine. Start instrumenting collaboration depth as a leading indicator of expansion.\n\nWhere this goes in the next 12-18 months: the best PLG companies will split their PM org into an activation pod and a network-effects pod, with separate metrics and separate roadmaps. The \"one funnel to rule them all\" era is ending.\n\nWhat's the expansion signal your team trusts most right now?\n\n#PLG #ProductManagement #SaaS",
+  "topic": "Activation and time-to-value",
+  "format": "myth_busting",
+  "hashtags": [
+    "#PLG",
+    "#ProductManagement",
+    "#SaaS"
+  ],
+  "word_count": 229,
+  "char_count": 1467,
+  "status": "draft",
+  "saved_at": "2026-05-27T12:49:37.210976"
+}

@@ -1,0 +1,47 @@
+{
+  "text": "Most PMs still treat PLG as a funnel optimization problem. That's why their activation curves keep flattening.\n\nThe next wave of PLG isn't about removing friction. It's about engineering proof moments where the product sells itself before sales ever shows up.\n\nHere's the model I'd use going into the next 12-24 months:\n\nTHE PROOF LOOP\n\nA five-step replacement for the traditional acquisition-to-conversion funnel, built for AI-native and data products where value has to be demonstrated, not described.\n\nThe shift to watch: as AI products commoditize features, the moat moves to how quickly a user can generate a defensible result they'd be embarrassed to lose. Foundation layers (data trust, time-to-insight, shareability) are becoming the real PLG metrics. PQLs and free-to-paid rates are lagging indicators of these.\n\nFor PMs: stop instrumenting steps, start instrumenting proof.\n\nFor leaders: your PLG motion is only as strong as the artifact a user can show their boss on day one.\n\nWhat's the proof moment in your product right now, and how fast does a new user reach it?\n\n#PLG #ProductManagement #SaaS",
+  "topic": "Activation and time-to-value",
+  "format": "visual_framework",
+  "hashtags": [
+    "#PLG",
+    "#ProductManagement",
+    "#SaaS"
+  ],
+  "diagram": {
+    "title": "THE PROOF LOOP",
+    "subtitle": "A five-step PLG model for AI and data products where value must be demonstrated, not described.",
+    "steps": [
+      {
+        "label": "SIGNAL ENTRY",
+        "description": "User arrives with a specific outcome already in mind."
+      },
+      {
+        "label": "GUIDED SETUP",
+        "description": "Product removes config decisions and routes to first action."
+      },
+      {
+        "label": "PROOF MOMENT",
+        "description": "User generates a result worth showing someone else."
+      },
+      {
+        "label": "SHARE TRIGGER",
+        "description": "Output is exported, sent, or embedded in a workflow."
+      },
+      {
+        "label": "EXPANSION PULL",
+        "description": "Peers and managers request access, creating inbound demand."
+      }
+    ],
+    "foundation_title": "FOUNDATION LAYER",
+    "foundation_items": [
+      "DATA TRUST",
+      "TIME-TO-INSIGHT",
+      "SHAREABILITY",
+      "WORKFLOW FIT"
+    ]
+  },
+  "word_count": 175,
+  "char_count": 1108,
+  "status": "draft",
+  "saved_at": "2026-05-27T12:49:37.211331"
+}

@@ -1,0 +1,14 @@
+{
+  "text": "The \"free trial\" is quietly dying in AI-native SaaS. And most teams are misreading why.\n\nThe signal: activation rates on traditional 14-day trials are collapsing for AI products. Buyers don't want to \"explore.\" They want an outcome on day one.\n\nThe misread: most PMs think this is an onboarding problem. Better tooltips, shorter time-to-value, a slicker empty state. It's not.\n\nThe actual shift: AI products are evaluated on output quality, not feature adoption. A user who generated one great result in 90 seconds converts better than one who clicked through every feature in two weeks.\n\nMy 12-24 month prediction:\n\n1. Free trials get replaced by \"proof runs\" \u2014 bring your data, get one real result, decide.\n\n2. Activation metrics shift from \"used 3 features in 7 days\" to \"received one output worth paying for.\"\n\n3. PLG motions compress from weeks to a single session. The funnel becomes: land \u2192 prove \u2192 expand.\n\n4. Usage-based pricing tied to outcomes (not seats or tokens) becomes the default for AI-native categories.\n\nWhat to do now:\n\nFor PMs: redefine your activation event around output quality, not feature breadth. Instrument it this quarter.\n\nFor leaders: pressure-test whether your pricing model can survive a world where buyers expect proof before payment, not after.\n\nThe teams winning the next cycle are designing for one moment of earned trust, not 14 days of exploration.\n\nWhat's your current activation event, and would it survive this shift?\n\n#PLG #ProductManagement #SaaS",
+  "topic": "Activation and time-to-value",
+  "format": "trend_prediction",
+  "hashtags": [
+    "#PLG",
+    "#ProductManagement",
+    "#SaaS"
+  ],
+  "word_count": 240,
+  "char_count": 1491,
+  "status": "draft",
+  "saved_at": "2026-05-27T12:49:37.211639"
+}

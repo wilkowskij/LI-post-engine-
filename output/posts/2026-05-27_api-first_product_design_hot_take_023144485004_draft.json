@@ -1,0 +1,14 @@
+{
+  "text": "By 2026, the #1 consumer of your API won't be a human developer. It'll be an LLM deciding at runtime whether your endpoint is worth calling.\n\nThe conventional wisdom says API-first means \"design for developers.\" Clean docs, intuitive SDKs, great onboarding. That bar is now table stakes, and it's aimed at the wrong user.\n\nThe signal is hard to miss:\n\n1. The 2025 State of the API report showed AI/LLM integration overtake internal developer productivity as the top driver of new API investment for the first time.\n\n2. The Model Context Protocol, launched late 2024, was adopted across every major model provider and agent framework within a year. It effectively turns every API into a tool spec that agents discover and invoke without a human in the loop.\n\n3. Gartner projects 30%+ of new API demand by 2026 will come from AI consumption, not human developers.\n\nHere's the nuance: agents don't read your docs. They read your OpenAPI spec, your descriptions, your error payloads, and your auth flows. Ambiguous schemas get skipped. Vague errors get retried until budgets run out. Non-idempotent endpoints get blacklisted.\n\nThe PMs winning the next distribution layer will treat spec quality, error semantics, and discoverability as core product surface area, not infra hygiene.\n\nFor the leaders here: is your API team staffed and measured like a product team, or still like a platform cost center?\n\n#APIFirst #DeveloperExperience #SaaS",
+  "topic": "API-first product design",
+  "format": "hot_take",
+  "hashtags": [
+    "#APIFirst",
+    "#DeveloperExperience",
+    "#SaaS"
+  ],
+  "word_count": 232,
+  "char_count": 1435,
+  "status": "draft",
+  "saved_at": "2026-05-27T02:31:44.485004"
+}
