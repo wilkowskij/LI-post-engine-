@@ -1,50 +1,44 @@
 # Mermaid / AI Design Tool — Framework Diagram Prompt Template
 
 Use this template to generate a LinkedIn card visual in Mermaid.ai, Gamma,
-Beautiful.ai, or any AI design tool. Fill in the bracketed sections for each
-new post. Do not prescribe colors, fonts, or layout — let the tool decide.
+Beautiful.ai, or any AI design tool. Fill in the [bracketed] sections for each
+new post.
 
 ---
 
-## Prompt Template
+## Master Prompt Template
 
 ```
-Create a visual framework diagram for a LinkedIn post carousel card.
+Create a professional explainer infographic in the style of a LinkedIn
+thought-leadership visual with the following specs:
 
-CONCEPT: [FRAMEWORK NAME]
-[1-2 sentence description of what the framework explains and why it matters.]
+STYLE:
+- Light lavender/white background (#f5f0ff or white)
+- Primary colors: purple (#7B5EA7), blue (#4A90D9), yellow (#F5C842),
+  teal (#4ECDC4)
+- Hand-drawn/sketch-style icons (not photorealistic)
+- Rounded rectangle boxes with soft drop shadows
+- Bold sans-serif title (large, dark navy)
+- Subtitle in lighter italic or regular weight
+- Dashed and solid arrows showing flow/direction
+- Small emoji-style or outline icons inside each box
+- Numbered section labels in colored pill/badge shapes
 
-CONTEXT: [2-4 sentences of the problem or market signal this framework addresses.
-Ground it in a specific observation, stat, or pattern — not generic advice.]
+LAYOUT:
+- 1200x1200px or 1080x1350px (square or portrait for LinkedIn)
+- 4-section flow: [Left column] → [Center grid] → [Right column]
+- Bottom strip for sub-process steps (horizontal icon chain)
+- "Why It Matters" callout box with checklist bullets
 
-FRAMEWORK STEPS (in order — this is a sequential flow):
+CONTENT TO VISUALIZE:
+[INSERT YOUR CONCEPT HERE]
 
-1. [STEP LABEL — ALL CAPS, 2-3 words]
-   [One sentence describing what this step means in practice]
-
-2. [STEP LABEL]
-   [Description]
-
-3. [STEP LABEL]
-   [Description]
-
-4. [STEP LABEL]
-   [Description]
-
-5. [STEP LABEL]
-   [Description]
-
-[OPTIONAL BOTTOM SECTION — include only if there's a natural foundation layer
-or a set of supporting/contrasting concepts]:
-[Section Title]: [Item 1] · [Item 2] · [Item 3] · [Item 4] · [Item 5]
-
-FORMAT: Portrait orientation, professional B2B style. The five steps
-should read as a clear left-to-right or top-to-bottom flow. The bottom
-section items should feel visually subordinate — like a footnote or
-secondary layer.
-
-AUDIENCE: Senior product managers and executives at B2B SaaS companies.
-The tone is sharp and credible, not startup-flashy.
+OUTPUT:
+- Label each section with numbers (1, 2, 3, 4)
+- Use short 2-4 word headers per box
+- Add 1-line subtitles under each header
+- Include a small robot/AI mascot character in bottom-left corner
+- Add creator initials badge (circle) in top-left
 ```
 
 ---
@@ -52,7 +46,28 @@ The tone is sharp and credible, not startup-flashy.
 ## Example: Agent-First Activation (May 2026)
 
 ```
-Create a visual framework diagram for a LinkedIn post carousel card.
+Create a professional explainer infographic in the style of a LinkedIn
+thought-leadership visual with the following specs:
+
+STYLE:
+- Light lavender/white background (#f5f0ff or white)
+- Primary colors: purple (#7B5EA7), blue (#4A90D9), yellow (#F5C842),
+  teal (#4ECDC4)
+- Hand-drawn/sketch-style icons (not photorealistic)
+- Rounded rectangle boxes with soft drop shadows
+- Bold sans-serif title (large, dark navy)
+- Subtitle in lighter italic or regular weight
+- Dashed and solid arrows showing flow/direction
+- Small emoji-style or outline icons inside each box
+- Numbered section labels in colored pill/badge shapes
+
+LAYOUT:
+- 1080x1350px portrait for LinkedIn
+- 4-section flow: [Left column] → [Center grid] → [Right column]
+- Bottom strip for sub-process steps (horizontal icon chain)
+- "Why It Matters" callout box with checklist bullets
+
+CONTENT TO VISUALIZE:
 
 CONCEPT: Agent-First Activation
 A framework showing how software product activation needs to change
@@ -65,32 +80,106 @@ agents don't click around. They make an API call and either get a
 result or leave forever. The activation playbook needs to be rebuilt
 from scratch.
 
-FRAMEWORK STEPS (in order — this is a sequential flow):
+SECTION 1 (left) — CAPTURE / INPUTS:
+What agents need to find and access your product:
+- Machine-readable docs
+- Public API endpoints
+- Zero-friction auth (API keys)
+- No signup wall
 
-1. DISCOVERABLE
-   Machine-readable documentation an agent can parse without a browser
+SECTION 2 (center grid) — THE 4 ACTIVATION TYPES:
+Top-left:    DISCOVERABLE   — Docs an agent can parse
+Top-right:   FIRST CALL     — Successful API response in seconds
+Bottom-left: MEASURABLE     — Output the agent can verify
+Bottom-right: EXPANDABLE    — Usage grows without human touch
 
-2. FIRST CALL SUCCESS
-   Successful API response within seconds, no signup wall required
+SECTION 3 (bottom strip) — CONSOLIDATE PIPELINE:
+Summarize → Compress → Decay → Learn
 
-3. MEASURABLE OUTPUT
-   Agent can verify the result programmatically and continue its task
+SECTION 4 (right) — OUTPUTS / RETRIEVE & USE:
+- Brief Generation
+- Copy Suggestions
+- Smarter Targeting
+- Cross-campaign Learning
 
-4. USAGE SIGNAL
-   Track API calls and outcomes — not sessions, logins, or page views
+WHY IT MATTERS (callout box):
+✓ 80% of new signups at major dev platforms are now AI agents
+✓ Traditional onboarding is invisible to agents
+✓ Activation must be measured in API calls, not sessions
+✓ Expansion happens through usage, not sales calls
 
-5. EXPANSION
-   More agents, more calls, priced on consumption not seats
+OUTPUT:
+- Label each section with numbers (1, 2, 3, 4)
+- Use short 2-4 word headers per box
+- Add 1-line subtitles under each header
+- Include a small robot/AI mascot character in bottom-left corner
+- Add creator initials "JW" badge (circle) in top-left
+```
 
-WHAT TO RETIRE (a separate bottom section — things this framework
-replaces):
-Guided Tours · Activation Emails · Progress Bars · Per-Seat Pricing · Aha Moment Engineering
+---
 
-FORMAT: Portrait orientation, professional B2B style. The five steps
-should read as a clear left-to-right or top-to-bottom flow. The
-"What to Retire" items should feel visually subordinate — like a
-footnote or grayed-out layer.
+## Example: AI Marketing Agent Memory System (May 2026)
 
-AUDIENCE: Senior product managers and executives at SaaS companies.
-The tone is sharp and credible, not startup-flashy.
+```
+Create a professional explainer infographic in the style of a LinkedIn
+thought-leadership visual with the following specs:
+
+STYLE:
+- Light lavender/white background (#f5f0ff or white)
+- Primary colors: purple (#7B5EA7), blue (#4A90D9), yellow (#F5C842),
+  teal (#4ECDC4)
+- Hand-drawn/sketch-style icons (not photorealistic)
+- Rounded rectangle boxes with soft drop shadows
+- Bold sans-serif title (large, dark navy)
+- Subtitle in lighter italic or regular weight
+- Dashed and solid arrows showing flow/direction
+- Small emoji-style or outline icons inside each box
+- Numbered section labels in colored pill/badge shapes
+
+LAYOUT:
+- 1080x1350px portrait for LinkedIn
+- 4-section flow: [Left column] → [Center grid] → [Right column]
+- Bottom strip for sub-process steps (horizontal icon chain)
+- "Why It Matters" callout box with checklist bullets
+
+CONTENT TO VISUALIZE:
+
+CONCEPT: AI Marketing Agent Memory System
+How a marketing AI agent captures, stores, consolidates, and retrieves
+information to produce smarter, more consistent marketing output over time.
+
+SECTION 1 (left) — CAPTURE:
+Content flowing into the agent:
+- URLs scraped
+- PDFs ingested
+- Social posts pulled
+- Campaign briefs uploaded
+
+SECTION 2 (center grid) — MEMORY STORE (2×2 grid):
+Top-left:    EPISODIC     — Past campaigns run
+Top-right:   SEMANTIC     — Brand voice, audience insights
+Bottom-left: PROCEDURAL   — Proven workflows
+Bottom-right: GRAPH       — Brand → Audience → Channel relationships
+
+SECTION 3 (bottom strip) — CONSOLIDATE PIPELINE:
+Summarize → Compress → Decay → Learn
+
+SECTION 4 (right) — RETRIEVE & USE:
+- Brief Generation
+- Copy Suggestions
+- Smarter Targeting
+- Cross-campaign Learning
+
+WHY IT MATTERS (callout box):
+✓ Remembers what worked last quarter
+✓ Maintains brand voice consistency
+✓ Reduces repetitive setup
+✓ Scales across campaigns
+
+OUTPUT:
+- Label each section with numbers (1, 2, 3, 4)
+- Use short 2-4 word headers per box
+- Add 1-line subtitles under each header
+- Include a small robot/AI mascot character in bottom-left corner
+- Add creator initials "JW" badge (circle) in top-left
 ```

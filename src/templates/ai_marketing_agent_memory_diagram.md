@@ -9,81 +9,67 @@ for a marketing-specific AI agent.
 ## Prompt for Design Tool
 
 ```
-Create a visual architecture diagram for an AI Marketing Agent Memory System.
+Create a professional explainer infographic in the style of a LinkedIn
+thought-leadership visual with the following specs:
+
+STYLE:
+- Light lavender/white background (#f5f0ff or white)
+- Primary colors: purple (#7B5EA7), blue (#4A90D9), yellow (#F5C842),
+  teal (#4ECDC4)
+- Hand-drawn/sketch-style icons (not photorealistic)
+- Rounded rectangle boxes with soft drop shadows
+- Bold sans-serif title (large, dark navy)
+- Subtitle in lighter italic or regular weight
+- Dashed and solid arrows showing flow/direction
+- Small emoji-style or outline icons inside each box
+- Numbered section labels in colored pill/badge shapes
+
+LAYOUT:
+- 1080x1350px portrait for LinkedIn
+- 4-section flow: [Left column] → [Center grid] → [Right column]
+- Bottom strip for sub-process steps (horizontal icon chain)
+- "Why It Matters" callout box with checklist bullets
+
+CONTENT TO VISUALIZE:
 
 CONCEPT: AI Marketing Agent Memory System
-A diagram showing how a marketing AI agent captures, stores, consolidates,
-and retrieves information to produce smarter, more consistent marketing output
-over time.
+How a marketing AI agent captures, stores, consolidates, and retrieves
+information to produce smarter, more consistent marketing output over time.
 
-LAYOUT: Four directional sections around a central memory store.
-Left → Center → Bottom → Right flow. Not a linear step diagram —
-this is an interconnected system architecture.
-
----
-
-SECTION 1 — CAPTURE (left side)
-Label: CAPTURE
-What flows in from the outside world into the agent's memory.
-
-Content Sources:
+SECTION 1 (left) — CAPTURE:
+Content flowing into the agent:
 - URLs scraped
 - PDFs ingested
 - Social posts pulled
 - Campaign briefs uploaded
 
----
-
-SECTION 2 — MEMORY STORE (center, grid layout)
-Label: MEMORY STORE
-Four memory types arranged as a 2×2 grid:
-
+SECTION 2 (center grid) — MEMORY STORE (2×2 grid):
 Top-left:    EPISODIC     — Past campaigns run
 Top-right:   SEMANTIC     — Brand voice, audience insights
 Bottom-left: PROCEDURAL   — Proven workflows
 Bottom-right: GRAPH       — Brand → Audience → Channel relationships
 
----
-
-SECTION 3 — CONSOLIDATE (bottom)
-Label: CONSOLIDATE
-A horizontal processing pipeline beneath the memory store.
-
-Steps (left to right):
+SECTION 3 (bottom strip) — CONSOLIDATE PIPELINE:
 Summarize → Compress → Decay → Learn
 
----
-
-SECTION 4 — RETRIEVE & USE (right side)
-Label: RETRIEVE & USE
-What the agent produces when memory is queried.
-
-Outputs:
+SECTION 4 (right) — RETRIEVE & USE:
 - Brief Generation
 - Copy Suggestions
 - Smarter Targeting
 - Cross-campaign Learning
 
----
-
-WHY IT MATTERS (separate callout box, can sit in a corner or below)
-Label: WHY IT MATTERS
-
+WHY IT MATTERS (callout box):
 ✓ Remembers what worked last quarter
 ✓ Maintains brand voice consistency
 ✓ Reduces repetitive setup
 ✓ Scales across campaigns
 
----
-
-FORMAT: Landscape or square orientation works. Professional, technical
-but not overly complex. The MEMORY STORE grid should be the visual
-centerpiece. Arrows should show directionality: input flows in from
-the left (CAPTURE), consolidation happens below, retrieval exits to
-the right (RETRIEVE & USE).
-
-AUDIENCE: Senior marketers, marketing ops leaders, and product managers
-evaluating AI agent architectures. Tone is clear and credible.
+OUTPUT:
+- Label each section with numbers (1, 2, 3, 4)
+- Use short 2-4 word headers per box
+- Add 1-line subtitles under each header
+- Include a small robot/AI mascot character in bottom-left corner
+- Add creator initials "JW" badge (circle) in top-left
 ```
 
 ---
