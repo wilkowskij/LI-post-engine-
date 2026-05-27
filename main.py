@@ -321,8 +321,12 @@ def run_daily(topic, auto_schedule, generate_only):
     if generate_only:
         # Write a review-pending file for the CI workflow to create a GitHub Issue
         import json as _json
+        try:
+            post_file_str = str(path.relative_to(Path.cwd()))
+        except (ValueError, AttributeError):
+            post_file_str = str(path)
         review = {
-            "post_file": str(path),
+            "post_file": post_file_str,
             "topic": chosen["topic"],
             "format": chosen.get("format", ""),
             "text": chosen["text"],
