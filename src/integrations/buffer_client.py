@@ -9,7 +9,7 @@ from typing import Optional
 import requests
 
 
-BUFFER_API_BASE = "https://api.buffer.com"
+BUFFER_API_BASE = "https://api.bufferapp.com/1"
 
 
 class BufferClient:
@@ -19,12 +19,16 @@ class BufferClient:
         self.session.headers.update({"Authorization": f"Bearer {self.token}"})
 
     def _get(self, path: str, **kwargs) -> dict:
-        resp = self.session.get(f"{BUFFER_API_BASE}/{path}", **kwargs)
+        params = kwargs.pop("params", {})
+        params["access_token"] = self.token
+        resp = self.session.get(f"{BUFFER_API_BASE}/{path}", params=params, **kwargs)
         resp.raise_for_status()
         return resp.json()
 
     def _post(self, path: str, **kwargs) -> dict:
-        resp = self.session.post(f"{BUFFER_API_BASE}/{path}", **kwargs)
+        data = kwargs.pop("data", {})
+        data["access_token"] = self.token
+        resp = self.session.post(f"{BUFFER_API_BASE}/{path}", data=data, **kwargs)
         resp.raise_for_status()
         return resp.json()
 
@@ -34,7 +38,7 @@ class BufferClient:
 
     def get_profiles(self) -> list[dict]:
         """Return all connected social channels."""
-        result = self._get("channels.json")
+        result = self._get("profiles.json")
         return result if isinstance(result, list) else result.get("data", [])
 
     def get_linkedin_profiles(self) -> list[dict]:
