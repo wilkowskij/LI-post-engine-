@@ -1,0 +1,8 @@
+{
+  "post_file": "/home/user/LI-post-engine-/output/posts/2026-05-27_api-first_product_design_visual_framework_023144484570_draft.json",
+  "topic": "API-first product design",
+  "format": "visual_framework",
+  "text": "By 2026, your API's most important user won't read your docs.\n\nIt will be an LLM deciding at runtime whether your endpoint is worth calling.\n\nThe old API-first playbook optimized for developer experience: clean SDKs, good docs, sandbox keys. That's table stakes now.\n\nThe new playbook optimizes for Agent Experience (AX). Postman's 2025 report shows AI/LLM integration just displaced internal developer productivity as the #1 driver of new API investment. Gartner projects 30%+ of net-new API demand by 2026 will come from agents, not humans. And since MCP's launch, agents now auto-discover tools from your spec \u2014 APIs with vague descriptions or untyped errors get silently skipped.\n\nThe canonical API-first companies built $150B+ in combined value on the principle that the API *is* the product. The next cohort will do the same \u2014 but the product surface has shifted to your OpenAPI spec, error semantics, and endpoint discoverability.\n\nThe framework below is how I'd score readiness today.\n\nIf your API can't be picked correctly by an agent on the first try, you're not in the AI distribution layer. You're below it.\n\nWhat's the first thing you'd audit in your own spec?\n\n#APIFirst #ProductManagement #AI #SaaS",
+  "image_url": "",
+  "generated_at": "2026-05-27T02:31:45.051353"
+}
