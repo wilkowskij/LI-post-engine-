@@ -23,7 +23,7 @@ def research_trending_topics(category: Optional[str] = None) -> dict:
 
     try:
         from src.agent.marketing_agent import run_research_agent
-        client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+        client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"], max_retries=5)
         return run_research_agent(topic, client)
     except Exception:
         pass

@@ -261,7 +261,7 @@ def run_daily(topic, auto_schedule, generate_only):
 
     _require_env("ANTHROPIC_API_KEY")
 
-    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"], max_retries=5)
 
     from src.utils.content_calendar import pick_todays_topic, pick_todays_formats
 
