@@ -69,27 +69,22 @@ class BufferClient:
     # Creating posts
     # ------------------------------------------------------------------ #
 
-    def _discover_mutations(self) -> None:
-        """Print available mutations and CreatePostInput fields."""
+    def _discover_schema(self) -> None:
+        """Print SchedulingType enum values and AssetInput fields."""
         data = self._query("""
             query {
-              __schema {
-                mutationType {
-                  fields { name }
-                }
+              schedulingType: __type(name: "SchedulingType") {
+                enumValues { name }
               }
-              __type(name: "CreatePostInput") {
-                inputFields {
-                  name
-                  type { name kind ofType { name } }
-                }
+              assetInput: __type(name: "AssetInput") {
+                inputFields { name type { name kind ofType { name } } }
               }
             }
         """)
-        fields = data.get("__schema", {}).get("mutationType", {}).get("fields", [])
-        print(f"[buffer] available mutations: {[f['name'] for f in fields]}")
-        input_fields = data.get("__type", {}).get("inputFields", [])
-        print(f"[buffer] CreatePostInput fields: {[f['name'] for f in input_fields]}")
+        enum_vals = [v["name"] for v in (data.get("schedulingType") or {}).get("enumValues", [])]
+        asset_fields = [f["name"] for f in (data.get("assetInput") or {}).get("inputFields", [])]
+        print(f"[buffer] SchedulingType values: {enum_vals}")
+        print(f"[buffer] AssetInput fields: {asset_fields}")
 
     def schedule_post(
         self,
@@ -104,7 +99,7 @@ class BufferClient:
             raise ValueError("No LinkedIn channel IDs found. Set BUFFER_PROFILE_IDS secret.")
 
         try:
-            self._discover_mutations()
+            self._discover_schema()
         except Exception as e:
             print(f"[buffer] introspection failed: {e}")
 
