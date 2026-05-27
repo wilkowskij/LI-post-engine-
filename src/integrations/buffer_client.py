@@ -58,11 +58,17 @@ class BufferClient:
         return [p for p in self.get_profiles() if "linkedin" in p.get("service", "").lower()]
 
     def get_profile_ids(self) -> list[str]:
-        """Return channel IDs from env or auto-detect LinkedIn channels."""
+        """Return channel IDs from env, falling back to auto-detected LinkedIn channels."""
+        all_channels = self.get_profiles()
+        valid_ids = {c["id"] for c in all_channels}
+
         env_ids = os.environ.get("BUFFER_PROFILE_IDS", "")
         if env_ids:
-            return [pid.strip() for pid in env_ids.split(",") if pid.strip()]
-        linkedin = self.get_linkedin_profiles()
+            requested = [pid.strip() for pid in env_ids.split(",") if pid.strip()]
+            if all(pid in valid_ids for pid in requested):
+                return requested
+
+        linkedin = [c for c in all_channels if "linkedin" in c.get("service", "").lower()]
         return [p["id"] for p in linkedin]
 
     # ------------------------------------------------------------------ #
