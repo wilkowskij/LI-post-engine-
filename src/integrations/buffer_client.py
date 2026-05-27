@@ -69,23 +69,6 @@ class BufferClient:
     # Creating posts
     # ------------------------------------------------------------------ #
 
-    def _discover_schema(self) -> None:
-        """Print ImageAssetInput fields and ShareMode enum values."""
-        data = self._query("""
-            query {
-              imageAsset: __type(name: "ImageAssetInput") {
-                inputFields { name type { name kind ofType { name } } }
-              }
-              shareMode: __type(name: "ShareMode") {
-                enumValues { name }
-              }
-            }
-        """)
-        image_fields = [f["name"] for f in (data.get("imageAsset") or {}).get("inputFields", [])]
-        mode_vals = [v["name"] for v in (data.get("shareMode") or {}).get("enumValues", [])]
-        print(f"[buffer] ImageAssetInput fields: {image_fields}")
-        print(f"[buffer] ShareMode values: {mode_vals}")
-
     def schedule_post(
         self,
         text: str,
@@ -98,22 +81,25 @@ class BufferClient:
         if not ids:
             raise ValueError("No LinkedIn channel IDs found. Set BUFFER_PROFILE_IDS secret.")
 
-        try:
-            self._discover_schema()
-        except Exception as e:
-            print(f"[buffer] introspection failed: {e}")
-
         results = []
         for channel_id in ids:
+            if now:
+                mode = "shareNow"
+            elif scheduled_at:
+                mode = "customScheduled"
+            else:
+                mode = "addToQueue"
+
             inp: dict = {
                 "channelId": channel_id,
                 "text": text,
-                "schedulingType": "notification" if now else "automatic",
+                "schedulingType": "automatic",
+                "mode": mode,
             }
             if scheduled_at:
                 inp["dueAt"] = scheduled_at.strftime("%Y-%m-%dT%H:%M:%S+0000")
             if image_url:
-                inp["assets"] = [{"image": image_url}]
+                inp["assets"] = [{"image": {"url": image_url}}]
 
             data = self._query("""
                 mutation CreatePost($input: CreatePostInput!) {
