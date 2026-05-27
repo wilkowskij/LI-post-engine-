@@ -70,21 +70,21 @@ class BufferClient:
     # ------------------------------------------------------------------ #
 
     def _discover_schema(self) -> None:
-        """Print SchedulingType enum values and AssetInput fields."""
+        """Print ImageAssetInput fields and ShareMode enum values."""
         data = self._query("""
             query {
-              schedulingType: __type(name: "SchedulingType") {
-                enumValues { name }
-              }
-              assetInput: __type(name: "AssetInput") {
+              imageAsset: __type(name: "ImageAssetInput") {
                 inputFields { name type { name kind ofType { name } } }
+              }
+              shareMode: __type(name: "ShareMode") {
+                enumValues { name }
               }
             }
         """)
-        enum_vals = [v["name"] for v in (data.get("schedulingType") or {}).get("enumValues", [])]
-        asset_fields = [f["name"] for f in (data.get("assetInput") or {}).get("inputFields", [])]
-        print(f"[buffer] SchedulingType values: {enum_vals}")
-        print(f"[buffer] AssetInput fields: {asset_fields}")
+        image_fields = [f["name"] for f in (data.get("imageAsset") or {}).get("inputFields", [])]
+        mode_vals = [v["name"] for v in (data.get("shareMode") or {}).get("enumValues", [])]
+        print(f"[buffer] ImageAssetInput fields: {image_fields}")
+        print(f"[buffer] ShareMode values: {mode_vals}")
 
     def schedule_post(
         self,
@@ -97,6 +97,11 @@ class BufferClient:
         ids = profile_ids or self.get_profile_ids()
         if not ids:
             raise ValueError("No LinkedIn channel IDs found. Set BUFFER_PROFILE_IDS secret.")
+
+        try:
+            self._discover_schema()
+        except Exception as e:
+            print(f"[buffer] introspection failed: {e}")
 
         results = []
         for channel_id in ids:
