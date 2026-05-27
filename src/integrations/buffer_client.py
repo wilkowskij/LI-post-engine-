@@ -98,25 +98,17 @@ class BufferClient:
         if not ids:
             raise ValueError("No LinkedIn channel IDs found. Set BUFFER_PROFILE_IDS secret.")
 
-        try:
-            self._discover_schema()
-        except Exception as e:
-            print(f"[buffer] introspection failed: {e}")
-
         results = []
         for channel_id in ids:
             inp: dict = {
                 "channelId": channel_id,
                 "text": text,
-                "schedulingType": "queue",
+                "schedulingType": "notification" if now else "automatic",
             }
-            if now:
-                inp["schedulingType"] = "now"
-            elif scheduled_at:
-                inp["schedulingType"] = "scheduled"
+            if scheduled_at:
                 inp["dueAt"] = scheduled_at.strftime("%Y-%m-%dT%H:%M:%S+0000")
             if image_url:
-                inp["assets"] = [{"type": "image", "url": image_url}]
+                inp["assets"] = [{"image": image_url}]
 
             data = self._query("""
                 mutation CreatePost($input: CreatePostInput!) {
