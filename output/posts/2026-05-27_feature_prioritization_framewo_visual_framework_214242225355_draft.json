@@ -1,0 +1,46 @@
+{
+  "text": "RICE is quietly breaking.\n\nNot because the math is wrong. Because the denominator collapsed.\n\nWhen AI coding tools cut build effort by 3-5x, every feature suddenly scores \"high ROI.\" Your backlog stops sorting itself. Everything looks worth doing.\n\nAnd yet the oldest stat in product still holds: most features shipped in B2B SaaS go rarely or never used. That number hasn't budged in a decade of \"better\" frameworks. Which tells you the bottleneck was never build capacity. It was judgment about what to build.\n\nThe frameworks getting real traction now \u2014 Opportunity Solution Trees, JTBD bets, outcome contracts \u2014 all share one move. They stop scoring on cost and start scoring on outcome confidence.\n\nThe question shifts from \"what can we afford to build?\" to \"what outcome are we willing to own?\"\n\nThat's a much harder conversation. It forces a team to commit to a number a customer or the business will actually feel. You can't hide behind a velocity chart.\n\nIf engineering capacity isn't your scarce resource anymore, what is \u2014 for your team specifically?\n\n#ProductManagement #Prioritization #ProductStrategy",
+  "topic": "Feature prioritization frameworks",
+  "format": "visual_framework",
+  "hashtags": [
+    "#Prioritization",
+    "#ProductManagement",
+    "#ProductStrategy"
+  ],
+  "diagram": {
+    "title": "THE OUTCOME OWNERSHIP STACK",
+    "subtitle": "How prioritization shifts when build cost stops being the constraint",
+    "steps": [
+      {
+        "label": "NAME THE OUTCOME",
+        "description": "Pick a metric a customer or the business will actually feel."
+      },
+      {
+        "label": "RATE YOUR CONFIDENCE",
+        "description": "How sure are you this bet moves that number?"
+      },
+      {
+        "label": "DEFINE THE EVIDENCE",
+        "description": "What signal proves or kills the bet early?"
+      },
+      {
+        "label": "COMMIT TO OWNERSHIP",
+        "description": "One team owns the outcome, not just the ship date."
+      },
+      {
+        "label": "KILL OR DOUBLE DOWN",
+        "description": "Review against the metric, not the roadmap."
+      }
+    ],
+    "foundation_title": "WHAT THIS REPLACES",
+    "foundation_items": [
+      "EFFORT SCORING",
+      "VELOCITY THEATER",
+      "FEATURE COUNTING"
+    ]
+  },
+  "word_count": 179,
+  "char_count": 1113,
+  "status": "draft",
+  "saved_at": "2026-05-27T21:42:42.225355"
+}

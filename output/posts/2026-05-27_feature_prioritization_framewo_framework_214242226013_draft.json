@@ -1,0 +1,14 @@
+{
+  "text": "Your RICE score is broken and you probably haven't noticed yet.\n\nHere's what's happening. AI coding tools have cut engineering effort by something like 3-5x on most feature work. Which means the denominator in your RICE math just collapsed. Every feature now looks high-ROI. Every backlog item suddenly clears the bar.\n\nThe framework was never really measuring value. It was measuring scarcity. And the scarcity is gone.\n\nMeanwhile the stat that's haunted product teams for a decade hasn't moved: roughly 80% of features in B2B SaaS get rarely or never used. A decade of \"better\" prioritization. Same waste. Which tells you the bottleneck was never build capacity. It was judgment.\n\nSo the question shifts.\n\nOld question: what can we afford to build?\nNew question: what outcome are we willing to own?\n\nThe frameworks gaining ground right now (Opportunity Solution Trees, JTBD prioritization, outcome bets) all share one thing. They prioritize on confidence in the outcome, not cost of the build. Because build cost stopped being the scarce resource.\n\nWhere this breaks: if your team genuinely can't ship (legacy stack, regulated environment, infra debt), effort still matters and RICE still works. Don't throw it out for fashion.\n\nBut if your engineers are shipping 2x faster and your roadmap looks the same shape it did in 2023, you're not prioritizing. You're just filling capacity faster.\n\nWhat outcome would you stake your next quarter on, knowing you can't blame effort anymore?\n\n#ProductManagement #Prioritization #ProductStrategy",
+  "topic": "Feature prioritization frameworks",
+  "format": "framework",
+  "hashtags": [
+    "#Prioritization",
+    "#ProductManagement",
+    "#ProductStrategy"
+  ],
+  "word_count": 241,
+  "char_count": 1536,
+  "status": "draft",
+  "saved_at": "2026-05-27T21:42:42.226013"
+}

@@ -1,0 +1,14 @@
+{
+  "text": "Your RICE scores are about to start lying to you. Some already are.\n\nHere's what I'm watching: as AI coding tools compress build time, the Effort denominator in every prioritization framework is collapsing. A feature that scored 4.2 last year scores 8.6 this year. Same feature. Same value. Just cheaper to build.\n\nMost teams are reading this as good news. \"We can ship more of the roadmap.\" That's the wrong read.\n\nThe roadmap was never the problem. For as long as I've been doing this, somewhere around 70-80% of shipped B2B features go barely used. A decade of better frameworks hasn't moved that number. Which means build capacity was never the real bottleneck. Prioritization judgment was.\n\nSo here's my prediction for the next 18 months: the teams that win won't be the ones shipping 3x more features. They'll be the ones who admit RICE and ICE were crutches for a constraint that no longer exists, and rebuild their prioritization around outcome confidence instead of effort math.\n\nThe question shifts from \"what can we afford to build?\" to \"what outcome are we willing to put our name on?\" Those are very different conversations. The second one is harder. It also doesn't scale by adding engineers or AI agents.\n\nIf you're a PM, start now: kill the effort column in your next prioritization doc. Force the conversation to be about the outcome you're betting on and your confidence in it.\n\nWhat's the last feature you shipped that you'd actually stake a quarter on?\n\n#ProductManagement #Prioritization #ProductStrategy",
+  "topic": "Feature prioritization frameworks",
+  "format": "trend_prediction",
+  "hashtags": [
+    "#Prioritization",
+    "#ProductManagement",
+    "#ProductStrategy"
+  ],
+  "word_count": 254,
+  "char_count": 1525,
+  "status": "draft",
+  "saved_at": "2026-05-27T21:42:42.225707"
+}
