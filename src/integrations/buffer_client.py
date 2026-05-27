@@ -26,7 +26,9 @@ class BufferClient:
         if variables:
             payload["variables"] = variables
         resp = self.session.post(BUFFER_API_BASE, json=payload)
-        resp.raise_for_status()
+        if not resp.ok:
+            print(f"[buffer] HTTP {resp.status_code}: {resp.text[:500]}")
+            resp.raise_for_status()
         data = resp.json()
         if "errors" in data:
             raise ValueError(f"GraphQL errors: {data['errors']}")
@@ -67,6 +69,23 @@ class BufferClient:
     # Creating posts
     # ------------------------------------------------------------------ #
 
+    def _discover_mutations(self) -> None:
+        """Print available mutations to help debug schema mismatches."""
+        data = self._query("""
+            query {
+              __schema {
+                mutationType {
+                  fields {
+                    name
+                    args { name type { name kind ofType { name } } }
+                  }
+                }
+              }
+            }
+        """)
+        fields = data.get("__schema", {}).get("mutationType", {}).get("fields", [])
+        print(f"[buffer] available mutations: {[f['name'] for f in fields]}")
+
     def schedule_post(
         self,
         text: str,
@@ -78,6 +97,11 @@ class BufferClient:
         ids = profile_ids or self.get_profile_ids()
         if not ids:
             raise ValueError("No LinkedIn channel IDs found. Set BUFFER_PROFILE_IDS secret.")
+
+        try:
+            self._discover_mutations()
+        except Exception as e:
+            print(f"[buffer] introspection failed: {e}")
 
         results = []
         for channel_id in ids:
