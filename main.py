@@ -160,6 +160,13 @@ def schedule(filepath, image, when, yes):
         print_error("Buffer connection failed. Check BUFFER_ACCESS_TOKEN.")
         sys.exit(1)
 
+    # Print available channels so the user can verify BUFFER_PROFILE_IDS
+    try:
+        channels = buffer.get_profiles()
+        print_info(f"Buffer channels: {[(c.get('service'), c.get('name'), c['id']) for c in channels]}")
+    except Exception as _e:
+        print_error(f"Could not list channels: {_e}")
+
     if when == "now":
         result = buffer.schedule_post(post["text"], image_url=image_url, now=True)
     elif when == "tomorrow":
