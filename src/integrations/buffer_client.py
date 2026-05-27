@@ -70,21 +70,26 @@ class BufferClient:
     # ------------------------------------------------------------------ #
 
     def _discover_mutations(self) -> None:
-        """Print available mutations to help debug schema mismatches."""
+        """Print available mutations and CreatePostInput fields."""
         data = self._query("""
             query {
               __schema {
                 mutationType {
-                  fields {
-                    name
-                    args { name type { name kind ofType { name } } }
-                  }
+                  fields { name }
+                }
+              }
+              __type(name: "CreatePostInput") {
+                inputFields {
+                  name
+                  type { name kind ofType { name } }
                 }
               }
             }
         """)
         fields = data.get("__schema", {}).get("mutationType", {}).get("fields", [])
         print(f"[buffer] available mutations: {[f['name'] for f in fields]}")
+        input_fields = data.get("__type", {}).get("inputFields", [])
+        print(f"[buffer] CreatePostInput fields: {[f['name'] for f in input_fields]}")
 
     def schedule_post(
         self,
