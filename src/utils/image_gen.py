@@ -230,7 +230,10 @@ def generate_post_image(
     Requires post["diagram"] to be populated — call writer.generate_diagram_spec()
     first if the post was not generated in visual_framework format.
 
-    Uses Playwright HTML renderer when available; falls back to Pillow.
+    Priority:
+      1. OpenAI image generation (gpt-image-1 / DALL-E 3) — when OPENAI_API_KEY is set
+      2. Playwright HTML renderer — when Playwright is installed
+      3. Pillow fallback
     """
     diagram = post.get("diagram")
     if not diagram:
@@ -238,6 +241,16 @@ def generate_post_image(
             "post has no 'diagram' spec. Call writer.generate_diagram_spec(post, client) first."
         )
 
+    # 1. OpenAI image generation
+    if os.environ.get("OPENAI_API_KEY"):
+        try:
+            from src.integrations.openai_image_gen import generate_image as _openai_gen
+            return _openai_gen(diagram, post.get("text", ""), output_path=output_path)
+        except Exception as e:
+            import warnings
+            warnings.warn(f"OpenAI image generation failed, falling back: {e}")
+
+    # 2. Playwright HTML renderer
     try:
         from src.utils.html_renderer import render_card
         return render_card(
@@ -249,4 +262,5 @@ def generate_post_image(
     except ImportError:
         pass
 
+    # 3. Pillow fallback
     return generate_framework_diagram(diagram, author_name=author_name, output_path=output_path)

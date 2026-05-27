@@ -40,6 +40,7 @@ jobs:
       - name: Preflight — verify required secrets
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
           CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
@@ -57,6 +58,7 @@ jobs:
             fi
           }
           check ANTHROPIC_API_KEY     "$ANTHROPIC_API_KEY"     required
+          check OPENAI_API_KEY        "$OPENAI_API_KEY"        optional
           check CLOUDINARY_CLOUD_NAME "$CLOUDINARY_CLOUD_NAME"  optional
           check CLOUDINARY_API_KEY    "$CLOUDINARY_API_KEY"     optional
           check CLOUDINARY_API_SECRET "$CLOUDINARY_API_SECRET"  optional
@@ -70,6 +72,7 @@ jobs:
       - name: Run daily post engine
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
           CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
