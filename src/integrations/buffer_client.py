@@ -176,12 +176,13 @@ class BufferClient:
     def validate_connection(self) -> bool:
         """Check that the access token works."""
         try:
-            # Try new channels endpoint first, fall back to legacy user endpoint
-            try:
-                self.get_profiles()
-                return True
-            except Exception:
-                user = self._get("user.json")
-                return bool(user.get("id"))
-        except Exception:
-            return False
+            self.get_profiles()
+            return True
+        except Exception as e:
+            print(f"[buffer] channels.json failed: {e}")
+        try:
+            user = self._get("user.json")
+            return bool(user.get("id"))
+        except Exception as e:
+            print(f"[buffer] user.json failed: {e}")
+        return False
