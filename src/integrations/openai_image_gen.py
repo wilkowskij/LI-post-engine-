@@ -111,32 +111,43 @@ def generate_image(
     client = openai.OpenAI(api_key=api_key)
     prompt = format_image_prompt(diagram, post_text)
 
-    # gpt-image-1 = the model ChatGPT free uses; portrait 1024×1536
-    # dall-e-3 fallback = portrait 1024×1792
+    # gpt-image-1 = the model behind ChatGPT free image generation
+    #   - returns b64_json by default; does NOT accept response_format param
+    # dall-e-3 fallback
+    #   - requires response_format="b64_json" to get bytes instead of a URL
     candidates = [
-        ("gpt-image-1", "1024x1536"),
-        ("dall-e-3",    "1024x1792"),
+        ("gpt-image-1", "1024x1536", {}),
+        ("dall-e-3",    "1024x1792", {"response_format": "b64_json"}),
     ]
 
-    last_error = None
-    for model, size in candidates:
+    errors = []
+    for model, size, extra_kwargs in candidates:
         try:
+            print(f"[openai_image_gen] trying {model} @ {size}...")
             response = client.images.generate(
                 model=model,
                 prompt=prompt,
                 n=1,
                 size=size,
-                response_format="b64_json",
+                **extra_kwargs,
             )
-            img_bytes = base64.b64decode(response.data[0].b64_json)
-            output_path.write_bytes(img_bytes)
-            return output_path
-        except openai.NotFoundError:
-            # Model not available on this account tier — try next
-            last_error = f"{model} not available"
-            continue
-        except openai.BadRequestError as e:
-            last_error = str(e)
+            # gpt-image-1 returns b64_json by default; dall-e-3 with response_format also
+            img_b64 = response.data[0].b64_json
+            if img_b64:
+                output_path.write_bytes(base64.b64decode(img_b64))
+                print(f"[openai_image_gen] success with {model}")
+                return output_path
+            # fallback: URL response (dall-e-3 without response_format)
+            url = response.data[0].url
+            if url:
+                import urllib.request
+                urllib.request.urlretrieve(url, output_path)
+                print(f"[openai_image_gen] success with {model} (url)")
+                return output_path
+        except Exception as e:
+            msg = f"{model}: {e}"
+            print(f"[openai_image_gen] failed — {msg}")
+            errors.append(msg)
             continue
 
-    raise RuntimeError(f"OpenAI image generation failed: {last_error}")
+    raise RuntimeError(f"OpenAI image generation failed: {'; '.join(errors)}")

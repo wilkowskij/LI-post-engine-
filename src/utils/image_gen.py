@@ -247,8 +247,7 @@ def generate_post_image(
             from src.integrations.openai_image_gen import generate_image as _openai_gen
             return _openai_gen(diagram, post.get("text", ""), output_path=output_path)
         except Exception as e:
-            import warnings
-            warnings.warn(f"OpenAI image generation failed, falling back: {e}")
+            print(f"[image_gen] OpenAI failed — falling back to Playwright: {e}")
 
     # 2. Playwright HTML renderer
     try:
