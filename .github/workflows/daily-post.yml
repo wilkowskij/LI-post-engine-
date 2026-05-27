@@ -34,9 +34,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Install Playwright Chromium
-        run: playwright install --with-deps chromium
-
       - name: Preflight — verify required secrets
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -58,14 +55,14 @@ jobs:
             fi
           }
           check ANTHROPIC_API_KEY     "$ANTHROPIC_API_KEY"     required
-          check OPENAI_API_KEY        "$OPENAI_API_KEY"        optional
+          check OPENAI_API_KEY        "$OPENAI_API_KEY"        required
           check CLOUDINARY_CLOUD_NAME "$CLOUDINARY_CLOUD_NAME"  optional
           check CLOUDINARY_API_KEY    "$CLOUDINARY_API_KEY"     optional
           check CLOUDINARY_API_SECRET "$CLOUDINARY_API_SECRET"  optional
           check BUFFER_ACCESS_TOKEN   "$BUFFER_ACCESS_TOKEN"    optional
           check TAVILY_API_KEY        "$TAVILY_API_KEY"         optional
           if [ "$status" != "0" ]; then
-            echo "::error::ANTHROPIC_API_KEY is not set as a repository secret. Add it under Settings → Secrets and variables → Actions."
+            echo "::error::Required secrets missing. Add ANTHROPIC_API_KEY and OPENAI_API_KEY under Settings → Secrets and variables → Actions."
             exit 1
           fi
 

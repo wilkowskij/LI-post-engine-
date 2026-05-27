@@ -241,13 +241,10 @@ def generate_post_image(
             "post has no 'diagram' spec. Call writer.generate_diagram_spec(post, client) first."
         )
 
-    # 1. OpenAI image generation
+    # 1. OpenAI image generation — primary renderer when key is set
     if os.environ.get("OPENAI_API_KEY"):
-        try:
-            from src.integrations.openai_image_gen import generate_image as _openai_gen
-            return _openai_gen(diagram, post.get("text", ""), output_path=output_path)
-        except Exception as e:
-            print(f"[image_gen] OpenAI failed — falling back to Playwright: {e}")
+        from src.integrations.openai_image_gen import generate_image as _openai_gen
+        return _openai_gen(diagram, post.get("text", ""), output_path=output_path)
 
     # 2. Playwright HTML renderer
     try:
