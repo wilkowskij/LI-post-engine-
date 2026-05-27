@@ -114,18 +114,21 @@ class BufferClient:
                 inp["mediaUrls"] = [image_url]
 
             data = self._query("""
-                mutation CreatePost($input: PostInput!) {
+                mutation CreatePost($input: CreatePostInput!) {
                   createPost(input: $input) {
-                    post { id status }
-                    userErrors { message }
+                    ... on PostActionSuccess {
+                      post { id status }
+                    }
+                    ... on PostActionError {
+                      message
+                    }
                   }
                 }
             """, {"input": inp})
 
             result = data.get("createPost", {})
-            errors = result.get("userErrors") or []
-            if errors:
-                raise ValueError(f"Buffer post error: {errors}")
+            if result.get("message"):
+                raise ValueError(f"Buffer post error: {result['message']}")
             results.append(result.get("post", {}))
 
         return results[0] if len(results) == 1 else {"posts": results}
