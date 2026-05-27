@@ -34,6 +34,36 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Preflight — verify required secrets
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+          BUFFER_ACCESS_TOKEN: ${{ secrets.BUFFER_ACCESS_TOKEN }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+        run: |
+          echo "Secret presence (values hidden):"
+          status=0
+          check() {
+            if [ -z "$2" ]; then
+              echo "  MISSING  $1"
+              [ "$3" = "required" ] && status=1
+            else
+              echo "  present  $1 (${#2} chars)"
+            fi
+          }
+          check ANTHROPIC_API_KEY     "$ANTHROPIC_API_KEY"     required
+          check CLOUDINARY_CLOUD_NAME "$CLOUDINARY_CLOUD_NAME"  optional
+          check CLOUDINARY_API_KEY    "$CLOUDINARY_API_KEY"     optional
+          check CLOUDINARY_API_SECRET "$CLOUDINARY_API_SECRET"  optional
+          check BUFFER_ACCESS_TOKEN   "$BUFFER_ACCESS_TOKEN"    optional
+          check TAVILY_API_KEY        "$TAVILY_API_KEY"         optional
+          if [ "$status" != "0" ]; then
+            echo "::error::ANTHROPIC_API_KEY is not set as a repository secret. Add it under Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+
       - name: Run daily post engine
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
