@@ -53,31 +53,28 @@ def generate_post(
     is_visual = chosen_format == "visual_framework"
     format_suffix = _VISUAL_FRAMEWORK_SUFFIX if is_visual else "\nReturn ONLY the post text, ready to copy-paste to LinkedIn. No meta-commentary."
 
-    user_prompt = f"""Write a LinkedIn post for a Senior Product Manager in the SaaS/DaaS space.
+    user_prompt = f"""Write a LinkedIn post for Jeff Wilkowski — Senior PM in the SaaS/PLG/DaaS space.
 
 RESEARCH BRIEF:
 {research_brief}
 {angle_note}
 
 POST FORMAT: {chosen_format}
-Format description: {fmt['description']}
-Structure to follow: {fmt['structure']}
+What it is: {fmt['description']}
+How it should be structured: {fmt['structure']}
 Target length: {fmt['length']}
 
-HASHTAGS to use (pick 3-5 most relevant): {', '.join(hashtags)}
+HASHTAGS — pick 3-5 that fit naturally, don't force them: {', '.join(hashtags)}
 
-RULES:
-- Open with a PREDICTION, PATTERN, or FRAMEWORK — not a personal story opener
-- Write for both a senior PM AND an executive reading on mobile
-- Include one forward-looking take (where is this heading in 12-24 months?)
-- Use structure: numbered lists, named frameworks, clear before/after when possible
-- Ground every claim in a concrete signal, pattern, or market observation
-- Never name specific companies, clients, or employers
-- Never use: "delve into", "it's worth noting", "in today's fast-paced landscape",
-  "game-changer", "revolutionize", "synergy", or "leverage" as a verb
-- Short paragraphs, line breaks between each for mobile readability
-- Do NOT use em-dashes (—) more than once
-- Do NOT start with "I"
+A few reminders about voice:
+- Write like you're explaining something important to a smart colleague, not writing a blog post
+- One strong, specific idea defended well beats five shallow points
+- Don't cite specific reports or statistics unless you'd stake your reputation on the accuracy —
+  it's better to say "I've seen this pattern" than invent a precise number
+- The opener should earn attention through genuine curiosity or a real challenge to assumptions —
+  it doesn't have to be a prediction or framework announcement
+- If you end with a question, make it one that actually has stakes — not "what do you think?"
+- Write for mobile: short paragraphs, natural line breaks, varied sentence length
 {format_suffix}"""
 
     message = client.messages.create(

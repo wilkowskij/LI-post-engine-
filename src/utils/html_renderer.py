@@ -8,7 +8,6 @@ Layout (1080 × 1350 portrait):
   ─ foundation row  (optional pills)
   ─ byline
 """
-import re
 from pathlib import Path
 from typing import Optional
 
@@ -36,7 +35,6 @@ def _extract_hook(post_text: str, max_chars: int = 180) -> str:
     first = lines[0] if lines else ""
     if len(first) <= max_chars:
         return first
-    # Truncate at a word boundary
     cut = first[:max_chars].rsplit(" ", 1)[0]
     return cut.rstrip(".,;:") + " …"
 
@@ -54,17 +52,27 @@ def _esc(text: str) -> str:
 # ── HTML template ─────────────────────────────────────────────────────────────
 
 _CSS = f"""
-* {{ margin: 0; padding: 0; box-sizing: border-box; }}
+* {{ margin: 0; padding: 0; box-sizing: border-box; text-decoration: none !important; }}
+a, a:link, a:visited, a:hover, a:active {{ color: inherit !important; text-decoration: none !important; }}
 
 body {{
   width: {CARD_W}px;
   height: {CARD_H}px;
-  background: {BRAND['bg']};
+  background: linear-gradient(160deg, #111827 0%, #0c1623 100%);
   font-family: 'Inter', 'Liberation Sans', 'DejaVu Sans', system-ui, sans-serif;
   color: {BRAND['white']};
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
+}}
+
+body::before {{
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 500px;
+  background: radial-gradient(ellipse at 20% 0%, rgba(201,162,85,0.06) 0%, transparent 65%);
+  pointer-events: none;
 }}
 
 /* ── top accent bar ── */
@@ -109,7 +117,7 @@ body {{
 /* ── diagram zone ── */
 .diagram-zone {{
   flex: 1;
-  padding: 24px 52px 20px;
+  padding: 24px 52px 16px;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -121,13 +129,14 @@ body {{
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: {BRAND['gold']};
-  margin-bottom: 16px;
+  margin-bottom: 14px;
+  flex-shrink: 0;
 }}
 
 .steps-list {{
+  flex: 1;
   display: flex;
   flex-direction: column;
-  flex: 1;
   gap: 0;
 }}
 
@@ -135,20 +144,32 @@ body {{
   background: {BRAND['surface']};
   border-radius: 8px;
   border-left: 4px solid {BRAND['gold']};
-  padding: 14px 20px 14px 18px;
+  padding: 0 22px 0 16px;
   display: flex;
-  align-items: flex-start;
-  gap: 14px;
+  align-items: center;
+  gap: 16px;
   flex: 1;
+  min-height: 72px;
+}}
+
+.step-num-wrap {{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: rgba(201, 162, 85, 0.12);
+  border: 1.5px solid rgba(201, 162, 85, 0.40);
+  flex-shrink: 0;
 }}
 
 .step-num {{
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 900;
   color: {BRAND['gold']};
-  min-width: 34px;
   line-height: 1;
-  padding-top: 2px;
 }}
 
 .step-body {{
@@ -157,29 +178,30 @@ body {{
 }}
 
 .step-label {{
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: {BRAND['white']};
-  margin-bottom: 4px;
-  line-height: 1.3;
+  margin-bottom: 6px;
+  line-height: 1.2;
 }}
 
 .step-desc {{
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 400;
   color: {BRAND['gray']};
-  line-height: 1.45;
+  line-height: 1.5;
 }}
 
 .step-arrow {{
   text-align: center;
   color: {BRAND['gold']};
-  font-size: 16px;
+  font-size: 18px;
+  line-height: 1;
+  opacity: 0.5;
   padding: 3px 0;
   flex-shrink: 0;
-  opacity: 0.7;
 }}
 
 /* ── foundation row ── */
@@ -248,7 +270,6 @@ def build_card_html(
     foundation_title = diagram.get("foundation_title", "")
     foundation_items = (diagram.get("foundation_items") or [])[:8]
 
-    # Build step cards HTML
     steps_html = []
     for i, step in enumerate(steps):
         if i > 0:
@@ -257,14 +278,13 @@ def build_card_html(
         desc = _esc(step.get("description", ""))
         steps_html.append(f"""
         <div class="step-card">
-          <div class="step-num">{i + 1:02d}</div>
+          <div class="step-num-wrap"><div class="step-num">{i + 1:02d}</div></div>
           <div class="step-body">
             <div class="step-label">{label}</div>
             <div class="step-desc">{desc}</div>
           </div>
         </div>""")
 
-    # Foundation row HTML
     foundation_html = ""
     if foundation_items:
         pills = "".join(
@@ -280,14 +300,15 @@ def build_card_html(
     </div>"""
 
     return f"""<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="format-detection" content="telephone=no,date=no,address=no,email=no,url=no">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>{_CSS}</style>
 </head>
-<body>
+<body spellcheck="false">
   <div class="accent-bar"></div>
 
   <div class="hook-zone">
@@ -329,34 +350,41 @@ def render_card(
     output_path.parent.mkdir(parents=True, exist_ok=True)
     html = build_card_html(diagram, post_text, author_name=author_name)
 
-    from playwright.sync_api import sync_playwright
+    _launch_args = [
+        "--disable-spell-checking",
+        "--disable-features=SpellcheckAutoCorrect,SpellcheckAutoType,AutofillServerCommunication",
+    ]
 
     def _find_headless_shell() -> Optional[str]:
-        """Scan PLAYWRIGHT_BROWSERS_PATH for a usable headless-shell binary."""
         import os
         base = Path(os.environ.get("PLAYWRIGHT_BROWSERS_PATH", "/opt/pw-browsers"))
         if not base.exists():
             return None
-        # Prefer headless_shell over full chrome (old headless removed in Chromium 112+)
         for name in ("headless_shell", "chrome-headless-shell", "chrome"):
             for binary in sorted(base.rglob(name), reverse=True):
                 if binary.is_file() and os.access(binary, os.X_OK):
                     return str(binary)
         return None
 
+    from playwright.sync_api import sync_playwright
     with sync_playwright() as pw:
-        launch_kwargs: dict = {}
         try:
-            browser = pw.chromium.launch(**launch_kwargs)
+            browser = pw.chromium.launch(args=_launch_args)
         except Exception:
-            # Binary version mismatch — try auto-detected path
             fallback = _find_headless_shell()
             if not fallback:
                 raise
-            browser = pw.chromium.launch(executable_path=fallback)
+            browser = pw.chromium.launch(executable_path=fallback, args=_launch_args)
 
         page = browser.new_page(viewport={"width": CARD_W, "height": CARD_H})
         page.set_content(html, wait_until="networkidle")
+        # Strip any auto-detected link styling Chromium applies to text
+        page.evaluate("""() => {
+            document.querySelectorAll('a').forEach(a => {
+                a.style.color = 'inherit';
+                a.style.textDecoration = 'none';
+            });
+        }""")
         page.screenshot(path=str(output_path), type="png", clip={
             "x": 0, "y": 0, "width": CARD_W, "height": CARD_H,
         })
