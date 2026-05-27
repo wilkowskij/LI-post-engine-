@@ -229,10 +229,24 @@ def generate_post_image(
     Generate the diagram image for a post.
     Requires post["diagram"] to be populated — call writer.generate_diagram_spec()
     first if the post was not generated in visual_framework format.
+
+    Uses Playwright HTML renderer when available; falls back to Pillow.
     """
     diagram = post.get("diagram")
     if not diagram:
         raise ValueError(
             "post has no 'diagram' spec. Call writer.generate_diagram_spec(post, client) first."
         )
+
+    try:
+        from src.utils.html_renderer import render_card
+        return render_card(
+            diagram,
+            post.get("text", ""),
+            author_name=author_name,
+            output_path=output_path,
+        )
+    except ImportError:
+        pass
+
     return generate_framework_diagram(diagram, author_name=author_name, output_path=output_path)
