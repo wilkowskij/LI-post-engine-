@@ -308,22 +308,18 @@ def run_daily(topic, auto_schedule, generate_only):
     # Generate framework diagram → upload to Cloudinary
     image_url = None
     if os.environ.get("CLOUDINARY_API_KEY"):
-        try:
-            from src.utils.image_gen import generate_post_image
-            from src.integrations.cloudinary_client import upload_post_image
-            from src.agent.writer import generate_diagram_spec
-            author_name = os.environ.get("AUTHOR_NAME", "Jeff Wilkowski")
-            print_info("Generating framework diagram...")
-            generate_diagram_spec(chosen, client)   # no-op if spec already present
-            card_path = generate_post_image(chosen, author_name=author_name)
-            print_info("Uploading image to Cloudinary...")
-            result = upload_post_image(card_path, chosen["topic"])
-            image_url = result["url"]
-            print_success(f"Image ready: {image_url}")
-            # Persist image_url in the draft JSON so schedule-post can reuse it
-            update_post_status(str(path), "draft", extra={"image_url": image_url})
-        except Exception as e:
-            print_error(f"Image generation skipped: {e}")
+        from src.utils.image_gen import generate_post_image
+        from src.integrations.cloudinary_client import upload_post_image
+        from src.agent.writer import generate_diagram_spec
+        author_name = os.environ.get("AUTHOR_NAME", "Jeff Wilkowski")
+        print_info("Generating framework diagram...")
+        generate_diagram_spec(chosen, client)
+        card_path = generate_post_image(chosen, author_name=author_name)
+        print_info("Uploading image to Cloudinary...")
+        result = upload_post_image(card_path, chosen["topic"])
+        image_url = result["url"]
+        print_success(f"Image ready: {image_url}")
+        update_post_status(str(path), "draft", extra={"image_url": image_url})
 
     if generate_only:
         # Write a review-pending file for the CI workflow to create a GitHub Issue

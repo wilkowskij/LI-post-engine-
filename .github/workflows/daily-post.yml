@@ -66,6 +66,28 @@ jobs:
             exit 1
           fi
 
+      - name: Test OpenAI image generation
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python3 -c "
+          import os, openai
+          client = openai.OpenAI(api_key=os.environ['OPENAI_API_KEY'])
+          print('Testing gpt-image-1...')
+          try:
+              r = client.images.generate(model='gpt-image-1', prompt='a blue circle', n=1, size='1024x1024')
+              print('gpt-image-1: OK')
+          except Exception as e:
+              print(f'gpt-image-1 failed: {e}')
+              print('Trying dall-e-3...')
+              try:
+                  r = client.images.generate(model='dall-e-3', prompt='a blue circle', n=1, size='1024x1024', response_format='b64_json')
+                  print('dall-e-3: OK')
+              except Exception as e2:
+                  print(f'dall-e-3 failed: {e2}')
+                  exit(1)
+          "
+
       - name: Run daily post engine
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
