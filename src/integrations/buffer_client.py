@@ -119,9 +119,6 @@ class BufferClient:
                     ... on PostActionSuccess {
                       post { id status }
                     }
-                    ... on PostActionError {
-                      message
-                    }
                   }
                 }
             """, {"input": inp})
