@@ -1,0 +1,85 @@
+name: Daily LinkedIn Post
+
+on:
+  schedule:
+    # 8:00 AM CT (UTC-6 winter / UTC-5 summer) on Mon, Wed, Fri
+    # Winter (UTC-6): 14:00 UTC · Summer (UTC-5): 13:00 UTC
+    # Runs at 14:00 UTC year-round; post lands ~8am CT in winter, ~9am in summer
+    - cron: '0 14 * * 1,3,5'
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: 'Override topic (leave blank for smart auto-select)'
+        required: false
+        default: ''
+
+jobs:
+  generate-post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily post generation
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+          BUFFER_ACCESS_TOKEN: ${{ secrets.BUFFER_ACCESS_TOKEN }}
+          BUFFER_PROFILE_IDS: ${{ secrets.BUFFER_PROFILE_IDS }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          AUTHOR_NAME: ${{ secrets.AUTHOR_NAME }}
+          AUTHOR_HEADLINE: ${{ secrets.AUTHOR_HEADLINE }}
+          POST_TIMEZONE: America/Chicago
+          POSTING_DAYS: Mon,Wed,Fri
+        run: |
+          TOPIC="${{ github.event.inputs.topic }}"
+          if [ -n "$TOPIC" ]; then
+            python main.py run-daily --auto-schedule --topic "$TOPIC"
+          else
+            python main.py run-daily --auto-schedule
+          fi
+
+      - name: Commit post history
+        if: success()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add output/posts/ || true
+          git diff --cached --quiet || git commit -m "chore: add post $(date +%Y-%m-%d) [skip ci]"
+          git push || true
+
+      - name: Upload generated artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: post-output-${{ github.run_number }}
+          path: |
+            output/posts/
+            output/images/
+          retention-days: 90
+
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Daily post pipeline failed — ${new Date().toISOString().slice(0,10)}`,
+              body: `The daily LinkedIn post workflow failed.\n\n**Run:** [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})\n\nCheck the logs for details. Common causes: expired Buffer token, Cloudinary quota, Anthropic API issue.`,
+              labels: ['pipeline-failure']
+            });
