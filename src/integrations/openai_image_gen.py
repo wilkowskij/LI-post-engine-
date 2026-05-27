@@ -12,10 +12,14 @@ from pathlib import Path
 from typing import Optional
 
 
-_STYLE_BLOCK = """\
+_BASE_PROMPT = """\
+Create a professional explainer infographic in the style of a LinkedIn \
+thought-leadership visual with the following specs:
+
 STYLE:
 - Light lavender/white background (#f5f0ff or white)
-- Primary colors: purple (#7B5EA7), blue (#4A90D9), yellow (#F5C842), teal (#4ECDC4)
+- Primary colors: purple (#7B5EA7), blue (#4A90D9), yellow (#F5C842), \
+teal (#4ECDC4)
 - Hand-drawn/sketch-style icons (not photorealistic)
 - Rounded rectangle boxes with soft drop shadows
 - Bold sans-serif title (large, dark navy)
@@ -25,17 +29,20 @@ STYLE:
 - Numbered section labels in colored pill/badge shapes
 
 LAYOUT:
-- 1080x1350px portrait for LinkedIn
+- 1200x1200px or 1080x1350px (square or portrait for LinkedIn)
 - 4-section flow: [Left column] → [Center grid] → [Right column]
 - Bottom strip for sub-process steps (horizontal icon chain)
 - "Why It Matters" callout box with checklist bullets
+
+CONTENT TO VISUALIZE:
+{content}
 
 OUTPUT:
 - Label each section with numbers (1, 2, 3, 4)
 - Use short 2-4 word headers per box
 - Add 1-line subtitles under each header
 - Include a small robot/AI mascot character in bottom-left corner
-- Add creator initials "JW" badge (circle) in top-left\
+- Add creator initials badge (circle) in top-left\
 """
 
 
@@ -75,12 +82,7 @@ def format_image_prompt(diagram: dict, post_text: str) -> str:
 
     content = "\n".join(lines)
 
-    return (
-        "Create a professional explainer infographic in the style of a LinkedIn "
-        "thought-leadership visual with the following specs:\n\n"
-        f"{_STYLE_BLOCK}\n\n"
-        f"CONTENT TO VISUALIZE:\n{content}"
-    )
+    return _BASE_PROMPT.format(content=content)
 
 
 def generate_image(
