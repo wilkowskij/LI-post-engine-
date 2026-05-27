@@ -1,0 +1,14 @@
+{
+  "text": "Everyone's arguing about outcome-based vs. usage-based pricing.\n\nMeanwhile, the actual problem is that most SaaS teams are charging a ~50% AI premium on plans where the majority of seats already sit unused. Buyers notice. They just haven't churned yet.\n\nThe real question isn't which pricing model wins. It's whether your packaging has any architecture at all, or whether you've been bolting AI SKUs onto a structure that was already leaking.\n\nA frame I keep coming back to. Three layers, in order:\n\n1. Anchor \u2014 a subscription that defines who the customer is and what they get reliably. Not a fallback. The thing that makes everything else legible.\n\n2. Meter \u2014 usage on the dimension that actually correlates with value delivered. One. Not four.\n\n3. Upside \u2014 outcome or premium tier for the customers who've already proven the meter matters to them.\n\nMost teams skip straight to layer 3 because it's the loudest conversation in the market. But outcome pricing without an anchor is just a consulting engagement with a logo on it.\n\nWhere this breaks: true commodity infrastructure (pure usage wins) and bet-the-company enterprise deals (custom every time). Everywhere in the middle, the hybrid quietly dominates.\n\nThe uncomfortable signal right now: the companies pulling AI back into core plans aren't being generous. They're admitting the add-on SKU was never going to survive a renewal cycle.\n\nWhat's the one metric your pricing is actually anchored to \u2014 and would your customers name the same one?\n\n#SaaSPricing #ProductStrategy #PLG",
+  "topic": "Pricing and packaging strategy",
+  "format": "framework",
+  "hashtags": [
+    "#SaaSPricing",
+    "#ProductStrategy",
+    "#PLG"
+  ],
+  "word_count": 247,
+  "char_count": 1536,
+  "status": "draft",
+  "saved_at": "2026-05-27T23:47:41.384517"
+}

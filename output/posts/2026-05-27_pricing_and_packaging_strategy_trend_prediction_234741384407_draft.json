@@ -1,0 +1,14 @@
+{
+  "text": "The pricing debate right now is stuck on the wrong question.\n\nEveryone's arguing outcome-based vs. usage-based vs. subscription, like it's a religion war. Meanwhile the actual pattern I keep seeing is uglier: teams bolting a 50%+ AI premium onto plans where most seats already sit unused. Customers are paying more for AI on top of shelfware.\n\nThat's not a pricing strategy. That's a tax.\n\nHere's what I think most people are getting wrong about the next 18 months: outcome-based pricing is not going to win. It's too hard to attribute, too hard to forecast, and buyers don't trust the measurement. It'll get talked about constantly and adopted slowly.\n\nWhat's actually winning, quietly, is the hybrid model. Subscription as the anchor (predictable revenue, predictable budget line), with usage or outcome layered on top for the expansion story. The companies pulling AI features back *into* core plans aren't retreating. They're recognizing the add-on SKU was friction in disguise.\n\nMy prediction: by late 2026, the teams winning on monetization won't be the ones with the cleverest pricing model. They'll be the ones with any coherent packaging architecture at all. Most teams don't have one. They have a price list and a hope.\n\nWhat I'd do Monday: stop asking \"what should we charge for AI?\" and start asking \"what's the job our anchor plan is doing, and where does metered upside genuinely map to value created?\"\n\nIf your AI premium is bigger than your activation rate, what exactly are you selling?\n\n#SaaSPricing #ProductStrategy #PLG",
+  "topic": "Pricing and packaging strategy",
+  "format": "trend_prediction",
+  "hashtags": [
+    "#SaaSPricing",
+    "#ProductStrategy",
+    "#PLG"
+  ],
+  "word_count": 250,
+  "char_count": 1539,
+  "status": "draft",
+  "saved_at": "2026-05-27T23:47:41.384407"
+}

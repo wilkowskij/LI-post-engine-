@@ -1,0 +1,54 @@
+{
+  "text": "Everyone's debating outcome-based vs. usage-based pricing like it's the question that matters.\n\nIt isn't.\n\nThe uncomfortable pattern I keep seeing: companies are layering 50%+ AI premiums onto plans where most seats already sit unused. They're charging more for AI on top of shelfware. And when you ask how they arrived at the number, the answer is some version of \"that's what the market is doing.\"\n\nMeanwhile the teams quietly winning aren't picking a side in the pricing religion war. They're running a hybrid: a subscription anchor that funds predictability, with metered or outcome upside layered on top. The anchor isn't a fallback. It's what makes the rest viable.\n\nThe sequence I'd actually defend:\n\nStart with utilization truth before you touch price. Then anchor with a subscription floor. Then layer the metered upside where value scales with use. Then reserve outcome pricing for the narrow cases where you can actually measure the outcome. AI sits inside the architecture, not bolted onto it.\n\nMost \"AI pricing strategy\" right now is reactive packaging dressed up as conviction.\n\nIf you stripped your AI premium tomorrow, would your customers notice value loss, or just stop paying for something they weren't using?\n\n#SaaSPricing #ProductStrategy #PLG",
+  "topic": "Pricing and packaging strategy",
+  "format": "visual_framework",
+  "hashtags": [
+    "#SaaSPricing",
+    "#ProductStrategy",
+    "#PLG"
+  ],
+  "diagram": {
+    "title": "THE HYBRID PRICING STACK",
+    "subtitle": "A disciplined sequence for packaging SaaS and AI in 2026.",
+    "steps": [
+      {
+        "label": "AUDIT UTILIZATION",
+        "description": "Know what's actually used before pricing anything new."
+      },
+      {
+        "label": "ANCHOR WITH SUBSCRIPTION",
+        "description": "Set a floor that funds predictability for both sides."
+      },
+      {
+        "label": "LAYER METERED UPSIDE",
+        "description": "Charge more only where consumption tracks real value."
+      },
+      {
+        "label": "RESERVE OUTCOME PRICING",
+        "description": "Use it only where outcomes are measurable and attributable."
+      },
+      {
+        "label": "EMBED AI INSIDE",
+        "description": "Make AI part of the architecture, not a premium SKU."
+      }
+    ],
+    "foundation_title": "FOUNDATION: PACKAGING DISCIPLINE",
+    "foundation_items": [
+      "BUYER ROI EXPECTATIONS",
+      "USAGE TELEMETRY",
+      "WILLINGNESS-TO-PAY DATA",
+      "COMPETITIVE ANCHORS"
+    ]
+  },
+  "word_count": 199,
+  "char_count": 1264,
+  "status": "scheduled",
+  "saved_at": "2026-05-27T23:47:41.384142",
+  "updated_at": "2026-05-27T23:47:42.782740",
+  "buffer_result": {
+    "id": "6a17829e8975268c995e79f2",
+    "status": "scheduled"
+  },
+  "scheduled_when": "queue",
+  "image_url": null
+}
