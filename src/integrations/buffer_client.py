@@ -27,7 +27,7 @@ class BufferClient:
             payload["variables"] = variables
         resp = self.session.post(BUFFER_API_BASE, json=payload)
         if not resp.ok:
-            print(f"[buffer] HTTP {resp.status_code}: {resp.text[:500]}")
+            print(f"[buffer] HTTP {resp.status_code}: {resp.text[:2000]}")
             resp.raise_for_status()
         data = resp.json()
         if "errors" in data:
@@ -110,13 +110,18 @@ class BufferClient:
 
         results = []
         for channel_id in ids:
-            inp: dict = {"channelId": channel_id, "text": text}
+            inp: dict = {
+                "channelId": channel_id,
+                "text": text,
+                "schedulingType": "queue",
+            }
             if now:
-                inp["publishNow"] = True
+                inp["schedulingType"] = "now"
             elif scheduled_at:
-                inp["scheduledAt"] = scheduled_at.strftime("%Y-%m-%dT%H:%M:%S+0000")
+                inp["schedulingType"] = "scheduled"
+                inp["dueAt"] = scheduled_at.strftime("%Y-%m-%dT%H:%M:%S+0000")
             if image_url:
-                inp["mediaUrls"] = [image_url]
+                inp["assets"] = [{"type": "image", "url": image_url}]
 
             data = self._query("""
                 mutation CreatePost($input: CreatePostInput!) {
