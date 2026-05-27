@@ -1,0 +1,14 @@
+{
+  "text": "Most enterprise deals don't die on price. They die in a Slack thread you'll never see, between a VP who likes you and a director who doesn't get why this matters.\n\nGartner pegs it around 64% of stalled deals. Internal misalignment, not budget. And once you've got 10+ influencers on a deal, the cycle stretches almost insanely long.\n\nHere's how I've started thinking about it.\n\nStop treating product usage data as a roadmap input. Start treating it as a sales artifact.\n\nThe skeptical director who's blocking the deal doesn't need another ROI deck. They need to see that 340 people on their team logged in last month, that three workflows are already live, that the champion isn't bluffing about adoption. That's not a pitch. That's evidence.\n\nThe PM owns that evidence. Most don't ship it anywhere useful.\n\nThe pattern I keep seeing in the rare companies that get this right: product telemetry flows directly into the AE's workspace, segmented by account, surfaced as talking points. Not a dashboard nobody opens. A signal in the rep's daily motion.\n\nWhere it breaks: early-stage products with thin usage data, or deals where the buyer hasn't touched the product yet. In those cases you're back to narrative selling, and that's fine.\n\nBut for expansion, multi-threaded enterprise, and any deal stuck in committee? Usage data is the unlock.\n\nQuestion for the PMs reading: who in your org actually owns piping product signals into the sales motion? If the answer is \"nobody,\" that's the gap.\n\n#EnterpriseProduct #SaaS #GTM",
+  "topic": "Enterprise sales and product alignment",
+  "format": "framework",
+  "hashtags": [
+    "#EnterpriseProduct",
+    "#SaaS",
+    "#GTM"
+  ],
+  "word_count": 252,
+  "char_count": 1521,
+  "status": "draft",
+  "saved_at": "2026-05-27T21:18:12.738083"
+}

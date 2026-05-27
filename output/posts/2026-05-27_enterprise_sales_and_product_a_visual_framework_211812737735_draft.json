@@ -1,0 +1,49 @@
+{
+  "text": "Most stalled enterprise deals don't die on price anymore. They die in a Slack thread you'll never see, between a champion and three skeptics inside the buyer's org.\n\nThe pattern I keep seeing: a deal with 10+ stakeholders moves at a crawl because the champion can't make the case internally. They don't need a better pitch deck. They need ammunition. And the most persuasive ammunition isn't a case study from a logo that looks like them. It's their own colleagues' product usage.\n\nWhich is why the GTM asset with the highest leverage in 2026 isn't living in marketing or sales. It's sitting on the PM's dashboard.\n\nThe shift I'd push for: stop treating product telemetry as a roadmap input only. Start treating it as a sales artifact. Who's using what, how often, and what that predicts about expansion \u2014 piped directly into the account team's workflow.\n\nThe companies doing this well are closing multi-stakeholder deals at rates that look like outliers. They aren't. They've just figured out that consensus inside the buyer is built with evidence, not narrative.\n\nIf you're a PM: who on your GTM team can actually query your usage data without asking you first?\n\n#EnterpriseProduct #SaaS #GTM",
+  "topic": "Enterprise sales and product alignment",
+  "format": "visual_framework",
+  "hashtags": [
+    "#EnterpriseProduct",
+    "#SaaS",
+    "#GTM"
+  ],
+  "diagram": {
+    "title": "THE STAKEHOLDER UNBLOCK LOOP",
+    "subtitle": "How PM-owned product signals close consensus deals inside the buyer's org",
+    "steps": [
+      {
+        "label": "DETECT USAGE",
+        "description": "Identify which accounts and users show real engagement patterns."
+      },
+      {
+        "label": "TRANSLATE SIGNAL",
+        "description": "Convert telemetry into language a champion can use internally."
+      },
+      {
+        "label": "ARM THE CHAMPION",
+        "description": "Hand sales the evidence their buyer needs for internal consensus."
+      },
+      {
+        "label": "ROUTE TO STAKEHOLDERS",
+        "description": "Target the skeptics with usage proof from their own teams."
+      },
+      {
+        "label": "CLOSE ON EVIDENCE",
+        "description": "Win the deal on data, not narrative or discount."
+      }
+    ],
+    "foundation_title": "WHAT MAKES THE LOOP WORK",
+    "foundation_items": [
+      "SHARED USAGE DATA",
+      "PQL DEFINITIONS",
+      "SALES ACCESS TO TELEMETRY",
+      "PM-GTM RITUAL"
+    ]
+  },
+  "word_count": 200,
+  "char_count": 1194,
+  "status": "draft",
+  "saved_at": "2026-05-27T21:18:12.737735",
+  "updated_at": "2026-05-27T21:18:15.174114",
+  "image_url": "https://res.cloudinary.com/drum3eekm/image/upload/v1779916694/li-posts/2026-05-27/enterprise_sales_and_product_alignment.png"
+}

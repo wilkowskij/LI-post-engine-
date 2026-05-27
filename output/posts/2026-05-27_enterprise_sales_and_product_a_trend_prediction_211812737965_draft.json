@@ -1,0 +1,14 @@
+{
+  "text": "Enterprise deals aren't dying on price anymore. They're dying inside the buyer's org.\n\nGartner pegs it at 64% of stalled deals \u2014 not budget, not competition, just internal misalignment between the 10+ people who now have to nod yes. And sales cycles with that many influencers run about 3-4x longer than they did five years ago.\n\nMost people read this and say \"sales needs better discovery\" or \"we need a champion enablement kit.\"\n\nThat's the wrong read.\n\nThe buying committee isn't misaligned because sales didn't ask the right questions. They're misaligned because each stakeholder is evaluating the product against their own definition of value, and nobody in the room has a shared artifact that shows what's actually happening.\n\nHere's where I think this goes over the next 18 months: product usage data stops being a roadmap input and becomes the primary sales artifact in enterprise motions. Not the deck. Not the ROI calculator. The live picture of who in their org is already getting value, where adoption is stuck, and what the expansion path looks like.\n\nThe companies doing this well are already closing data-driven outbound at rates that look like inbound. Most PM orgs still treat usage telemetry as an internal dashboard.\n\nIf you're a PM right now, the question isn't \"what should we build next.\" It's \"what does my sales team need to see about our existing users to unblock the deal sitting in legal review?\"\n\nAre you instrumenting your product for your roadmap, or for your revenue?\n\n#EnterpriseProduct #SaaS #GTM",
+  "topic": "Enterprise sales and product alignment",
+  "format": "trend_prediction",
+  "hashtags": [
+    "#EnterpriseProduct",
+    "#SaaS",
+    "#GTM"
+  ],
+  "word_count": 253,
+  "char_count": 1529,
+  "status": "draft",
+  "saved_at": "2026-05-27T21:18:12.737965"
+}
