@@ -9,7 +9,7 @@ from typing import Optional
 import requests
 
 
-BUFFER_API_BASE = "https://api.bufferapp.com/1"
+BUFFER_API_BASE = "https://api.buffer.com/1"
 
 
 class BufferClient:
@@ -19,16 +19,12 @@ class BufferClient:
         self.session.headers.update({"Authorization": f"Bearer {self.token}"})
 
     def _get(self, path: str, **kwargs) -> dict:
-        params = kwargs.pop("params", {})
-        params["access_token"] = self.token
-        resp = self.session.get(f"{BUFFER_API_BASE}/{path}", params=params, **kwargs)
+        resp = self.session.get(f"{BUFFER_API_BASE}/{path}", **kwargs)
         resp.raise_for_status()
         return resp.json()
 
     def _post(self, path: str, **kwargs) -> dict:
-        data = kwargs.pop("data", {})
-        data["access_token"] = self.token
-        resp = self.session.post(f"{BUFFER_API_BASE}/{path}", data=data, **kwargs)
+        resp = self.session.post(f"{BUFFER_API_BASE}/{path}", **kwargs)
         resp.raise_for_status()
         return resp.json()
 
@@ -183,7 +179,7 @@ class BufferClient:
             self.get_profiles()
             return True
         except Exception as e:
-            print(f"[buffer] channels.json failed: {e}")
+            print(f"[buffer] profiles.json failed: {e}")
         try:
             user = self._get("user.json")
             return bool(user.get("id"))
