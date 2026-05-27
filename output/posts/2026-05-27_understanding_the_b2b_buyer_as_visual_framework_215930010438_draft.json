@@ -1,0 +1,47 @@
+{
+  "text": "Most PLG teams I talk to are still optimizing for self-serve conversion as if that's the finish line.\n\nBut the buyers I've watched over the last two years don't behave that way anymore. They sign up, poke around, then disappear into a Slack channel with three colleagues to decide if this thing is worth a real conversation. The product trial isn't the funnel. It's a research artifact for a committee that never logs in.\n\nThe teams pulling ahead have stopped treating self-serve and sales as separate motions and started designing for what actually happens between them.\n\nThe pattern looks roughly like this: a single user enters, the product surfaces signal that a buying group exists, the team routes intent before someone fills out a demo form, and revenue gets attributed to the moment of influence rather than the moment of signature.\n\nWhat changes if you actually believe this? You stop measuring activation at the user level and start measuring it at the account level. You stop rewarding AEs for sourcing pipeline the product already warmed.\n\nWhere are you still measuring individual users when the decision is being made by a group?\n\n#ProductManagement #GTM #B2BSaaS",
+  "topic": "Understanding the B2B buyer as a PM",
+  "format": "visual_framework",
+  "hashtags": [
+    "#ProductManagement",
+    "#GTM",
+    "#B2BSaaS"
+  ],
+  "diagram": {
+    "title": "THE INVISIBLE BUYING COMMITTEE",
+    "subtitle": "How modern PLG motions convert groups, not users.",
+    "steps": [
+      {
+        "label": "SOLO ENTRY",
+        "description": "One user signs up to evaluate on behalf of others."
+      },
+      {
+        "label": "SILENT SPREAD",
+        "description": "Evaluation moves to Slack, docs, and side conversations."
+      },
+      {
+        "label": "SIGNAL SURFACE",
+        "description": "Product detects multi-user intent before a form is filled."
+      },
+      {
+        "label": "EARLY ROUTING",
+        "description": "GTM engages the account, not the individual lead."
+      },
+      {
+        "label": "GROUP CONVERSION",
+        "description": "Deal closes faster because the committee already aligned."
+      }
+    ],
+    "foundation_title": "WHAT HAS TO BE TRUE UNDERNEATH",
+    "foundation_items": [
+      "ACCOUNT-LEVEL ACTIVATION METRICS",
+      "SHARED PRODUCT + GTM DATA MODEL",
+      "INTENT SIGNALS WIRED TO ROUTING",
+      "INCENTIVES THAT REWARD INFLUENCE"
+    ]
+  },
+  "word_count": 194,
+  "char_count": 1176,
+  "status": "draft",
+  "saved_at": "2026-05-27T21:59:30.010438"
+}
