@@ -1,0 +1,19 @@
+{
+  "text": "The economics of discovery just flipped, and most teams are reading it wrong.\n\nRunning customer research used to be expensive. You'd ask for 2-3 segmentation cuts because that's all the bandwidth allowed. Now? You can run 15 cuts before lunch. Synthetic user tools claim 85% behavioral fidelity. Half the people \"doing research\" don't have a research title.\n\nThe temptation is to use all this leverage to do *less* real discovery. Replace interviews with agents. Skip the messy customer calls. Ship faster.\n\nThat's the trap.\n\nHere's how I've started thinking about it. Call it the Discovery Inversion:\n\nWhen delivery was expensive, you optimized to ship the right thing once.\nWhen delivery is cheap, you can ship the wrong thing ten times before lunch.\n\nWhich means the cost of being wrong didn't go down with AI. It went up. The roadmap is the bottleneck now, not the build.\n\nSo the leverage isn't \"AI replaces interviews.\" It's \"AI lets me run 10x more real discovery loops that actually kill ideas in my backlog.\"\n\nSynthetic users are useful for the cheap stuff: pressure-testing a hypothesis before you spend a week recruiting, exploring a segment you can't access yet. They break the moment you need to understand *why* someone churned, or what they almost bought instead. Real humans, messy context, surprise answers.\n\nIf your backlog this quarter looks identical to last quarter, AI didn't make you faster. It made you more confidently wrong.\n\nWhat got killed on your roadmap this month?\n\n#CustomerDiscovery #ProductManagement #UserResearch #ProductStrategy #B2BSaaS #ProductResearch",
+  "topic": "Customer discovery and research",
+  "format": "framework",
+  "hashtags": [
+    "#CustomerDiscovery",
+    "#ProductManagement",
+    "#JTBD",
+    "#UserResearch",
+    "#ProductResearch",
+    "#CustomerInsights",
+    "#ProductStrategy",
+    "#B2BSaaS"
+  ],
+  "word_count": 252,
+  "char_count": 1590,
+  "status": "draft",
+  "saved_at": "2026-05-28T13:51:44.595889"
+}

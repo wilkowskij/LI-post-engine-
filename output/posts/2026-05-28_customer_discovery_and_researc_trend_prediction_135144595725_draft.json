@@ -1,0 +1,19 @@
+{
+  "text": "Synthetic users hit 85% behavioral fidelity this year. Gartner just named it a category. And I keep seeing teams use this as an excuse to do less real discovery, not more.\n\nThat's the wrong read.\n\nHere's the shift nobody's pricing in: AI didn't just make research 100x cheaper. It made *building the wrong thing* 100x cheaper too. Shipping a feature nobody wants used to cost you a quarter. Now it costs you an afternoon and a Cursor session.\n\nSo the math has inverted. When delivery was expensive, discovery was the bottleneck. Now delivery is nearly free, and the bottleneck is knowing what's actually worth building.\n\nThe teams winning in 2026 won't be the ones replacing interviews with synthetic users. They'll be the ones running 10x more *real* discovery loops \u2014 because the marginal cost of a segmentation cut, a transcript analysis, or a synthesis pass has collapsed. Synthetic users are great for stress-testing a hypothesis at 2am. They are not a substitute for sitting with a customer who just churned.\n\nWhat this means starting now:\n\nIf your backlog hasn't meaningfully changed in 90 days, you don't have a discovery process. You have a delivery factory dressed up in Figma.\n\nUse AI to do more cuts, more synthesis, more pre-work. Then spend the time you saved on more conversations, not fewer.\n\nThe honest question: when was the last time something a customer said actually killed an item on your roadmap?\n\n#ProductManagement #CustomerDiscovery #ProductStrategy #UserResearch #JTBD #B2BSaaS #CustomerInsights",
+  "topic": "Customer discovery and research",
+  "format": "trend_prediction",
+  "hashtags": [
+    "#CustomerDiscovery",
+    "#ProductManagement",
+    "#JTBD",
+    "#UserResearch",
+    "#ProductResearch",
+    "#CustomerInsights",
+    "#ProductStrategy",
+    "#B2BSaaS"
+  ],
+  "word_count": 246,
+  "char_count": 1522,
+  "status": "draft",
+  "saved_at": "2026-05-28T13:51:44.595725"
+}

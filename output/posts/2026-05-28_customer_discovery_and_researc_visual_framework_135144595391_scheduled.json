@@ -1,0 +1,59 @@
+{
+  "text": "AI just made customer research 100x cheaper.\n\nIt also made shipping the wrong product 100x cheaper.\n\nMost teams are celebrating the first half and ignoring the second. They've replaced two-week research sprints with a Tuesday afternoon of prompting synthetic users, and they think they've won. They haven't. They've just industrialized the production of plausible-sounding insights that never actually change the roadmap.\n\nReal discovery has one tell: the backlog changes. Ideas get killed. The roadmap you walked in with on Monday isn't the one you walk out with on Friday. If that's not happening, you're doing theater, regardless of how many interviews (synthetic or real) you ran.\n\nThe way I've started thinking about it:\n\nAI shouldn't replace the discovery loop. It should let you run ten of them in the time you used to run one \u2014 each one cheap enough that killing the idea costs nothing, and valuable enough that you actually do.\n\nThe question I'd ask any PM right now: when's the last time discovery actually killed something on your roadmap?\n\n#CustomerDiscovery #ProductManagement #UserResearch #ProductStrategy #B2BSaaS #JTBD",
+  "topic": "Customer discovery and research",
+  "format": "visual_framework",
+  "hashtags": [
+    "#CustomerDiscovery",
+    "#ProductManagement",
+    "#JTBD",
+    "#UserResearch",
+    "#ProductResearch",
+    "#CustomerInsights",
+    "#ProductStrategy",
+    "#B2BSaaS"
+  ],
+  "diagram": {
+    "title": "THE 10X DISCOVERY LOOP",
+    "subtitle": "How AI-era PMs turn cheaper research into sharper roadmaps",
+    "steps": [
+      {
+        "label": "FRAME THE BET",
+        "description": "Name the specific roadmap decision this loop will resolve."
+      },
+      {
+        "label": "RUN 10 CUTS",
+        "description": "Use AI to explore segments, JTBDs, and edge cases in parallel."
+      },
+      {
+        "label": "TALK TO HUMANS",
+        "description": "Validate the sharpest hypotheses with real interviews, not synthetic ones."
+      },
+      {
+        "label": "KILL OR COMMIT",
+        "description": "Change the backlog. If nothing changes, the loop failed."
+      },
+      {
+        "label": "SHORTEN THE LOOP",
+        "description": "Compress cycle time so the next bet costs even less."
+      }
+    ],
+    "foundation_title": "WHAT MAKES THE LOOP WORK",
+    "foundation_items": [
+      "CHEAP ANALYSIS",
+      "REAL CUSTOMERS",
+      "WILLINGNESS TO KILL IDEAS",
+      "DECISIONS, NOT DECKS"
+    ]
+  },
+  "word_count": 178,
+  "char_count": 1135,
+  "status": "scheduled",
+  "saved_at": "2026-05-28T13:51:44.595391",
+  "updated_at": "2026-05-28T13:52:31.515709",
+  "image_url": "https://res.cloudinary.com/drum3eekm/image/upload/v1779976349/li-posts/2026-05-28/customer_discovery_and_research.png",
+  "buffer_result": {
+    "id": "6a18489f59ec2862a0b2b422",
+    "status": "scheduled"
+  },
+  "scheduled_when": "queue"
+}
