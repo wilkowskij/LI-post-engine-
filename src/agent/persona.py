@@ -108,19 +108,64 @@ TOPIC_CATEGORIES = [
 ]
 
 HASHTAG_MAP = {
-    "Product-led growth tactics": ["#PLG", "#ProductStrategy", "#SaaS"],
-    "Go-to-market strategy for SaaS": ["#GTM", "#SaaS", "#ProductStrategy"],
-    "Pricing and packaging strategy": ["#SaaSPricing", "#ProductStrategy", "#PLG"],
-    "Activation and time-to-value": ["#PLG", "#ProductManagement", "#SaaS"],
-    "Product-led sales (PLS) motions": ["#PLS", "#PLG", "#SaaS", "#GTM"],
-    "Data-as-a-Service business models": ["#DaaS", "#DataStrategy", "#DataProducts"],
-    "AI features in B2B SaaS products": ["#AIProduct", "#SaaS", "#ProductManagement"],
-    "Data monetization and governance": ["#DataMonetization", "#DaaS", "#DataStrategy"],
-    "Building with LLMs in SaaS products": ["#LLM", "#AIProduct", "#SaaS"],
-    "API-first product design": ["#APIFirst", "#DeveloperExperience", "#SaaS"],
-    "Understanding the B2B buyer as a PM": ["#ProductManagement", "#GTM", "#B2BSaaS"],
-    "Enterprise sales and product alignment": ["#EnterpriseProduct", "#SaaS", "#GTM"],
-    "Metrics that matter to buyers and boards": ["#ProductMetrics", "#SaaS", "#B2BSaaS"],
-    "Feature prioritization frameworks": ["#Prioritization", "#ProductManagement", "#ProductStrategy"],
-    "Customer discovery and research": ["#CustomerDiscovery", "#ProductManagement", "#JTBD"],
+    "Product-led growth tactics": [
+        "#PLG", "#ProductLedGrowth", "#ProductStrategy", "#SaaS",
+        "#B2BSaaS", "#GrowthStrategy", "#ProductManagement", "#SaaSGrowth",
+    ],
+    "Go-to-market strategy for SaaS": [
+        "#GTM", "#GoToMarket", "#SaaS", "#ProductStrategy",
+        "#B2BSaaS", "#ProductMarketing", "#SaaSMarketing", "#GrowthStrategy",
+    ],
+    "Pricing and packaging strategy": [
+        "#SaaSPricing", "#PricingStrategy", "#ProductStrategy", "#PLG",
+        "#B2BSaaS", "#RevenueStrategy", "#ProductManagement", "#SaaS",
+    ],
+    "Activation and time-to-value": [
+        "#PLG", "#ProductManagement", "#SaaS", "#UserActivation",
+        "#TimeToValue", "#Onboarding", "#ProductGrowth", "#B2BSaaS",
+    ],
+    "Product-led sales (PLS) motions": [
+        "#PLS", "#PLG", "#SaaS", "#GTM",
+        "#ProductLedSales", "#B2BSales", "#SalesStrategy", "#ProductManagement",
+    ],
+    "Data-as-a-Service business models": [
+        "#DaaS", "#DataStrategy", "#DataProducts", "#DataMonetization",
+        "#B2BSaaS", "#DataBusiness", "#DataPlatform", "#ProductStrategy",
+    ],
+    "AI features in B2B SaaS products": [
+        "#AIProduct", "#SaaS", "#ProductManagement", "#ArtificialIntelligence",
+        "#B2BSaaS", "#AIStrategy", "#GenerativeAI", "#ProductStrategy",
+    ],
+    "Data monetization and governance": [
+        "#DataMonetization", "#DaaS", "#DataStrategy", "#DataGovernance",
+        "#DataProducts", "#B2BSaaS", "#DataManagement", "#ProductStrategy",
+    ],
+    "Building with LLMs in SaaS products": [
+        "#LLM", "#AIProduct", "#SaaS", "#GenerativeAI",
+        "#AIStrategy", "#ProductManagement", "#LargeLanguageModels", "#B2BSaaS",
+    ],
+    "API-first product design": [
+        "#APIFirst", "#DeveloperExperience", "#SaaS", "#ProductDesign",
+        "#DeveloperTools", "#B2BSaaS", "#TechProduct", "#ProductStrategy",
+    ],
+    "Understanding the B2B buyer as a PM": [
+        "#ProductManagement", "#GTM", "#B2BSaaS", "#BuyerJourney",
+        "#CustomerInsights", "#SalesAndProduct", "#B2BSales", "#ProductStrategy",
+    ],
+    "Enterprise sales and product alignment": [
+        "#EnterpriseProduct", "#SaaS", "#GTM", "#EnterpriseSales",
+        "#ProductManagement", "#SalesAlignment", "#B2BSaaS", "#ProductStrategy",
+    ],
+    "Metrics that matter to buyers and boards": [
+        "#ProductMetrics", "#SaaS", "#B2BSaaS", "#ProductStrategy",
+        "#DataDriven", "#KPIs", "#ProductManagement", "#RevenueMetrics",
+    ],
+    "Feature prioritization frameworks": [
+        "#Prioritization", "#ProductManagement", "#ProductStrategy", "#Roadmap",
+        "#ProductDevelopment", "#AgileProduct", "#B2BSaaS", "#SaaS",
+    ],
+    "Customer discovery and research": [
+        "#CustomerDiscovery", "#ProductManagement", "#JTBD", "#UserResearch",
+        "#ProductResearch", "#CustomerInsights", "#ProductStrategy", "#B2BSaaS",
+    ],
 }

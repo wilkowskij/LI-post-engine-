@@ -64,7 +64,7 @@ What it is: {fmt['description']}
 How it should be structured: {fmt['structure']}
 Target length: {fmt['length']}
 
-HASHTAGS — pick 3-5 that fit naturally, don't force them: {', '.join(hashtags)}
+HASHTAGS — pick 5-8 that fit naturally and are relevant to the industry: {', '.join(hashtags)}
 
 A few reminders about voice:
 - Write like you're explaining something important to a smart colleague, not writing a blog post
