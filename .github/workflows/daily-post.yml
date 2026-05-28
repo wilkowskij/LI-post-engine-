@@ -103,18 +103,12 @@ jobs:
           POST_TIMEZONE: America/New_York
           POSTING_DAYS: Tue,Wed,Thu
         run: |
-          # Automated schedule → generate only (creates GitHub Issue for review)
-          # Manual dispatch → full pipeline (generates + schedules to Buffer immediately)
-          if [ "${{ github.event_name }}" = "schedule" ]; then
-            MODE_FLAG="--generate-only"
-          else
-            MODE_FLAG="--auto-schedule"
-          fi
+          # Fully autonomous — always posts directly to Buffer
           TOPIC="${{ github.event.inputs.topic }}"
           if [ -n "$TOPIC" ]; then
-            python main.py run-daily $MODE_FLAG --topic "$TOPIC"
+            python main.py run-daily --auto-schedule --topic "$TOPIC"
           else
-            python main.py run-daily $MODE_FLAG
+            python main.py run-daily --auto-schedule
           fi
 
       - name: Commit post history
