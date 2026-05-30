@@ -163,3 +163,51 @@ class BufferClient:
             return [{"profile": p.get("name", p["id"]), "profile_id": p["id"]} for p in profiles]
         except Exception:
             return []
+
+    # ------------------------------------------------------------------ #
+    # Analytics
+    # ------------------------------------------------------------------ #
+
+    def get_analytics(self, limit: int = 10) -> list[dict]:
+        """
+        Fetch sent posts with engagement stats from Buffer.
+
+        Requires an Essentials plan or higher. Raises RuntimeError if
+        analytics are unavailable (free plan or schema mismatch).
+        """
+        data = self._query("""
+            query GetPostAnalytics($limit: Int!) {
+              account {
+                channels {
+                  id
+                  service
+                  name
+                  posts(filter: { status: "sent" }, first: $limit, orderBy: SENT_AT_DESC) {
+                    nodes {
+                      id
+                      text
+                      sentAt
+                      statistics {
+                        impressions
+                        clicks
+                        reactions
+                        comments
+                        shares
+                        reach
+                      }
+                    }
+                  }
+                }
+              }
+            }
+        """, {"limit": limit})
+
+        results = []
+        channels = data.get("account", {}).get("channels", [])
+        for channel in channels:
+            if "linkedin" not in channel.get("service", "").lower():
+                continue
+            nodes = channel.get("posts", {}).get("nodes", [])
+            for post in nodes:
+                results.append({"channel": channel.get("name", "LinkedIn"), **post})
+        return results

@@ -415,6 +415,121 @@ def calendar(days):
 
 
 # ------------------------------------------------------------------ #
+# analytics
+# ------------------------------------------------------------------ #
+
+@cli.command()
+@click.option("--limit", "-n", default=10, show_default=True, help="Number of recent posts to show")
+def analytics(limit):
+    """Show engagement analytics for recently published posts from Buffer."""
+    from src.integrations.buffer_client import BufferClient
+    from src.utils.storage import list_posts
+    from src.utils.display import print_error, print_info, print_success
+    from rich.table import Table
+    from rich import box
+
+    _require_env("BUFFER_ACCESS_TOKEN")
+
+    buffer = BufferClient()
+    if not buffer.validate_connection():
+        print_error("Buffer connection failed. Check BUFFER_ACCESS_TOKEN.")
+        sys.exit(1)
+
+    console.rule("[bold blue]Post Analytics — Buffer[/bold blue]")
+
+    try:
+        posts = buffer.get_analytics(limit=limit)
+
+        if not posts:
+            console.print("[yellow]No published posts found in Buffer yet.[/yellow]")
+            console.print("[dim]Posts appear here after they've been sent by Buffer.[/dim]")
+            return
+
+        # Summary totals
+        total_impr  = sum((p.get("statistics") or {}).get("impressions", 0) or 0 for p in posts)
+        total_clicks = sum((p.get("statistics") or {}).get("clicks", 0) or 0 for p in posts)
+        avg_ctr = f"{(total_clicks / total_impr * 100):.1f}%" if total_impr else "—"
+
+        console.print(f"\n[bold]Posts shown:[/bold] {len(posts)}  |  "
+                      f"[bold]Total impressions:[/bold] [green]{total_impr:,}[/green]  |  "
+                      f"[bold]Total clicks:[/bold] [green]{total_clicks:,}[/green]  |  "
+                      f"[bold]Avg CTR:[/bold] [cyan]{avg_ctr}[/cyan]\n")
+
+        table = Table(box=box.ROUNDED, show_lines=True)
+        table.add_column("Date",        style="cyan",  width=12)
+        table.add_column("Preview",                    width=38)
+        table.add_column("Impressions", justify="right", style="green", width=13)
+        table.add_column("Clicks",      justify="right", width=8)
+        table.add_column("CTR",         justify="right", style="cyan",  width=7)
+        table.add_column("Reactions",   justify="right", width=10)
+        table.add_column("Comments",    justify="right", width=10)
+        table.add_column("Shares",      justify="right", width=8)
+
+        # Sort by impressions descending so best posts float to top
+        posts_sorted = sorted(
+            posts,
+            key=lambda p: (p.get("statistics") or {}).get("impressions", 0) or 0,
+            reverse=True,
+        )
+
+        for p in posts_sorted:
+            stats   = p.get("statistics") or {}
+            impr    = stats.get("impressions", 0) or 0
+            clicks  = stats.get("clicks", 0) or 0
+            ctr     = f"{(clicks / impr * 100):.1f}%" if impr > 0 else "—"
+            sent    = (p.get("sentAt") or "")[:10]
+            preview = (p.get("text") or "").replace("\n", " ")[:36] + "…"
+            table.add_row(
+                sent,
+                preview,
+                f"{impr:,}",
+                str(clicks),
+                ctr,
+                str(stats.get("reactions", 0) or 0),
+                str(stats.get("comments", 0) or 0),
+                str(stats.get("shares", 0) or 0),
+            )
+
+        console.print(table)
+        console.print("\n[dim]Sorted by impressions (highest first). "
+                      "Check LinkedIn directly for demographic breakdowns.[/dim]")
+
+    except (ValueError, RuntimeError) as e:
+        print_error(f"Buffer analytics unavailable: {e}")
+        console.print()
+        console.print("[yellow]This usually means one of:[/yellow]")
+        console.print("  1. Your Buffer plan is [bold]Free[/bold] — analytics require Essentials or higher")
+        console.print("  2. No posts have been sent yet")
+        console.print()
+        console.print("[dim]Falling back to locally tracked posts...[/dim]\n")
+
+        local_posts = list_posts(status="scheduled", limit=limit)
+        if not local_posts:
+            local_posts = list_posts(limit=limit)
+
+        if local_posts:
+            table = Table(title="Locally Tracked Posts", box=box.ROUNDED)
+            table.add_column("Date",   style="cyan", width=12)
+            table.add_column("Topic",               width=30)
+            table.add_column("Format",              width=16)
+            table.add_column("Words",  justify="center", width=6)
+            table.add_column("Status", style="green", width=10)
+            for p in local_posts:
+                table.add_row(
+                    p.get("saved_at", "")[:10],
+                    p.get("topic", "")[:28],
+                    p.get("format", "").replace("_", " "),
+                    str(p.get("word_count", 0)),
+                    p.get("status", ""),
+                )
+            console.print(table)
+            console.print("\n[dim]To see impressions and clicks, check LinkedIn "
+                          "directly: click any post → 'X impressions' below it.[/dim]")
+        else:
+            console.print("[dim]No posts found locally either.[/dim]")
+
+
+# ------------------------------------------------------------------ #
 # weekly-report
 # ------------------------------------------------------------------ #
 
