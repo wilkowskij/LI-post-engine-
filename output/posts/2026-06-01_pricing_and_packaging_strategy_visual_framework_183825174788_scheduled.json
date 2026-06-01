@@ -1,0 +1,54 @@
+{
+  "text": "SaaS spent two decades convincing itself it was a fixed-margin business.\n\nAI just broke that. Every prompt, every token, every inference call is a variable cost sitting on your P&L. The companies still running annual pricing reviews are quietly bleeding margin to the ones treating pricing as a product surface they ship against.\n\nThe pattern I keep seeing in companies that get this right:\n\nThey've stopped asking \"what's our pricing model?\" and started asking \"which layer of value is this, and how should it be metered?\"\n\nSubscription holds the floor. Usage captures the variable cost and the variable value. Outcomes \u2014 when they show up \u2014 almost always need services wrapped around them to be sustainable. Pure pay-for-results sounds elegant in a deck and falls apart in a renewal conversation.\n\nThe biggest shift isn't the model. It's the cadence. Pricing used to be a finance exercise once a year. Now it's a quarterly product decision, with COGS data flowing back into packaging the way usage data flows into roadmap.\n\nIf your pricing page hasn't changed in 12 months, that's not stability. That's drift.\n\nWhat's the right trigger to force a repricing conversation before margin tells you it's overdue?\n\n#SaaSPricing #ProductStrategy #PLG",
+  "topic": "Pricing and packaging strategy",
+  "format": "visual_framework",
+  "hashtags": [
+    "#SaaSPricing",
+    "#ProductStrategy",
+    "#PLG"
+  ],
+  "diagram": {
+    "title": "THE PRICING STACK",
+    "subtitle": "How modern SaaS layers value capture in an AI-cost world",
+    "steps": [
+      {
+        "label": "SUBSCRIPTION FLOOR",
+        "description": "Predictable base that covers fixed platform and access value."
+      },
+      {
+        "label": "USAGE LAYER",
+        "description": "Meters variable AI cost and variable customer value together."
+      },
+      {
+        "label": "FEATURE PREMIUMS",
+        "description": "AI-powered capabilities priced separately from the core seat."
+      },
+      {
+        "label": "OUTCOME UPSIDE",
+        "description": "Performance bonuses tied to results, wrapped with services."
+      },
+      {
+        "label": "QUARTERLY RESHIP",
+        "description": "Repackage and reprice on a product cadence, not annually."
+      }
+    ],
+    "foundation_title": "FOUNDATION: WHAT MAKES IT WORK",
+    "foundation_items": [
+      "COGS TELEMETRY",
+      "USAGE INSTRUMENTATION",
+      "PACKAGING OWNERSHIP IN PRODUCT",
+      "CONTRACT FLEXIBILITY"
+    ]
+  },
+  "word_count": 201,
+  "char_count": 1245,
+  "status": "scheduled",
+  "saved_at": "2026-06-01T18:38:25.174788",
+  "updated_at": "2026-06-01T18:38:28.270378",
+  "image_url": "https://res.cloudinary.com/drum3eekm/image/upload/v1780339106/li-posts/2026-06-01/pricing_and_packaging_strategy.png",
+  "buffer_result": {
+    "id": "6a1dd1a489c572cabc702639",
+    "status": "scheduled"
+  },
+  "scheduled_when": "queue"
+}

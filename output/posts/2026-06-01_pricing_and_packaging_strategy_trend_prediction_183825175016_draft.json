@@ -1,0 +1,14 @@
+{
+  "text": "For 20 years, SaaS was a fixed-margin business. You sold a seat, the marginal cost of serving that seat was rounding-error close to zero, and finance reviewed pricing once a year because pricing didn't really *do* anything between reviews.\n\nAI broke that. Quietly.\n\nEvery AI feature you ship has a token cost, a compute cost, an inference cost. Variable COGS are back in software for the first time since on-prem. And most teams haven't internalized what that means yet.\n\nMost people are reading the shift as \"we need usage-based pricing.\" That's half the answer and it's the easy half. The harder shift is that pricing is no longer a finance artifact reviewed annually. It's a product surface \u2014 something you reprice and repackage multiple times a year as your model costs, model choices, and customer behavior change underneath you.\n\nMy 12-24 month prediction: pure-subscription AI products will quietly bleed margin and lose to hybrid peers (subscription floor + usage on the AI-heavy surfaces). Outcome-based pricing will get loud in 2026, but the version that actually works will be a base subscription plus performance upside \u2014 paired with services. Pure \"pay for results\" will keep failing because nobody can agree on attribution.\n\nWhat to do Monday: get your pricing on the product roadmap. Literally. Put it in the quarterly planning doc. Assign a PM to it.\n\nIf your CFO still owns pricing alone, you're already behind.\n\nWhere are you drawing the line between PM-owned and finance-owned pricing decisions right now?\n\n#SaaSPricing #ProductStrategy #PLG",
+  "topic": "Pricing and packaging strategy",
+  "format": "trend_prediction",
+  "hashtags": [
+    "#SaaSPricing",
+    "#ProductStrategy",
+    "#PLG"
+  ],
+  "word_count": 252,
+  "char_count": 1560,
+  "status": "draft",
+  "saved_at": "2026-06-01T18:38:25.175016"
+}

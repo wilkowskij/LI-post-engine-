@@ -1,0 +1,14 @@
+{
+  "text": "For two decades, SaaS pricing was a finance problem. Set the tiers, defend the discounts, revisit annually.\n\nAI broke that.\n\nThe minute your product calls a model, you have variable COGS again. Every query has a cost. Every power user has a margin profile. The \"set it and forget it\" subscription was only ever possible because software had near-zero marginal cost. That assumption is gone.\n\nHere's how I've started thinking about it. Three layers:\n\n1. **Subscription base** \u2014 pays for access, predictability, and the parts of your product with fixed cost.\n2. **Usage layer** \u2014 covers the parts with real variable cost (tokens, compute, data volume). Not a profit center. A margin protector.\n3. **Outcome layer** \u2014 optional, paired with services, tied to a measurable win the customer cares about.\n\nMost teams I see are still pricing at layer 1 only, then watching gross margin compress quarter over quarter as AI features get adopted by the heaviest users \u2014 exactly the customers they used to celebrate.\n\nWhere this breaks: if your usage metric isn't something the buyer can predict or control, you'll trigger procurement reviews instead of expansion. Usage pricing only works when the customer can forecast their bill within ~20%.\n\nThe bigger shift: pricing is now a product surface, not an annual exercise. If you're not repackaging at least twice a year, you're falling behind the cost curve underneath you.\n\nWhat's the variable cost in your product you're still absorbing instead of pricing?\n\n#SaaSPricing #ProductStrategy #PLG",
+  "topic": "Pricing and packaging strategy",
+  "format": "framework",
+  "hashtags": [
+    "#SaaSPricing",
+    "#ProductStrategy",
+    "#PLG"
+  ],
+  "word_count": 247,
+  "char_count": 1532,
+  "status": "draft",
+  "saved_at": "2026-06-01T18:38:25.175138"
+}
