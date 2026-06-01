@@ -1,0 +1,19 @@
+{
+  "text": "Most teams I talk to think their AI feature is failing because they picked the wrong model. They're rewriting prompts, swapping providers, A/B testing Claude vs GPT.\n\nThat's almost never the problem.\n\nThe pattern I keep seeing in features that work versus features that die in pilot comes down to three questions, in this order:\n\n1. Workflow depth. Does the feature sit inside a job someone already does daily, or does it ask them to open a new tab? If it's a new tab, you've already lost.\n\n2. Context precision. Are you piping the right 200 tokens into the model, or dumping 8,000 tokens of \"just in case\" context and hoping the model figures out what matters? More context makes outputs worse, not better, past a surprisingly low threshold.\n\n3. Pricing architecture. If your AI feature ships on a flat per-seat plan, your gross margin is a function of how much your power users use it. That math breaks fast.\n\nNone of those are AI problems. They're PM fundamentals applied to a substrate where the unit economics and the UX physics are different.\n\nThe teams shipping the 5% that work aren't smarter about models. They're disciplined about integration, ruthless about context, and they redesigned pricing before the feature shipped.\n\nWhere this framework breaks: greenfield products with no legacy workflow to integrate into. There, the rules are different and I'm still figuring them out.\n\nWhich failure mode are you seeing most in your org right now, integration, context, or pricing?\n\n#AIProduct #ProductManagement #SaaS #LLM #AIStrategy #B2BSaaS",
+  "topic": "Building with LLMs in SaaS products",
+  "format": "framework",
+  "hashtags": [
+    "#LLM",
+    "#AIProduct",
+    "#SaaS",
+    "#GenerativeAI",
+    "#AIStrategy",
+    "#ProductManagement",
+    "#LargeLanguageModels",
+    "#B2BSaaS"
+  ],
+  "word_count": 255,
+  "char_count": 1550,
+  "status": "draft",
+  "saved_at": "2026-06-01T14:38:02.008208"
+}

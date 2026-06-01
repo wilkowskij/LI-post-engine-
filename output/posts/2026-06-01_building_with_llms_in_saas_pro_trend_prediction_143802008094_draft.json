@@ -1,0 +1,19 @@
+{
+  "text": "Most of the GenAI pilots I've watched stall in the last year didn't stall because the model was wrong.\n\nThey stalled because the PM team treated it like a model problem.\n\nThey picked a foundation model, wrapped it in a chat UI, dumped every available document into the context window, and shipped it on the same per-seat plan as the rest of the product. Then they wondered why usage cratered after week three and finance started asking why gross margin slipped four points.\n\nThe 95% failure rate in the headlines isn't an AI failure. PM fundamentals are failing on a new substrate: workflow integration, context precision, and pricing design.\n\nMy 18-month prediction: by mid-2027, the SaaS products winning with AI features will look boring from the outside. Narrow workflow scope. Tight context pruning instead of \"we use all your data.\" Hybrid pricing that separates seats from consumption from outcomes. And a quiet premium tier gating deeper integration access (MCP servers, agent actions, system-of-record writes).\n\nThe losers will keep shipping general-purpose copilots on flat-rate pricing and watching margin compress every time inference costs spike.\n\nIf you're a PM shipping AI features, start here:\n\n1. Pick one workflow and instrument it end-to-end before you touch a second one.\n2. Treat your context window like RAM, not storage.\n3. Put pricing on the roadmap as a feature, not a finance afterthought.\n\nOne question: how many of your AI features could survive a 3x jump in inference cost next quarter?\n\n#AIProduct #SaaS #ProductManagement #LLM #AIStrategy #B2BSaaS",
+  "topic": "Building with LLMs in SaaS products",
+  "format": "trend_prediction",
+  "hashtags": [
+    "#LLM",
+    "#AIProduct",
+    "#SaaS",
+    "#GenerativeAI",
+    "#AIStrategy",
+    "#ProductManagement",
+    "#LargeLanguageModels",
+    "#B2BSaaS"
+  ],
+  "word_count": 252,
+  "char_count": 1578,
+  "status": "draft",
+  "saved_at": "2026-06-01T14:38:02.008094"
+}

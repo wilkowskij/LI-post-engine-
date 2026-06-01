@@ -1,0 +1,58 @@
+{
+  "text": "Most GenAI pilots I see stalling aren't failing because the model is wrong. The PM work underneath is wrong.\n\nThe foundation model is the easy part now. Swap one for another in an afternoon. The hard part is everything most teams skip: which workflow the feature lives inside, what context gets passed in (and what stays out), how the legacy API behaves under load, and whether the pricing model survives contact with inference costs.\n\nKarpathy's framing stuck with me: the context window is RAM, not a hard drive. Teams keep dumping more context in and wondering why quality drops. Precision beats volume, every time.\n\nThe other quiet killer is pricing. Flat-rate seats on top of variable token costs is a margin trap. The teams shipping sustainably have moved to consumption pricing for AI features and outcome pricing for agents, with heavier integrations gated behind a premium tier.\n\nThe pattern I keep coming back to looks like this:\n\n[see diagram]\n\nThe failing 95% aren't losing at AI. They're losing at product fundamentals applied to a new substrate.\n\nWhere are you seeing the bigger gap on your team, context design or pricing redesign?\n\n#AIProduct #LLM #SaaS #ProductManagement #AIStrategy #B2BSaaS #GenerativeAI",
+  "topic": "Building with LLMs in SaaS products",
+  "format": "visual_framework",
+  "hashtags": [
+    "#LLM",
+    "#AIProduct",
+    "#SaaS",
+    "#GenerativeAI",
+    "#AIStrategy",
+    "#ProductManagement",
+    "#LargeLanguageModels",
+    "#B2BSaaS"
+  ],
+  "diagram": {
+    "title": "THE LLM FEATURE STACK",
+    "subtitle": "What separates the 5% of GenAI features that ship from the 95% that stall.",
+    "steps": [
+      {
+        "label": "WORKFLOW FIT",
+        "description": "Pick one workflow with a measurable before/after, not a demo surface."
+      },
+      {
+        "label": "CONTEXT PRECISION",
+        "description": "Engineer what the model sees; less, sharper context beats more."
+      },
+      {
+        "label": "INTEGRATION DEPTH",
+        "description": "Wire into legacy APIs with retries, fallbacks, and real auth."
+      },
+      {
+        "label": "EVAL & GUARDRAILS",
+        "description": "Ship offline evals and production traces before scaling usage."
+      },
+      {
+        "label": "PRICING REDESIGN",
+        "description": "Match consumption or outcomes to inference cost, not seats."
+      }
+    ],
+    "foundation_title": "FOUNDATION (THE PART EVERYONE SKIPS)",
+    "foundation_items": [
+      "MODEL CHOICE IS REPLACEABLE",
+      "MARGINS ARE A PRODUCT DECISION",
+      "TRUST COMPOUNDS PER WORKFLOW"
+    ]
+  },
+  "word_count": 205,
+  "char_count": 1263,
+  "status": "scheduled",
+  "saved_at": "2026-06-01T14:38:02.007835",
+  "updated_at": "2026-06-01T14:38:50.082984",
+  "image_url": "https://res.cloudinary.com/drum3eekm/image/upload/v1780324728/li-posts/2026-06-01/building_with_llms_in_saas_products.png",
+  "buffer_result": {
+    "id": "6a1d997907f0449a6e9c71f9",
+    "status": "scheduled"
+  },
+  "scheduled_when": "queue"
+}
