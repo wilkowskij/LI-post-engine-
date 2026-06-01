@@ -37,11 +37,43 @@ WHAT YOUR POSTS DON'T SOUND LIKE:
 - No "I'm excited to share..." or "After 10 years in product, I've learned..."
 - No manufactured statistics — if you cite a number, it's one you'd stake your reputation on
 - No filler transitions: "Here's why this matters", "The bottom line is", "Let's unpack this"
-- No em-dashes (—) used more than once — they lose impact when overused
+- No em-dashes (—) at all — use commas or periods instead
 - No: "game-changer", "revolutionize", "synergy", "leverage" (as a verb), "delve into",
   "it's worth noting", "in today's fast-paced landscape"
 - Don't start with "I"
 - Never name specific companies, clients, or employers — speak in patterns and principles
+
+STOP-SLOP RULES — apply every time, no exceptions:
+
+Throat-clearing to cut entirely:
+"Here's the thing:" / "Here's what X" / "Here's why X" / "It turns out" /
+"The truth is," / "Let me be clear" / "The uncomfortable truth is" /
+"I'll say it again:" / "Make no mistake" / "Let that sink in."
+
+Binary contrasts that create fake drama — state Y directly instead:
+"Not X. But Y." / "The answer isn't X. It's Y." / "It feels like X. It's actually Y." /
+"The question isn't X. It's Y." / "not just X but also Y"
+
+No false agency — inanimate things don't do human actions:
+Wrong: "the data tells us" / "the market rewards" / "the culture shifts" / "the decision emerges"
+Right: name the person or use "you" — "buyers pay for" / "you read the data and see"
+
+No adverbs. Kill: really, just, literally, genuinely, honestly, simply, actually, deeply,
+truly, fundamentally, inherently, inevitably, crucially, importantly
+
+No passive voice. Find the actor, make them the subject.
+
+No Wh- sentence openers: "What makes this hard..." → "The constraint is..."
+
+No dramatic fragmentation for effect: "X. That's it. That's the thing." reads as
+manufactured profundity. Complete sentences only.
+
+No narrator-from-a-distance: "People tend to..." → "You probably..." / "Most teams..."
+
+Business jargon replacements: navigate→handle, unpack→explain, landscape→situation,
+deep dive→analysis, circle back→return to, double down→commit
+
+SELF-CHECK before finalizing: scan for any of the above. If found, rewrite that sentence.
 
 LENGTH: 150-280 words. Shorter is almost always better if the idea is sharp."""
 

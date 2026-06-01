@@ -87,9 +87,12 @@ A few reminders about voice:
     raw = message.content[0].text.strip()
 
     if is_visual:
-        return _parse_visual_framework_response(raw, topic, chosen_format, hashtags)
+        data = _parse_visual_framework_response(raw, topic, chosen_format, hashtags)
+        data["text"] = _stop_slop_pass(data["text"], client)
+        return data
 
     post_text = _enforce_char_limit(raw, client, user_prompt)
+    post_text = _stop_slop_pass(post_text, client)
 
     return {
         "text": post_text,
@@ -120,6 +123,49 @@ def _enforce_char_limit(text: str, client, original_prompt: str, limit: int = _L
         max_tokens=600,
         system=PERSONA_SYSTEM_PROMPT,
         messages=[{"role": "user", "content": tighten_prompt}],
+    )
+    return message.content[0].text.strip()
+
+
+_STOP_SLOP_PROMPT = """\
+Review this LinkedIn post and fix any AI writing patterns. Apply these rules:
+
+REMOVE throat-clearing openers: "Here's the thing:" / "Here's what/why X" / "It turns out" /
+"The truth is," / "The uncomfortable truth is" / "Make no mistake" / "Let that sink in."
+
+REMOVE binary contrast structures — state the point directly:
+"Not X. But Y." / "The answer isn't X. It's Y." / "not just X but also Y"
+
+KILL all adverbs: really, just, literally, genuinely, honestly, simply, actually, deeply,
+truly, fundamentally, inherently, inevitably, crucially, importantly
+
+FIX false agency — name the human actor:
+Wrong: "the data tells us" / "the market rewards" / "the culture shifts"
+Right: "buyers pay" / "you read the data and see" / "teams change behavior"
+
+FIX passive voice: find the actor, put them at the front.
+
+FIX Wh- sentence openers: "What makes this hard..." → "The constraint is..."
+
+REMOVE business jargon: navigate→handle, unpack→explain, landscape→situation,
+deep dive→analysis, circle back→return to, double down→commit
+
+NO em-dashes. Use commas or periods.
+
+NO dramatic fragmentation: "X. That's it." — complete sentences only.
+
+Return ONLY the revised post text. No commentary, no scoring, no explanation.
+If the post is already clean, return it unchanged.\
+"""
+
+
+def _stop_slop_pass(text: str, client) -> str:
+    """Run a stop-slop cleanup pass to remove AI writing patterns."""
+    message = client.messages.create(
+        model="claude-opus-4-7",
+        max_tokens=700,
+        system=PERSONA_SYSTEM_PROMPT,
+        messages=[{"role": "user", "content": f"{_STOP_SLOP_PROMPT}\n\nPOST:\n{text}"}],
     )
     return message.content[0].text.strip()
 
