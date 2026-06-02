@@ -1,0 +1,19 @@
+{
+  "text": "Your company is being scored on two different scoreboards right now, and most PM dashboards only track one of them.\n\nYour board watches Rule of 40, NRR, magic number. Capital efficiency. The median private SaaS sits below 40% today, but the few that clear it trade at roughly 3x the revenue multiple of everyone else. That spread is why every QBR feels heavier than it did two years ago.\n\nYour buyers watch something else. They build a shortlist of about 4-5 vendors on day one, and in the vast majority of 2025 deals, they buy from that day-one list. By the time someone fills out your demo form, the decision is mostly confirmation.\n\nGetting on that day-one list has almost nothing to do with your board metrics. SOC 2, SSO, API depth, time-to-value under 45 days, a named reference in their vertical. Trust and speed.\n\nOptimizing hard for one scoreboard often hurts the other. Squeeze CAC and your TTV gets worse. Invest in security and reference programs and your magic number takes a hit this quarter.\n\nMy prediction for the next 18 months: the PMs who pull ahead build one dashboard that shows both. Board metrics on top, buyer-trust metrics underneath, with explicit tradeoffs called out. The ones who pick a side lose deals they should have won, or miss numbers they should have hit.\n\nWhich scoreboard is your roadmap optimizing for right now, and can you prove it?\n\n#ProductManagement #B2BSaaS #ProductStrategy #ProductMetrics #RevenueMetrics #SaaS",
+  "topic": "Metrics that matter to buyers and boards",
+  "format": "trend_prediction",
+  "hashtags": [
+    "#ProductMetrics",
+    "#SaaS",
+    "#B2BSaaS",
+    "#ProductStrategy",
+    "#DataDriven",
+    "#KPIs",
+    "#ProductManagement",
+    "#RevenueMetrics"
+  ],
+  "word_count": 245,
+  "char_count": 1457,
+  "status": "draft",
+  "saved_at": "2026-06-02T14:50:45.431808"
+}

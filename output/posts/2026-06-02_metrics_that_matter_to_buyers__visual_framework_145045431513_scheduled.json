@@ -1,0 +1,59 @@
+{
+  "text": "Your company sits on two scoreboards right now. Most product teams watch one.\n\nThe board grades you on Rule of 40, NRR, magic number. The handful of SaaS companies that clear those bars trade at roughly 3x the multiple of the average deal. That math drives every QBR you sit through.\n\nBuyers grade you on something else.\n\nBy the time a buying committee enters your funnel, they've filled most of their shortlist spots before talking to anyone. Day one of their journey. And they buy from that initial list almost every time. What earned the spot? Security posture, time to value under 45 days, a named reference in their vertical, and reputation built from research you didn't control.\n\nNRR doesn't show up anywhere in that decision.\n\nThe PMs winning this cycle build one dashboard that bridges both systems. Capital efficiency on top, trust and TTV signals underneath, with a clear view of where optimizing one is starving the other.\n\nCut onboarding headcount to protect margin, and your board metric improves while your shortlist position erodes. You won't see it for two quarters.\n\nWhich scoreboard is your roadmap optimizing for right now?\n\n#ProductStrategy #B2BSaaS #ProductMetrics #RevenueMetrics #ProductManagement #KPIs",
+  "topic": "Metrics that matter to buyers and boards",
+  "format": "visual_framework",
+  "hashtags": [
+    "#ProductMetrics",
+    "#SaaS",
+    "#B2BSaaS",
+    "#ProductStrategy",
+    "#DataDriven",
+    "#KPIs",
+    "#ProductManagement",
+    "#RevenueMetrics"
+  ],
+  "diagram": {
+    "title": "THE TWO SCOREBOARDS",
+    "subtitle": "How boards and buyers judge your product on different metrics, and where they meet.",
+    "steps": [
+      {
+        "label": "BOARD VIEW",
+        "description": "Rule of 40, NRR, magic number, CAC payback."
+      },
+      {
+        "label": "BUYER VIEW",
+        "description": "Reputation, security, time-to-value, peer proof."
+      },
+      {
+        "label": "THE GAP",
+        "description": "Strong board metrics still lose Day-1 shortlist spots."
+      },
+      {
+        "label": "THE BRIDGE",
+        "description": "One dashboard tracking efficiency and trust together."
+      },
+      {
+        "label": "THE TRADE-OFF",
+        "description": "Name where optimizing one starves the other."
+      }
+    ],
+    "foundation_title": "WHAT BOTH SYSTEMS RUN ON",
+    "foundation_items": [
+      "TIME-TO-VALUE",
+      "REFERENCE QUALITY",
+      "SECURITY POSTURE",
+      "RETENTION ECONOMICS"
+    ]
+  },
+  "word_count": 209,
+  "char_count": 1304,
+  "status": "scheduled",
+  "saved_at": "2026-06-02T14:50:45.431513",
+  "updated_at": "2026-06-02T14:51:35.364187",
+  "image_url": "https://res.cloudinary.com/drum3eekm/image/upload/v1780411893/li-posts/2026-06-02/metrics_that_matter_to_buyers_and_boards.png",
+  "buffer_result": {
+    "id": "6a1eedf7425d4528baef3a3b",
+    "status": "scheduled"
+  },
+  "scheduled_when": "queue"
+}
