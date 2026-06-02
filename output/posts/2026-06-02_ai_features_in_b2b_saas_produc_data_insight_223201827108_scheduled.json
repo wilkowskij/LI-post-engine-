@@ -1,0 +1,26 @@
+{
+  "text": "Two years ago, every pricing deck I saw had the same slide: \"AI as premium tier, 30-50% uplift.\"\n\nThat model is dying faster than anyone wants to admit.\n\nVendors who jacked prices for AI add-ons in 2025 are quietly folding those features back into core plans this year. Not because AI got cheaper to run (though it did), but because buyers stopped paying the premium. Renewal conversations got ugly. Procurement started asking why the \"AI tier\" was a separate line item when competitors were including it.\n\nThe credit model isn't saving anyone either. It looked clever in 2024. In practice, buyers hate unpredictable bills and sales teams hate explaining them. A handful of companies do credits well. Most are walking it back to seat-based with AI included.\n\nIf you own pricing on a roadmap, the implication is uncomfortable.\n\nAI is becoming table stakes, no longer a SKU. Your monetization story has to come from outcomes your AI produces, not from access to the AI itself. If your 2026 plan still has a line called \"AI Pro tier,\" you're solving last year's problem.\n\nThe pricing experiments that survive will be hybrid: a seat floor plus consumption on high-value workflows. Pure usage-based was always going to lose to predictability.\n\nThe question I keep coming back to: if AI stops being a premium feature, what's your moat in the renewal conversation?\n\n#SaaS #ProductManagement #AIStrategy #B2BSaaS #ProductStrategy #AIProduct",
+  "topic": "AI features in B2B SaaS products",
+  "format": "data_insight",
+  "hashtags": [
+    "#AIProduct",
+    "#SaaS",
+    "#ProductManagement",
+    "#ArtificialIntelligence",
+    "#B2BSaaS",
+    "#AIStrategy",
+    "#GenerativeAI",
+    "#ProductStrategy"
+  ],
+  "word_count": 234,
+  "char_count": 1432,
+  "status": "scheduled",
+  "saved_at": "2026-06-02T22:32:01.827108",
+  "updated_at": "2026-06-02T22:32:54.779358",
+  "image_url": "https://res.cloudinary.com/drum3eekm/image/upload/v1780439573/li-posts/2026-06-02/ai_features_in_b2b_saas_products.png",
+  "buffer_result": {
+    "id": "6a1f5a164c5ee6e0b426301e",
+    "status": "scheduled"
+  },
+  "scheduled_when": "queue"
+}

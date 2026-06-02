@@ -1,0 +1,52 @@
+{
+  "text": "Eighteen months ago, every pricing deck I reviewed had the same slide: AI as a premium tier, 30-50% uplift, gross margin expansion baked in.\n\nThat slide is aging badly.\n\nBuyers stopped paying the AI tax. They tried the add-on, didn't see proportional value, and either churned the upgrade or used it as leverage at renewal. Vendors are folding AI back into core plans and calling it a feature, not a SKU.\n\nThe pattern I keep seeing in pricing decisions right now looks like this:\n\nStart with the premium tier. Watch attach rates stall. Switch to credits or usage to make value visible. Realize credits create buyer anxiety and finance friction. Re-bundle into core, raise the base price a bit, compete on outcomes.\n\nMost teams are somewhere in step 2 or 3 and don't know step 5 is coming.\n\nThe quieter shift underneath all of this: AI is becoming table stakes faster than any feature category I've tracked. If your 2026 revenue plan assumes a standalone AI tier carries the number, that plan has a hole in it.\n\nIs AI still a SKU in your roadmap, or have you started treating it as the price of staying in the category?\n\n#AIProduct #SaaS #ProductManagement #B2BSaaS #AIStrategy #ProductStrategy",
+  "topic": "AI features in B2B SaaS products",
+  "format": "visual_framework",
+  "hashtags": [
+    "#AIProduct",
+    "#SaaS",
+    "#ProductManagement",
+    "#ArtificialIntelligence",
+    "#B2BSaaS",
+    "#AIStrategy",
+    "#GenerativeAI",
+    "#ProductStrategy"
+  ],
+  "diagram": {
+    "title": "THE GREAT AI RE-BUNDLING",
+    "subtitle": "How SaaS pricing for AI is collapsing back to core plans",
+    "steps": [
+      {
+        "label": "PREMIUM TIER",
+        "description": "AI launches as a paid add-on with a 30-100% uplift."
+      },
+      {
+        "label": "ATTACH STALLS",
+        "description": "Buyers test it, don't see proportional value, downgrade at renewal."
+      },
+      {
+        "label": "CREDITS PIVOT",
+        "description": "Vendors switch to usage credits to expose value per call."
+      },
+      {
+        "label": "CREDIT FATIGUE",
+        "description": "Finance teams reject unpredictable bills, buyers cap usage."
+      },
+      {
+        "label": "RE-BUNDLE",
+        "description": "AI folds into core plans, base price rises, outcomes become the wedge."
+      }
+    ],
+    "foundation_title": "WHAT'S DRIVING THE SHIFT",
+    "foundation_items": [
+      "FALLING INFERENCE COSTS",
+      "BUYER PRICE FATIGUE",
+      "AI AS TABLE STAKES",
+      "HYBRID PRICING NORM"
+    ]
+  },
+  "word_count": 201,
+  "char_count": 1175,
+  "status": "draft",
+  "saved_at": "2026-06-02T22:32:01.827381"
+}

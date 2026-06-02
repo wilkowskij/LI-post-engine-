@@ -1,0 +1,19 @@
+{
+  "text": "Last year, almost every SaaS vendor I talked to was building an \"AI tier.\" Premium SKU, 30-100% price uplift, gated access to the shiny new models. The decks all said the same thing: AI is the upsell.\n\nTwelve months in, that playbook is falling apart.\n\nWhat I'm seeing now: vendors are pulling AI features back into core plans. Not because they want to. Because renewal conversations got ugly. Buyers looked at the uplift, looked at what they were using, and pushed back hard. Procurement teams started treating \"AI add-on\" as a line item to cut, not a feature to expand.\n\nMost people read this as \"AI pricing hasn't matured yet.\" I think that's wrong. The premium-tier model assumed AI was a distinct product. To buyers, it's a capability. You don't pay extra for spellcheck.\n\nMy 12-24 month prediction: AI as a standalone SKU mostly disappears in horizontal SaaS. It survives in vertical and workflow-specific tools where the outcome is measurable and the ROI is obvious. Everywhere else, AI becomes table stakes inside seat-based or hybrid pricing, with usage caps on the expensive stuff (inference, agents, long-context calls).\n\nIf you're a PM with an \"AI tier\" on your 2026 roadmap, pressure-test it now. Ask: would a buyer pay for this if you renamed it? If the answer is no, you don't have a SKU. You have a feature with a markup.\n\nWhere are you landing on this? Premium tier, or table stakes?\n\n#ProductManagement #SaaS #AIProduct #B2BSaaS #ProductStrategy #AIStrategy",
+  "topic": "AI features in B2B SaaS products",
+  "format": "trend_prediction",
+  "hashtags": [
+    "#AIProduct",
+    "#SaaS",
+    "#ProductManagement",
+    "#ArtificialIntelligence",
+    "#B2BSaaS",
+    "#AIStrategy",
+    "#GenerativeAI",
+    "#ProductStrategy"
+  ],
+  "word_count": 247,
+  "char_count": 1475,
+  "status": "draft",
+  "saved_at": "2026-06-02T22:32:01.827604"
+}
