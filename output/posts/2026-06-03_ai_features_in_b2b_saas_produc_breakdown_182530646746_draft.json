@@ -1,0 +1,19 @@
+{
+  "text": "SaaS spend went up 8% last year while app counts stayed flat. That's not consolidation. That's an AI tax.\n\nMost companies paying it don't trust the AI enough to let it run anything.\n\nThe pattern I keep seeing in pricing decks:\n\n1. Ship an AI feature into the existing product\n2. Move the feature into a higher tier (or invent a new top tier)\n3. Justify a 15-30% list price increase at renewal\n4. Point at the valuation multiple AI-native peers are getting\n5. Tell the board you've \"repriced for AI\"\n\nEvery step is rational on its own. The stack is fragile.\n\nThe step PMs skip: validating that buyers are getting autonomous value, not assisted value. Those are different products with different willingness to pay. A summarizer that saves an analyst 20 minutes is worth something. An agent the analyst still babysits is worth a lot less than your pricing page implies.\n\nThe best PM teams I've watched do one thing differently. They separate the platform fee from the consumption fee before finance asks them to. Platform price reflects trust and workflow ownership. Consumption price reflects tokens and runs. When trust is low, customers still buy the platform and ramp usage as confidence grows. When trust is high, consumption compounds on its own.\n\nBundling AI into a higher tier hides the trust gap. Splitting the meter exposes it, which is the point.\n\nIf your AI revenue evaporated at renewal, would you know which half was the problem?\n\n#ProductManagement #B2BSaaS #AIStrategy #PLG #ProductStrategy #AIProduct",
+  "topic": "AI features in B2B SaaS products",
+  "format": "breakdown",
+  "hashtags": [
+    "#AIProduct",
+    "#SaaS",
+    "#ProductManagement",
+    "#ArtificialIntelligence",
+    "#B2BSaaS",
+    "#AIStrategy",
+    "#GenerativeAI",
+    "#ProductStrategy"
+  ],
+  "word_count": 253,
+  "char_count": 1515,
+  "status": "draft",
+  "saved_at": "2026-06-03T18:25:30.646746"
+}

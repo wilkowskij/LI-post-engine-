@@ -1,0 +1,26 @@
+{
+  "text": "Most AI pricing increases shipping right now will get clawed back in 2027 renewals.\n\nVendors are treating AI like a pricing event. Bundle it into the higher tier, raise the floor, point at the valuation premium AI-native companies are getting, and call it value capture. SaaS spend is up around 8% this year while the number of apps per portfolio barely moved. That's the AI tax, and almost everyone is paying it.\n\nThe conventional read is that this is fine because AI is the future and customers will grow into the price. I don't buy it.\n\nIn every buyer conversation I've had this year, the same pattern shows up. IT leadership is enthusiastic about agents. The people who'd use them daily are skeptical, and almost no one has handed over a core workflow to run autonomously. Procurement is starting to notice the gap between the line item and the seat-level usage.\n\nOne nuance. This pattern doesn't apply to AI features that change the unit of work, like Clay separating platform value from token cost. Those will hold. The fragile ones are AI bundles glued onto existing seat pricing with no usage story underneath.\n\nIf you're a PM, the question for your next pricing review: can you show autonomous usage by role, or are you charging for potential?\n\n#AIProduct #ProductManagement #B2BSaaS #AIStrategy #SaaS #ProductStrategy",
+  "topic": "AI features in B2B SaaS products",
+  "format": "hot_take",
+  "hashtags": [
+    "#AIProduct",
+    "#SaaS",
+    "#ProductManagement",
+    "#ArtificialIntelligence",
+    "#B2BSaaS",
+    "#AIStrategy",
+    "#GenerativeAI",
+    "#ProductStrategy"
+  ],
+  "word_count": 223,
+  "char_count": 1327,
+  "status": "scheduled",
+  "saved_at": "2026-06-03T18:25:30.646523",
+  "updated_at": "2026-06-03T18:26:23.047997",
+  "image_url": "https://res.cloudinary.com/drum3eekm/image/upload/v1780511180/li-posts/2026-06-03/ai_features_in_b2b_saas_products.png",
+  "buffer_result": {
+    "id": "6a2071ce2ca64c57e56eb044",
+    "status": "scheduled"
+  },
+  "scheduled_when": "queue"
+}
