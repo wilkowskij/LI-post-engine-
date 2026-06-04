@@ -2,9 +2,13 @@
 OpenAI image generation for LinkedIn post cards.
 
 Uses gpt-image-1 (the model behind ChatGPT's free image generation)
-with DALL-E 3 as fallback. Rotates between two visual styles:
+with DALL-E 3 as fallback. Rotates between six visually distinct styles:
   1. Light lavender/white infographic (clean, editorial)
   2. Dark neon numbered-steps roadmap (bold, high-contrast)
+  3. Bold typography minimalist (oversized text as design element)
+  4. 2x2 strategy matrix (consulting/quadrant framework)
+  5. Iceberg model (visible vs. hidden layers)
+  6. Editorial muted magazine (warm cream, serif, sophisticated)
 """
 import base64
 import os
@@ -32,7 +36,7 @@ teal (#4ECDC4)
 - Numbered section labels in colored pill/badge shapes
 
 LAYOUT:
-- 1200x1200px or 1080x1350px (square or portrait for LinkedIn)
+- 1080x1350px portrait (LinkedIn optimized)
 - 4-section flow: [Left column] → [Center grid] → [Right column]
 - Bottom strip for sub-process steps (horizontal icon chain)
 - "Why It Matters" callout box with checklist bullets
@@ -90,7 +94,159 @@ OUTPUT:
 - The overall feel: high-contrast, professional, scroll-stopping\
 """
 
-_STYLES = [_LIGHT_LAVENDER_PROMPT, _DARK_NEON_PROMPT]
+# Style 3 — Bold typography minimalist
+_BOLD_TYPOGRAPHY_PROMPT = """\
+Create a bold typographic LinkedIn infographic where oversized text IS the \
+primary design element — no photography, minimal iconography.
+
+STYLE:
+- Off-white background (#FAFAFA or #F8F6F2)
+- Ultra-bold sans-serif headline at 40-50% of vertical space — readable as a thumbnail
+- Color palette: deep charcoal (#1A1A1A) for primary text + ONE warm accent \
+(choose from: terracotta #C4704F, dusty blue #3D6B8E, or slate green #3D6B5A)
+- Thin geometric rule lines, brackets, or bold underlines as the only decoration
+- Weight contrast: ultra-bold for labels, regular weight for descriptions
+- Any statistics or numbers displayed at massive scale as a design feature
+- Clean, editorial look — Wall Street Journal data graphics aesthetic
+
+LAYOUT:
+- 1080x1350px portrait
+- Giant hook title at top (all-caps or title case, fills 40-45% of height)
+- 3-5 framework points below in a clean vertical list with generous spacing
+- Each point: accent-colored short bold label + 1-sentence description in lighter weight
+- Bottom band: thin rule line + key takeaway or "JW" byline in small muted text
+- Generous white space throughout — breathing room is a design feature
+
+CONTENT TO VISUALIZE:
+{content}
+
+OUTPUT:
+- The title must dominate — make it so large it feels almost too big
+- Use the accent color sparingly: key words in the title, bullet labels, rule lines only
+- No more than 10-15 words per bullet point line
+- The overall feel: editorial, confident, no-nonsense — built to stop a scroll\
+"""
+
+# Style 4 — 2x2 strategy matrix
+_QUADRANT_MATRIX_PROMPT = """\
+Create a professional 2x2 strategy matrix LinkedIn infographic in a \
+consulting/strategy style.
+
+STYLE:
+- Clean white background (#FFFFFF) with very subtle light gray grid (#F2F2F2)
+- Axis lines in medium gray (#999999), clearly labeled at each end
+- Four quadrant tinted fills using 2 accent colors at 15% opacity:
+  top-left light blue (#EBF4FD), top-right light green (#EBF7EE),
+  bottom-left light amber (#FEF8EB), bottom-right light purple (#F3EEFB)
+- Quadrant labels in bold dark navy (#1A2744), centered in each quadrant
+- Clean sans-serif font (no serifs, no decorative elements)
+- McKinsey/strategy consulting aesthetic — rigorous and minimal
+
+LAYOUT:
+- 1080x1080px square
+- Bold title at the top above the matrix (2 lines maximum)
+- Short subtitle: "X-axis = [low→high label] | Y-axis = [low→high label]"
+- Large 2x2 grid taking up 70% of the image
+- Each quadrant: bold 2-3 word label at top + 2-3 tight bullet points
+- Small circular number badges (1-4) in quadrant corners
+- Footer: thin rule + one-line strategic insight + "JW" badge bottom right
+
+CONTENT TO VISUALIZE:
+{content}
+
+OUTPUT:
+- Map the framework steps into the 4 quadrants by logical opposition or tension
+- Axis labels must make the core tradeoff immediately obvious
+- Each quadrant label should be memorable and distinct (avoid generic terms)
+- The overall feel: board-room ready, strategy deck quality\
+"""
+
+# Style 5 — Iceberg model
+_ICEBERG_PROMPT = """\
+Create an iceberg model LinkedIn infographic revealing visible surface vs. \
+hidden depth — a reveal structure that shows what most people miss.
+
+STYLE:
+- Upper section (above waterline, ~30% of height): pale sky blue (#E8F4FD) \
+with soft white clouds or gradient suggesting open air
+- Waterline: a clear, bold horizontal line with subtle wave texture, \
+labeled "WHAT MOST PEOPLE SEE" on the left
+- Lower section (below waterline, ~70% of height): deep ocean blue \
+(#0B3D6E graduating to #061F3A at the bottom)
+- Iceberg shape: above water in crisp white (#FFFFFF), \
+below water in translucent ice blue (#A8D4F0 at 60% opacity)
+- Above-water text: dark navy — the obvious, surface-level items (1-2 only)
+- Below-water text: white or very light — the hidden factors (3-5 items)
+- Gold accent (#F5C842) for title and section dividers
+
+LAYOUT:
+- 1080x1350px portrait
+- Bold gold title at the very top: "THE [FRAMEWORK NAME] ICEBERG"
+- Above waterline: 1-2 items (the commonly observed behaviors/symptoms)
+- Clear waterline divider with "WHAT MOST PEOPLE SEE" label
+- Below waterline: 3-5 items in the iceberg body, spaced vertically, \
+getting progressively more foundational toward the bottom
+- Each item: bold short label + 1-line description
+- Bottom edge: key insight in small white italic
+
+CONTENT TO VISUALIZE:
+{content}
+
+OUTPUT:
+- Reframe the framework steps as surface observations (above) vs. root causes (below)
+- The below-water items should feel like genuine revelations — things people overlook
+- The depth should feel real: bottom items most hidden, most important
+- The overall feel: thought-provoking, "now I see it differently"\
+"""
+
+# Style 6 — Editorial muted magazine
+_EDITORIAL_MUTED_PROMPT = """\
+Create an editorial magazine-style LinkedIn infographic with a warm, \
+sophisticated palette — think Harvard Business Review meets LinkedIn.
+
+STYLE:
+- Warm cream/parchment background (#F5F0E8)
+- Dark navy primary typography (#1C2B4A)
+- ONE warm accent color (choose whichever fits the topic best): \
+  terracotta (#C4704F) for operational/business topics, \
+  forest green (#2D5A27) for growth/strategy topics, \
+  slate blue (#3D5A80) for data/technology topics
+- Thin elegant serif font for the title (editorial, authoritative)
+- Clean modern sans-serif for all body text and labels
+- Minimal geometric decoration: thin horizontal rule lines, \
+  small filled squares as bullet markers, subtle underlines
+- No gradients, no shadows, no textures — flat and refined throughout
+
+LAYOUT:
+- 1080x1350px portrait
+- Overline at top: small caps category label in accent color \
+  (e.g., "PRODUCT STRATEGY" or "GTM INSIGHT")
+- Large serif title below: 2-3 lines, fills 25-30% of height
+- Thin rule line separating header from body
+- 3-5 framework items in a clean numbered vertical list, well-spaced
+- Each item: accent-colored number + bold sans-serif label (6-8 words) \
+  + 1-2 sentence description in lighter weight
+- Bottom: thin rule + italic key takeaway sentence
+- Bottom right: "JW" monogram in a small circle, accent color border
+
+CONTENT TO VISUALIZE:
+{content}
+
+OUTPUT:
+- The title should read like a magazine headline, not a diagram label
+- Maximum 3-4 uses of the accent color total — restraint is the point
+- Generous line spacing and padding — white space signals quality
+- The overall feel: authoritative, considered, worth saving and re-reading\
+"""
+
+_STYLES = [
+    _LIGHT_LAVENDER_PROMPT,
+    _DARK_NEON_PROMPT,
+    _BOLD_TYPOGRAPHY_PROMPT,
+    _QUADRANT_MATRIX_PROMPT,
+    _ICEBERG_PROMPT,
+    _EDITORIAL_MUTED_PROMPT,
+]
 
 
 def format_image_prompt(diagram: dict, post_text: str, style_prompt: Optional[str] = None) -> str:
