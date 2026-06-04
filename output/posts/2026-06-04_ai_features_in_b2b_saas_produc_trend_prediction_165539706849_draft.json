@@ -1,0 +1,19 @@
+{
+  "text": "Most AI pricing pages I've seen this year follow the same template: take the existing tier, add an \"AI\" SKU, charge 30-50% more, call it a growth lever.\n\nThe math is catching up.\n\nClassic SaaS gross margins sit around 80-90%. AI features, once you account for inference costs, land closer to 50-60%. Every query a user runs costs you something. And the more your premium AI tier succeeds, the worse your margins get.\n\nThat's a strange shape for a growth lever.\n\nThe other half of the problem: most workers I talk to bypass the in-product AI their company already pays for and use ChatGPT or Claude on the side. So vendors charge a premium for features users aren't adopting.\n\nMy prediction for the next 18 months: the \"AI as a premium add-on SKU\" model collapses for anything other than integrated workflow AI. Two things replace it.\n\nOne, AI gets bundled into the core product at no upcharge, and the pricing conversation moves to seat expansion or usage tiers tied to value created.\n\nTwo, outcome-based pricing for AI agents goes mainstream in categories like support, sales dev, and ops. You pay when the agent closes the ticket, books the meeting, reconciles the invoice.\n\nIf you're a PM right now, the question to sit with: can you defend your AI upcharge with adoption data, or are you charging for a feature your users are quietly going around?\n\nWhich one are you?\n\n#AIProduct #SaaS #ProductManagement #B2BSaaS #AIStrategy #ProductStrategy",
+  "topic": "AI features in B2B SaaS products",
+  "format": "trend_prediction",
+  "hashtags": [
+    "#AIProduct",
+    "#SaaS",
+    "#ProductManagement",
+    "#ArtificialIntelligence",
+    "#B2BSaaS",
+    "#AIStrategy",
+    "#GenerativeAI",
+    "#ProductStrategy"
+  ],
+  "word_count": 245,
+  "char_count": 1446,
+  "status": "draft",
+  "saved_at": "2026-06-04T16:55:39.706849"
+}

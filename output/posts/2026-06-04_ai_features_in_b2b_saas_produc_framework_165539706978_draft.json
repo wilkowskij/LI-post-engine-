@@ -1,0 +1,19 @@
+{
+  "text": "Most AI pricing strategies I'm seeing right now are quietly torching gross margins, and the people approving them haven't done the math.\n\nClassic SaaS runs 80-90% gross margin. AI features, once you account for inference costs at real usage, land closer to 50-60%. So when a PM ships an \"AI add-on\" SKU at +30% ARPU and ops celebrates the expansion revenue, finance sees the same dollar generating less profit. You sold harder for worse unit economics.\n\nA frame I've been using when pricing AI capabilities:\n\nBolt-on, Bundle, or Bounty.\n\nBolt-on is the trap. Separate SKU, premium price, optional usage. Customers churn the add-on first when budgets tighten, and the ones who keep it use it heavily enough to crush your margin. Worst of both sides.\n\nBundle works when the AI is so wired into the core workflow that ripping it out breaks the product. You raise the base price, accept lower blended margin, and defend it with retention. This only holds if the AI is doing something the user can't replicate by pasting into ChatGPT.\n\nBounty is outcome-based. You get paid when the agent closes the ticket, books the meeting, reconciles the invoice. Margins compress per transaction but scale with value delivered, and the buyer stops comparing your price to a $20 ChatGPT seat.\n\nThe Bolt-on era is closing because most of your users already have a better general-purpose AI in another tab.\n\nWhich one are you defending in your next pricing review?\n\n#AIProduct #SaaS #ProductManagement #B2BSaaS #AIStrategy #ProductStrategy",
+  "topic": "AI features in B2B SaaS products",
+  "format": "framework",
+  "hashtags": [
+    "#AIProduct",
+    "#SaaS",
+    "#ProductManagement",
+    "#ArtificialIntelligence",
+    "#B2BSaaS",
+    "#AIStrategy",
+    "#GenerativeAI",
+    "#ProductStrategy"
+  ],
+  "word_count": 249,
+  "char_count": 1519,
+  "status": "draft",
+  "saved_at": "2026-06-04T16:55:39.706978"
+}

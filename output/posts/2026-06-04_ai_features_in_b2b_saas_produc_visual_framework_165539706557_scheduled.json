@@ -1,0 +1,59 @@
+{
+  "text": "The AI-as-premium-SKU playbook is breaking, and most PMs haven't noticed yet.\n\nThe math is simple. Classic SaaS gross margins sit around 80-90%. AI features run closer to 50-60% once you account for inference costs. So when you bolt an AI add-on onto your product and charge 30% more for it, you're often selling a worse-margin product to a customer who's already paying ChatGPT $20 a month for the same output.\n\nI've watched two patterns work. The rest are margin traps.\n\nThe ones that work either bury the AI so deep in the workflow that ripping it out would break the job (bundled pricing, no separate SKU), or they tie payment to a measurable outcome the agent delivers. Everything in between, the premium toggle, the AI tier, the credits pack bolted onto a seat license, is a holding pattern.\n\nThe question I'd push every PM on right now: if your AI feature disappeared tomorrow, would your customers churn, or would they shrug and open another tab?\n\nIf it's the second one, you don't have a pricing problem. You have a positioning problem dressed up as a pricing problem.\n\n#AIProduct #SaaS #ProductManagement #B2BSaaS #AIStrategy #ProductStrategy",
+  "topic": "AI features in B2B SaaS products",
+  "format": "visual_framework",
+  "hashtags": [
+    "#AIProduct",
+    "#SaaS",
+    "#ProductManagement",
+    "#ArtificialIntelligence",
+    "#B2BSaaS",
+    "#AIStrategy",
+    "#GenerativeAI",
+    "#ProductStrategy"
+  ],
+  "diagram": {
+    "title": "THE AI MONETIZATION LADDER",
+    "subtitle": "How AI features earn their price, from margin trap to defensible moat",
+    "steps": [
+      {
+        "label": "PREMIUM TOGGLE",
+        "description": "Bolt-on SKU at 30-100% uplift. Easy to cancel, easy to copy."
+      },
+      {
+        "label": "CREDITS & METERING",
+        "description": "Usage-based pricing that exposes your COGS to the customer."
+      },
+      {
+        "label": "BUNDLED WORKFLOW",
+        "description": "AI woven into the core job. Removing it breaks the product."
+      },
+      {
+        "label": "OUTCOME-BASED",
+        "description": "You get paid when the agent delivers a measurable result."
+      },
+      {
+        "label": "ACCOUNTABLE AGENT",
+        "description": "Pricing tied to SLAs on quality, accuracy, or revenue impact."
+      }
+    ],
+    "foundation_title": "WHAT EVERY RUNG REQUIRES",
+    "foundation_items": [
+      "UNIT ECONOMICS CLARITY",
+      "MEASURABLE USER OUTCOMES",
+      "WORKFLOW DEPTH",
+      "TRUST IN OUTPUTS"
+    ]
+  },
+  "word_count": 195,
+  "char_count": 1169,
+  "status": "scheduled",
+  "saved_at": "2026-06-04T16:55:39.706557",
+  "updated_at": "2026-06-04T16:56:26.627908",
+  "image_url": "https://res.cloudinary.com/drum3eekm/image/upload/v1780592184/li-posts/2026-06-04/ai_features_in_b2b_saas_products.png",
+  "buffer_result": {
+    "id": "6a21ae3a3f71d3ddd910108a",
+    "status": "scheduled"
+  },
+  "scheduled_when": "queue"
+}
