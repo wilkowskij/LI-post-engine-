@@ -37,19 +37,22 @@ teal (#4ECDC4)
 
 LAYOUT:
 - 1080x1350px portrait (LinkedIn optimized)
-- 4-section flow: [Left column] → [Center grid] → [Right column]
-- Bottom strip for sub-process steps (horizontal icon chain)
-- "Why It Matters" callout box with checklist bullets
+- TOP SECTION: bold framework title + one-line subtitle (NOT a numbered box)
+- MIDDLE GRID: 2-column grid of step cards — all steps numbered consecutively 1, 2, 3, 4, 5
+  - Do NOT place any unnumbered context or hook text inside the step grid
+  - Every cell in the grid is a numbered step card — no exceptions
+  - Flow arrows connect: card 1 → card 2 → card 3 → card 4 → card 5 (S-curve)
+- BOTTOM STRIP: "Why It Matters" with 3-4 short checklist bullets (no number badge)
 
 CONTENT TO VISUALIZE:
 {content}
 
 OUTPUT:
-- Label each section with numbers (1, 2, 3, 4)
-- Use short 2-4 word headers per box
-- Add 1-line subtitles under each header
-- Include a small robot/AI mascot character in bottom-left corner
-- Add creator initials badge (circle) in top-left\
+- Number every step card: 01, 02, 03, 04, 05 — all must have a visible numbered badge
+- Use short 2-4 word headers per step box
+- Add 1-line description under each header
+- Include a small robot/AI mascot character in bottom-left of the Why It Matters strip
+- Add "JW" initials badge (small circle) in bottom-right corner\
 """
 
 # Style 2 — Dark neon numbered-steps roadmap

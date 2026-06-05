@@ -28,7 +28,13 @@ IMPORTANT — this is a visual_framework post. Return a single JSON object (no m
 }
 
 Steps: 4-5 items. Foundation items: 3-5 items (or omit the array if there is no natural foundation layer).
-The diagram must be self-contained — someone who only sees the image should understand the framework."""
+The diagram must be self-contained — someone who only sees the image should understand the framework.
+
+CRITICAL RULES FOR post_text:
+- The post_text must read as a complete, standalone LinkedIn post — no references to the diagram at all.
+- Never write "[see diagram]", "see above", "as shown", "the framework below", or any phrase that references the image.
+- The diagram is an attached image. The post text will appear separately. Write the post_text as if no image exists.
+- Never name specific companies, clients, or competitors — speak in patterns and principles."""
 
 
 def generate_post(
@@ -128,34 +134,58 @@ def _enforce_char_limit(text: str, client, original_prompt: str, limit: int = _L
 
 
 _STOP_SLOP_PROMPT = """\
-Review this LinkedIn post and fix any AI writing patterns. Apply these rules:
+Review this LinkedIn post and fix every AI writing pattern you find. Apply ALL rules below:
 
-REMOVE throat-clearing openers: "Here's the thing:" / "Here's what/why X" / "It turns out" /
-"The truth is," / "The uncomfortable truth is" / "Make no mistake" / "Let that sink in."
+REMOVE throat-clearing openers:
+"Here's the thing:" / "Here's what/why X" / "It turns out" / "The truth is," /
+"The uncomfortable truth is" / "Make no mistake" / "Let that sink in." /
+"The reality is" / "I'll be honest" / "At the end of the day"
 
-REMOVE binary contrast structures — state the point directly:
-"Not X. But Y." / "The answer isn't X. It's Y." / "not just X but also Y"
+REMOVE binary contrast structures — state the point directly instead:
+"Not X. But Y." / "The answer isn't X. It's Y." / "not just X but also Y" /
+"aren't failing because X ... Y is the problem" / "It's not X. It's Y."
+
+REMOVE dramatic fragments used for emphasis:
+"Every time." / "Full stop." / "Day one." / "That's it." / "Simple as that." /
+Any sentence under 5 words that exists only for punch — fold it into the prior sentence.
+
+REMOVE lazy extremes: every, always, never, everyone, nobody — replace with specifics.
 
 KILL all adverbs: really, just, literally, genuinely, honestly, simply, actually, deeply,
-truly, fundamentally, inherently, inevitably, crucially, importantly
+truly, fundamentally, inherently, inevitably, crucially, importantly, quietly, clearly
 
 FIX false agency — name the human actor:
-Wrong: "the data tells us" / "the market rewards" / "the culture shifts"
-Right: "buyers pay" / "you read the data and see" / "teams change behavior"
+Wrong: "the data tells us" / "the market rewards" / "the culture shifts" /
+"the conversation moves" / "pricing evolves"
+Right: "buyers pay" / "you read the data and see" / "teams shift behavior"
 
-FIX passive voice: find the actor, put them at the front.
+FIX passive voice: find the actor, make them the subject.
 
 FIX Wh- sentence openers: "What makes this hard..." → "The constraint is..."
 
-REMOVE business jargon: navigate→handle, unpack→explain, landscape→situation,
-deep dive→analysis, circle back→return to, double down→commit
+REMOVE business jargon:
+navigate→handle, unpack→explain, landscape→situation, deep dive→analysis,
+circle back→return to, double down→commit, table stakes→baseline requirement,
+dressed up as→disguised as (then rewrite to be direct), substrate→foundation
 
-NO em-dashes. Use commas or periods.
+NO em-dashes anywhere. Use commas or periods.
 
-NO dramatic fragmentation: "X. That's it." — complete sentences only.
+NO company or product names: remove any specific company, tool, or product name
+and replace with a description of the pattern or category instead.
+Wrong: "like Clay separating platform from token cost"
+Right: "like separating platform access from consumption cost"
+
+NO manufactured statistics: if a number like "the failing 95%" or "3x the multiple"
+appears without a real source, rewrite as a pattern observation instead.
+Wrong: "The failing 95% aren't losing at AI"
+Right: "Most teams aren't losing at AI"
+
+NO diagram references in post text: remove any phrase like "[see diagram]",
+"see above", "as shown", "the framework below", "the pattern looks like this:" followed
+by nothing. The post text must stand completely alone.
 
 Return ONLY the revised post text. No commentary, no scoring, no explanation.
-If the post is already clean, return it unchanged.\
+Preserve the hashtags exactly as written at the end.\
 """
 
 
