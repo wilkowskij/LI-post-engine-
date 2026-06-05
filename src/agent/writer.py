@@ -95,10 +95,14 @@ A few reminders about voice:
     if is_visual:
         data = _parse_visual_framework_response(raw, topic, chosen_format, hashtags)
         data["text"] = _stop_slop_pass(data["text"], client)
+        data["text"] = _quality_review_pass(data["text"], chosen_format, client)
+        data["word_count"] = len(data["text"].split())
+        data["char_count"] = len(data["text"])
         return data
 
     post_text = _enforce_char_limit(raw, client, user_prompt)
     post_text = _stop_slop_pass(post_text, client)
+    post_text = _quality_review_pass(post_text, chosen_format, client)
 
     return {
         "text": post_text,
@@ -198,6 +202,84 @@ def _stop_slop_pass(text: str, client) -> str:
         messages=[{"role": "user", "content": f"{_STOP_SLOP_PROMPT}\n\nPOST:\n{text}"}],
     )
     return message.content[0].text.strip()
+
+
+_QUALITY_REVIEW_PROMPT = """\
+You are a senior editor reviewing a LinkedIn post before it publishes. \
+Score it on five dimensions, then rewrite any section that scores below 7.
+
+SCORE EACH (1-10):
+1. OPENER — Does the first sentence earn attention without a cliché hook or announcement?
+2. SPECIFICITY — Are claims concrete and grounded, or vague and generic?
+3. FLOW — Does each paragraph earn the next? Is there a clear logical progression?
+4. VOICE — Does it sound like a real person thinking out loud, not content-marketing copy?
+5. CLOSING — Does the final question or statement have real stakes, not a generic CTA?
+
+RULES YOU MUST ENFORCE:
+- The opener must not start with "I" or a throat-clearing phrase
+- No sentence fragment used purely for dramatic effect
+- No company or product names (replace with category descriptions)
+- No manufactured statistics (no precise numbers without a real source)
+- No reference to a diagram or image ("[see diagram]", "as shown", etc.)
+- No binary contrast structure ("Not X. But Y.")
+- No em-dashes
+- The post must read as a complete standalone piece
+
+OUTPUT FORMAT:
+Line 1: SCORES: opener=X specificity=X flow=X voice=X closing=X total=XX/50
+Line 2: ISSUES: <comma-separated list of what you fixed, or "none">
+Line 3+: <the full revised post text, hashtags included>
+
+If total >= 40 and no rule violations exist, output the post unchanged \
+(still include the SCORES and ISSUES lines).\
+"""
+
+
+def _quality_review_pass(text: str, post_format: str, client) -> str:
+    """
+    Second review pass: scores the post on 5 dimensions and rewrites
+    any section that fails before the post is saved or scheduled.
+    """
+    message = client.messages.create(
+        model="claude-opus-4-7",
+        max_tokens=800,
+        system=PERSONA_SYSTEM_PROMPT,
+        messages=[{
+            "role": "user",
+            "content": (
+                f"{_QUALITY_REVIEW_PROMPT}\n\n"
+                f"FORMAT: {post_format}\n\n"
+                f"POST TO REVIEW:\n{text}"
+            ),
+        }],
+    )
+    raw = message.content[0].text.strip()
+
+    # Parse out scores line and issues line, return only the post body
+    lines = raw.splitlines()
+    post_lines = []
+    skipping_header = True
+    for line in lines:
+        if skipping_header:
+            if line.startswith("SCORES:"):
+                score_line = line
+                continue
+            if line.startswith("ISSUES:"):
+                issues_line = line
+                skipping_header = False
+                continue
+        else:
+            post_lines.append(line)
+
+    revised = "\n".join(post_lines).strip()
+
+    # Log scores for visibility in CI
+    if "score_line" in dir():
+        print(f"[quality_review] {score_line}")
+    if "issues_line" in dir():
+        print(f"[quality_review] {issues_line}")
+
+    return revised if revised else text
 
 
 def _parse_visual_framework_response(raw: str, topic: str, fmt: str, hashtags: list) -> dict:
