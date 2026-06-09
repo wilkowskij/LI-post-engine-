@@ -1,0 +1,59 @@
+{
+  "text": "Most B2B SaaS shipped AI in 2024 to check a box on the roadmap. Two years in, the bill is coming due.\n\nTalk to enough CEOs and the pattern is the same: no measurable return on the AI spend. No revenue lift, no cost savings. And the vendors I talk to over coffee are quietly rethinking AI pricing right now, because shoving LLM features into the existing platform tier wrecked their unit economics.\n\nTraditional SaaS earned its fat gross margins on economies of scale. AI features carry incremental compute costs and no scale curve. Bolt one onto a seat-based plan and you've signed up to subsidize your heaviest users forever.\n\nThe small group of vendors making money on AI did something different. They didn't ship a feature. They re-architected a specific workflow, scoped it tightly, and priced it on usage or outcomes, separate from the core product.\n\nThat's the split worth sitting with: AI as a checkbox on the existing SKU, or AI as a new product with its own economics.\n\nIf you're a PM staring at an AI feature in your roadmap right now, the honest question is whether you're re-architecting a workflow or decorating one.\n\nWhich one is yours?\n\n#AIProduct #B2BSaaS #ProductManagement #AIStrategy #ProductStrategy #SaaS",
+  "topic": "AI features in B2B SaaS products",
+  "format": "visual_framework",
+  "hashtags": [
+    "#AIProduct",
+    "#SaaS",
+    "#ProductManagement",
+    "#ArtificialIntelligence",
+    "#B2BSaaS",
+    "#AIStrategy",
+    "#GenerativeAI",
+    "#ProductStrategy"
+  ],
+  "diagram": {
+    "title": "THE AI MARGIN TEST",
+    "subtitle": "How to tell if your AI feature builds a business or burns one",
+    "steps": [
+      {
+        "label": "SCOPE THE WORKFLOW",
+        "description": "Pick one job-to-be-done you can re-architect end to end."
+      },
+      {
+        "label": "MEASURE THE OUTCOME",
+        "description": "Define the unit of value the buyer would pay for directly."
+      },
+      {
+        "label": "MODEL COMPUTE COST",
+        "description": "Map per-call cost against price at p50 and p95 usage."
+      },
+      {
+        "label": "PRICE ON USAGE",
+        "description": "Separate the SKU from seat-based tiers and core platform."
+      },
+      {
+        "label": "GATE THE ROLLOUT",
+        "description": "Ship to design partners only until gross margin clears 60%."
+      }
+    ],
+    "foundation_title": "FOUNDATIONS",
+    "foundation_items": [
+      "WORKFLOW OWNERSHIP",
+      "USAGE TELEMETRY",
+      "SEPARATE P&L",
+      "BUYER ROI STORY"
+    ]
+  },
+  "word_count": 207,
+  "char_count": 1225,
+  "status": "scheduled",
+  "saved_at": "2026-06-09T16:36:26.683409",
+  "updated_at": "2026-06-09T16:37:19.796801",
+  "image_url": "https://res.cloudinary.com/drum3eekm/image/upload/v1781023037/li-posts/2026-06-09/ai_features_in_b2b_saas_products.png",
+  "buffer_result": {
+    "id": "6a28413f53f63309b99c663f",
+    "status": "scheduled"
+  },
+  "scheduled_when": "queue"
+}

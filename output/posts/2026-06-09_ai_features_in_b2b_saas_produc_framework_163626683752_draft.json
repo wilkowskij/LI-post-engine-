@@ -1,0 +1,19 @@
+{
+  "text": "Most CEOs report zero ROI from their AI investments. No revenue, no cost savings.\n\nMeanwhile most B2B SaaS products shipped an AI feature this year.\n\nBoth things are true, and they're connected.\n\nThe pattern I keep seeing: vendors bolt an AI feature onto an existing tier, price it at zero to drive adoption, then absorb the compute cost. Traditional SaaS runs 80% gross margins because servers scale. AI inference doesn't. Every active user becomes a variable cost line you didn't have before.\n\nI've started running new AI features through three questions, in order:\n\n1. Does this AI replace a specific workflow, or decorate an existing one? If it's decoration, kill it.\n2. Can the customer point to the dollar value of the outcome? If they can't articulate it, you can't price it.\n3. Does it have its own meter and its own price? If it's hiding inside the platform tier, you're financing your customer's experiment.\n\nWhere this breaks down: early land motions where you're using AI to win the seat. Fine. But put a sunset on it. \"Free during beta\" is a strategy. \"Free forever bundled into Pro\" is a slow margin bleed.\n\nThe vendors winning right now treat AI as a re-architected workflow with its own P&L, instead of a checkbox on the comparison grid.\n\nWhat's the AI feature in your product you'd cut tomorrow if your CFO saw the compute bill?\n\n#AIProduct #B2BSaaS #ProductManagement #AIStrategy #ProductStrategy",
+  "topic": "AI features in B2B SaaS products",
+  "format": "framework",
+  "hashtags": [
+    "#AIProduct",
+    "#SaaS",
+    "#ProductManagement",
+    "#ArtificialIntelligence",
+    "#B2BSaaS",
+    "#AIStrategy",
+    "#GenerativeAI",
+    "#ProductStrategy"
+  ],
+  "word_count": 238,
+  "char_count": 1414,
+  "status": "draft",
+  "saved_at": "2026-06-09T16:36:26.683752"
+}

@@ -1,0 +1,19 @@
+{
+  "text": "A number from a recent CEO survey has been sitting in my head all week: most CEOs report zero ROI from their AI investments. Not weak ROI. Zero.\n\nAt the same time, most B2B SaaS products now ship an AI feature.\n\nMost people read those two numbers and conclude AI is overhyped. The read I'd push back on is that one.\n\nThe pattern I keep seeing: vendors bolt AI onto an existing platform tier to check a box, price it at zero marginal cost to the customer, and tank their own gross margins on the compute bill. The customer gets a chatbot they don't use. The vendor gets a worse P&L. Nobody wins.\n\nThe small group of companies making money on AI did something different. They scoped a single workflow, rebuilt it from the ground up, and priced it on usage from day one. It looks less like a feature and more like a separate product living inside the suite.\n\nMy 12-24 month prediction: the \"AI included in your plan\" packaging dies. You'll see two SKUs. The base SaaS at traditional margins, and AI workflows priced on consumption with their own P&L. The vendors who split this cleanly will look healthy. The ones still hiding compute costs inside platform pricing will cut features or raise prices across the board.\n\nIf you're a PM right now, the question to sit with: can you name the gross margin of your AI feature this quarter? If you can't, someone in finance already has, and you won't like that conversation.\n\nSo when does your team get pulled into that meeting?\n\n#AIProduct #B2BSaaS #ProductManagement #AIStrategy #ProductStrategy #SaaS",
+  "topic": "AI features in B2B SaaS products",
+  "format": "trend_prediction",
+  "hashtags": [
+    "#AIProduct",
+    "#SaaS",
+    "#ProductManagement",
+    "#ArtificialIntelligence",
+    "#B2BSaaS",
+    "#AIStrategy",
+    "#GenerativeAI",
+    "#ProductStrategy"
+  ],
+  "word_count": 272,
+  "char_count": 1542,
+  "status": "draft",
+  "saved_at": "2026-06-09T16:36:26.683629"
+}
