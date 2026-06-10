@@ -1,0 +1,52 @@
+{
+  "text": "The PLG vs sales-led debate stopped being interesting about a year ago.\n\nThe question worth asking now: does your pricing model survive the shift from seats to outcomes?\n\nWhen an AI agent does the work of five SDRs, paying per login stops making sense to the person signing the check. The value isn't sitting in a chair anymore. It's sitting in an output.\n\nThe fastest-growing software companies are repackaging around this, and the pattern is consistent. The seat is no longer the unit. The motion is no longer one thing. The pricing page no longer matches the playbook from 2021.\n\nCompanies repricing early are pulling away on net revenue retention. Companies waiting for buyers to force their hand are watching deals shrink as procurement asks why a human seat count should determine what they pay for AI-delivered work.\n\nThe GTM stack is collapsing into something messier and more interesting: multiple motions, usage at the core, humans selling the expansion.\n\nIf your 2026 plan still leads with seat expansion as the growth lever, what's the story you tell the buyer who replaced half their seats with an agent?\n\n#GTM #SaaS #ProductStrategy #B2BSaaS #GrowthStrategy #ProductMarketing",
+  "topic": "Go-to-market strategy for SaaS",
+  "format": "visual_framework",
+  "hashtags": [
+    "#GTM",
+    "#GoToMarket",
+    "#SaaS",
+    "#ProductStrategy",
+    "#B2BSaaS",
+    "#ProductMarketing",
+    "#SaaSMarketing",
+    "#GrowthStrategy"
+  ],
+  "diagram": {
+    "title": "THE POST-SEAT GTM STACK",
+    "subtitle": "How software pricing and motion are reorganizing around outcomes, not logins.",
+    "steps": [
+      {
+        "label": "PRICE THE OUTCOME",
+        "description": "Charge for work completed, not chairs filled."
+      },
+      {
+        "label": "METER THE USAGE",
+        "description": "Track consumption events that map to buyer value."
+      },
+      {
+        "label": "RUN MULTIPLE MOTIONS",
+        "description": "Self-serve, inside sales, enterprise, partner, concurrent not sequential."
+      },
+      {
+        "label": "SELL THE EXPANSION",
+        "description": "Humans land usage commitments and unlock new outcomes."
+      },
+      {
+        "label": "REPRICE BEFORE FORCED",
+        "description": "Reset packaging while you still control the narrative."
+      }
+    ],
+    "foundation_title": "WHAT MAKES IT WORK",
+    "foundation_items": [
+      "USAGE TELEMETRY",
+      "OUTCOME DEFINITIONS",
+      "HYBRID COMP PLANS",
+      "AGENT-READY PRODUCT"
+    ]
+  },
+  "word_count": 193,
+  "char_count": 1189,
+  "status": "draft",
+  "saved_at": "2026-06-10T17:00:28.269962"
+}
