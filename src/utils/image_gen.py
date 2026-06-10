@@ -232,6 +232,7 @@ def generate_post_image(
 
     Priority:
       1. OpenAI image generation (gpt-image-1 / DALL-E 3) — when OPENAI_API_KEY is set
+         Includes a Claude vision QA review with up to MAX_RETRIES regeneration attempts.
       2. Playwright HTML renderer — when Playwright is installed
       3. Pillow fallback
     """
@@ -244,7 +245,30 @@ def generate_post_image(
     # 1. OpenAI image generation — primary renderer when key is set
     if os.environ.get("OPENAI_API_KEY"):
         from src.integrations.openai_image_gen import generate_image as _openai_gen
-        return _openai_gen(diagram, post.get("text", ""), output_path=output_path)
+        from src.utils.image_reviewer import review_image, MAX_RETRIES
+
+        best_path: Optional[Path] = None
+        for attempt in range(1 + MAX_RETRIES):
+            candidate = _openai_gen(diagram, post.get("text", ""), output_path=output_path)
+            best_path = candidate
+
+            if not os.environ.get("ANTHROPIC_API_KEY"):
+                # Skip review if no Anthropic key available
+                return candidate
+
+            print(f"[image_gen] reviewing image (attempt {attempt + 1}/{1 + MAX_RETRIES})...")
+            result = review_image(candidate, diagram)
+            if result.get("passed"):
+                return candidate
+
+            if attempt < MAX_RETRIES:
+                print("[image_gen] image failed QA — regenerating...")
+                # Force a fresh filename for the retry so the bad image isn't overwritten
+                output_path = None
+            else:
+                print("[image_gen] WARNING: image failed QA after all retries — using best attempt")
+
+        return best_path
 
     # 2. Playwright HTML renderer
     try:
