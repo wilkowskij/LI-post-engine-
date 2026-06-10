@@ -1,0 +1,19 @@
+{
+  "text": "Most enterprise GenAI pilots return nothing measurable to the P&L. That finding has been making the rounds, and most PMs I talk to blame the models. The models aren't the problem.\n\nThe product layer we're building on top of them is.\n\nMost SaaS vendors ran the same playbook last year: bolt a copilot onto the existing UX, charge $30 a seat, call it AI strategy. Buyers tried it, didn't see workflow change, stopped renewing the add-on. A few large vendors have quietly moved their agent products from per-seat to per-conversation pricing, which tells you everything. Seat-based AI pricing is a tell that the product doesn't drive outcomes. If it did, you'd want consumption to scale.\n\nThe pilots that work share a pattern. One workflow, end-to-end, with memory across sessions, feedback loops that improve the output, and pricing tied to the result. No sidebar. No chat box. You rebuild the workflow around what the model is good at.\n\nThe PMs who win in 2026 won't ship more AI features. They'll kill the copilot on their roadmap and rebuild one workflow from scratch, treating the model as a primitive instead of a feature you bolt on.\n\nWhich workflow in your product is worth that bet, and what would you have to stop shipping to fund it?\n\n#AIProduct #ProductManagement #B2BSaaS #AIStrategy #ProductStrategy #GenerativeAI",
+  "topic": "AI features in B2B SaaS products",
+  "format": "hot_take",
+  "hashtags": [
+    "#AIProduct",
+    "#SaaS",
+    "#ProductManagement",
+    "#ArtificialIntelligence",
+    "#B2BSaaS",
+    "#AIStrategy",
+    "#GenerativeAI",
+    "#ProductStrategy"
+  ],
+  "word_count": 220,
+  "char_count": 1323,
+  "status": "draft",
+  "saved_at": "2026-06-10T20:14:33.319492"
+}
