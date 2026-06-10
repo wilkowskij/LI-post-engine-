@@ -1,0 +1,52 @@
+{
+  "text": "Most companies calling themselves \"API-first\" mean they have APIs.\n\nThe gap shows up the moment you ask a different question: who is the API designed for?\n\nFor the last decade, the answer was a human developer reading docs, copying a curl command, and stitching things together. Reasonable. That was the buyer.\n\nThe buyer is changing. A meaningful share of integrations next year will start with an AI agent, not a person. Agents don't read your getting-started guide. They probe, reason about schemas, and give up when discovery is ambiguous.\n\nMost APIs fail that test. Endpoints are named for internal data models. Auth flows assume a browser. Error messages help humans debug, not machines retry. Pagination is inconsistent across the same product.\n\nThe teams I've watched pull ahead aren't shipping more endpoints. They're redesigning the consumption layer: predictable schemas, machine-readable capability descriptions, semantic error codes, idempotency by default.\n\nIf an agent had to complete a transaction through your product tonight, with no human in the loop, would it succeed on the first try?\n\nThat's the bar now.\n\n#APIFirst #DeveloperExperience #SaaS #ProductStrategy #B2BSaaS #TechProduct",
+  "topic": "API-first product design",
+  "format": "visual_framework",
+  "hashtags": [
+    "#APIFirst",
+    "#DeveloperExperience",
+    "#SaaS",
+    "#ProductDesign",
+    "#DeveloperTools",
+    "#B2BSaaS",
+    "#TechProduct",
+    "#ProductStrategy"
+  ],
+  "diagram": {
+    "title": "THE AGENT-READY API STACK",
+    "subtitle": "Five layers that separate API-as-checkbox from API-as-moat",
+    "steps": [
+      {
+        "label": "DISCOVERABILITY",
+        "description": "Agents find capabilities without reading human documentation."
+      },
+      {
+        "label": "SEMANTIC SCHEMAS",
+        "description": "Field names describe meaning, not internal database structure."
+      },
+      {
+        "label": "DETERMINISTIC ERRORS",
+        "description": "Machine-readable codes that tell an agent what to retry."
+      },
+      {
+        "label": "IDEMPOTENT ACTIONS",
+        "description": "Repeated calls produce the same outcome, every time."
+      },
+      {
+        "label": "AUTONOMOUS TRANSACTION",
+        "description": "Agent completes the job with no human in the loop."
+      }
+    ],
+    "foundation_title": "FOUNDATION: DESIGN PRINCIPLES",
+    "foundation_items": [
+      "CONSISTENT AUTH",
+      "PREDICTABLE PAGINATION",
+      "VERSIONED CONTRACTS",
+      "RATE-LIMIT TRANSPARENCY"
+    ]
+  },
+  "word_count": 182,
+  "char_count": 1203,
+  "status": "draft",
+  "saved_at": "2026-06-10T22:18:56.552547"
+}

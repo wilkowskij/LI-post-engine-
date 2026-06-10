@@ -1,0 +1,26 @@
+{
+  "text": "Most \"API-first\" companies are building APIs for the wrong customer.\n\nThey're still writing docs for a human developer who will read them, struggle through auth, and stitch together a Postman collection on a Tuesday afternoon.\n\nThat developer is a shrinking share of who actually consumes APIs.\n\nFour shifts worth making if agents are reading your docs more than humans are:\n\n1. Discovery. Can an agent find your API without a human in the loop? Most can't. Your OpenAPI spec lives somewhere a crawler can reach, but the semantic description of what your API does is buried in marketing copy.\n\n2. Reasoning. Endpoint names and parameter descriptions written for humans assume context. Agents need explicit semantics. \"customer_id\" works for a developer who already knows your data model. An agent needs to know what a customer is in your system, what states it can be in, and what it relates to.\n\n3. Authentication. OAuth flows designed for human consent break the moment an agent tries to act on someone's behalf. Scoped tokens and delegated auth are baseline now.\n\n4. Transaction. Can an agent complete a purchase, a refund, a provisioning step end-to-end without falling back to a UI? If no, that's your roadmap.\n\nThe step most teams skip is #2. They ship OpenAPI specs and assume that's enough. It isn't. The sharpest teams treat their API descriptions as a product surface, with the same rigor they apply to a landing page.\n\nIf an agent had to choose between your API and a competitor's tomorrow, which one wins?\n\n#APIFirst #DeveloperExperience #SaaS #ProductStrategy #B2BSaaS #DeveloperTools",
+  "topic": "API-first product design",
+  "format": "breakdown",
+  "hashtags": [
+    "#APIFirst",
+    "#DeveloperExperience",
+    "#SaaS",
+    "#ProductDesign",
+    "#DeveloperTools",
+    "#B2BSaaS",
+    "#TechProduct",
+    "#ProductStrategy"
+  ],
+  "word_count": 261,
+  "char_count": 1597,
+  "status": "scheduled",
+  "saved_at": "2026-06-10T22:18:56.552167",
+  "updated_at": "2026-06-10T22:21:30.934845",
+  "image_url": "https://res.cloudinary.com/drum3eekm/image/upload/v1781130089/li-posts/2026-06-10/api-first_product_design.png",
+  "buffer_result": {
+    "id": "6a29e36ae215b834bcb7bd95",
+    "status": "scheduled"
+  },
+  "scheduled_when": "queue"
+}

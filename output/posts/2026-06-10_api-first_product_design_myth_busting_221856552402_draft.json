@@ -1,0 +1,19 @@
+{
+  "text": "\"We're API-first.\"\n\nEvery exec deck I've reviewed in the last two years says some version of this. Most of the time, it means the company has REST endpoints and a developer portal. Maybe an OpenAPI spec that's 60% accurate.\n\nThat bar made sense in 2019. It doesn't hold up anymore.\n\nThe fastest-growing API consumer isn't a developer reading your docs at 2pm with coffee. It's an agent making a decision in 400 milliseconds with no human in the loop. That agent doesn't care about your thoughtfully-worded error messages. It needs machine-readable semantics, predictable auth flows, and endpoints that describe what they do, not how to call them.\n\nMost APIs I audit fail this test. Field names assume tribal knowledge. Pagination shifts across endpoints in the same product. Rate limits aren't discoverable until you hit them. A human developer pattern-matches around this. An agent gives up and picks a competitor.\n\nAPI-first as a claim is a baseline requirement now. API-designed-for-agents is the moat for the next 24 months, and the gap between the two is wider than most product leaders see.\n\nThe shift worth making: stop reviewing API design with \"would a developer figure this out?\" Start asking \"could an agent use this with zero prior context?\"\n\nDifferent question, different product.\n\nWhere are you seeing the agent-readiness gap show up in your roadmap conversations?\n\n#APIFirst #ProductStrategy #SaaS #DeveloperExperience #B2BSaaS #ProductDesign",
+  "topic": "API-first product design",
+  "format": "myth_busting",
+  "hashtags": [
+    "#APIFirst",
+    "#DeveloperExperience",
+    "#SaaS",
+    "#ProductDesign",
+    "#DeveloperTools",
+    "#B2BSaaS",
+    "#TechProduct",
+    "#ProductStrategy"
+  ],
+  "word_count": 229,
+  "char_count": 1457,
+  "status": "draft",
+  "saved_at": "2026-06-10T22:18:56.552402"
+}
