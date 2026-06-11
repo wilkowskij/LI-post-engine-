@@ -1,0 +1,19 @@
+{
+  "text": "Most \"sales-product misalignment\" is a sequencing problem.\n\nWatching the AI coding space, one company crossed nine figures in ARR before hiring a single enterprise rep. Their enterprise mix kept climbing anyway. By the time they brought in a President of Revenue, the demand was there, Fortune 500 logos included.\n\nMost companies do the opposite. They build a product that hasn't earned demand, layer enterprise sales on top to hit the number, then call the resulting friction \"alignment issues\" between sales and product.\n\nA way I've started thinking about it:\n\nSales is either a capture function or a push function. The product decides which one.\n\nCapture motion: usage is inside the account. Reps map stakeholders, handle procurement, expand seats. The conversation is about scope, not value.\n\nPush motion: sales has to manufacture belief the product hasn't earned. Each deal becomes a custom story. Cycles stretch. Win rates drop. PMs get blamed for not \"supporting the field.\"\n\nThe signal you're in push mode: your reps spend more time educating than negotiating. Your roadmap fills with one-off asks from late-stage deals. Your CSMs sound like implementation consultants.\n\nWhere this breaks down: regulated industries, net-new categories, anything where a buyer can't try before they buy. Those need a push motion from day one.\n\nFor most other teams, the question worth asking your exec team:\n\nIf we paused enterprise outbound for a quarter, would inbound demand still pull us into those accounts? If not, what are we selling?\n\n#ProductManagement #GTM #EnterpriseSales #SaaS #ProductStrategy #B2BSaaS #SalesAlignment",
+  "topic": "Enterprise sales and product alignment",
+  "format": "framework",
+  "hashtags": [
+    "#EnterpriseProduct",
+    "#SaaS",
+    "#GTM",
+    "#EnterpriseSales",
+    "#ProductManagement",
+    "#SalesAlignment",
+    "#B2BSaaS",
+    "#ProductStrategy"
+  ],
+  "word_count": 250,
+  "char_count": 1622,
+  "status": "draft",
+  "saved_at": "2026-06-11T17:38:42.943590"
+}

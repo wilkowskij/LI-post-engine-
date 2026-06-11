@@ -1,0 +1,59 @@
+{
+  "text": "Most teams talk about sales-product alignment like it's a meetings problem. Get the PM and the AE in a room. Agree on the roadmap. Sync on messaging.\n\nThat's not the problem.\n\nSome of the fastest-growing software companies of the last few years didn't hire a real enterprise rep until they were well past nine figures of ARR. By the time they brought in a senior revenue leader, enterprise was already a big chunk of the mix and climbing. They formalized the sales motion after the demand showed up, not before.\n\nMost companies do it the other way. They build a product that hasn't earned pull, layer a sales team on top, watch deals stall in 10-stakeholder committees, and call it misalignment.\n\nThe problem is sequencing.\n\nWhen the product earns demand first, sales becomes a capture function. Champions are already inside the account. Procurement is the friction, not the buying decision. When the product hasn't earned demand, sales becomes a push function, and the revenue leader takes the blame for every committee dynamic.\n\nThe order matters more than the org chart.\n\nWhere in your current motion are you pushing demand that the product should be pulling?\n\n#EnterpriseProduct #SaaS #GTM #ProductManagement #B2BSaaS #ProductStrategy #PLG",
+  "topic": "Enterprise sales and product alignment",
+  "format": "visual_framework",
+  "hashtags": [
+    "#EnterpriseProduct",
+    "#SaaS",
+    "#GTM",
+    "#EnterpriseSales",
+    "#ProductManagement",
+    "#SalesAlignment",
+    "#B2BSaaS",
+    "#ProductStrategy"
+  ],
+  "diagram": {
+    "title": "THE DEMAND SEQUENCING MODEL",
+    "subtitle": "How product-earned demand turns enterprise sales into capture, not push.",
+    "steps": [
+      {
+        "label": "PRODUCT EARNS USE",
+        "description": "Individual users adopt without procurement, training, or a deck."
+      },
+      {
+        "label": "ACCOUNTS CLUSTER",
+        "description": "Multiple users inside the same logo surface organically."
+      },
+      {
+        "label": "CHAMPIONS EMERGE",
+        "description": "Internal advocates push for team and org-wide rollout."
+      },
+      {
+        "label": "SALES CAPTURES",
+        "description": "Reps formalize contracts where demand already exists."
+      },
+      {
+        "label": "ENTERPRISE COMPOUNDS",
+        "description": "Expansion runs on proof, not pipeline manufacturing."
+      }
+    ],
+    "foundation_title": "WHAT MAKES THE SEQUENCE WORK",
+    "foundation_items": [
+      "DAILY-USE PRODUCT",
+      "BOTTOM-UP ADOPTION",
+      "VISIBLE USAGE SIGNALS",
+      "LOW FRICTION TO START"
+    ]
+  },
+  "word_count": 202,
+  "char_count": 1243,
+  "status": "scheduled",
+  "saved_at": "2026-06-11T17:38:42.943145",
+  "updated_at": "2026-06-11T17:41:26.621666",
+  "image_url": "https://res.cloudinary.com/drum3eekm/image/upload/v1781199684/li-posts/2026-06-11/enterprise_sales_and_product_alignment.png",
+  "buffer_result": {
+    "id": "6a2af3467b05d04a2424e4cc",
+    "status": "scheduled"
+  },
+  "scheduled_when": "queue"
+}
